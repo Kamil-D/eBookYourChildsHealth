@@ -1,4 +1,4 @@
-package com.example.kamil.ebookyourchildshealth;
+package com.example.kamil.ebookyourchildshealth.util;
 
 /**
  * Created by KamilosD on 2016-11-08.

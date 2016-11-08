@@ -3,9 +3,12 @@ package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,13 +25,22 @@ import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
-import com.example.kamil.ebookyourchildshealth.util;
+import com.example.kamil.ebookyourchildshealth.util.DocumentHelper;
+import com.example.kamil.ebookyourchildshealth.util.IntentHelper;
+import com.example.kamil.ebookyourchildshealth.util.util;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.IOException;
 import java.util.Calendar;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class AddMedicalVisitFragment extends Fragment {
@@ -35,13 +48,13 @@ public class AddMedicalVisitFragment extends Fragment {
     MyDebugger myDebugger;
     private Intent intent;
     private MyDatabaseHelper myDatabaseHelper;
-    private Unbinder unbinder;
     private String[] textViewNamesArray;
     private int day, month, year;
     private Calendar calendar;
     private int childIDfromIntent;
     private String childNameFromIntent;
     private Visit visitObject;
+    private Bitmap croppedImage;
 
     private TextView textViewName;
     private TextView textViewDoctor;
@@ -51,6 +64,8 @@ public class AddMedicalVisitFragment extends Fragment {
     private TextView textViewRecommendations;
     private TextView textViewMedicines;
 
+    @BindView(R.id.imageButtonAddPhoto)
+    public ImageButton imageButton;
     private EditText editTextName;
     private EditText editTextDoctor;
     private Spinner spinnerDisease;
@@ -65,7 +80,7 @@ public class AddMedicalVisitFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_medical_visit, container, false);
         myDebugger = new MyDebugger();
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         myDatabaseHelper = new MyDatabaseHelper(getActivity()); // activity czy context???
 
         getChildNameFromIntent();
@@ -138,6 +153,7 @@ public class AddMedicalVisitFragment extends Fragment {
 
         spinnerDisease.setAdapter(adapterSpinner);
     }
+
 
     @OnClick(R.id.buttonSaveVisit)
     public void saveChildToDatabaseButtonAction(View v) {

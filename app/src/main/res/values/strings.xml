@@ -16,6 +16,7 @@
 
     <string name="pick_date_add_child">Pick date of birth</string>
     <string name="pick_date_add_visit">Pick date of visit</string>
+    <string name="pick_photo_add_child">Pick photo</string>
 
     <integer name="tagOne">1</integer>
     <integer name="tagTwo">2</integer>

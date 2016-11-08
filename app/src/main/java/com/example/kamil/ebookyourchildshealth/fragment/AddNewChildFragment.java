@@ -3,8 +3,12 @@ package com.example.kamil.ebookyourchildshealth.fragment;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -25,8 +31,16 @@ import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.ChooseChildMainActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Child;
+import com.example.kamil.ebookyourchildshealth.util.DocumentHelper;
+import com.example.kamil.ebookyourchildshealth.util.IntentHelper;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.IOException;
 import java.util.Calendar;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class AddNewChildFragment extends Fragment {
@@ -38,12 +52,15 @@ public class AddNewChildFragment extends Fragment {
     private MyDatabaseHelper myDatabaseHelper;
     private Button saveChildButton;
     private Unbinder unbinder;
+    private Bitmap croppedImage;
 
     private int day, month, year;
     private Calendar calendar;
 
     private Child childObject;
 
+    @BindView(R.id.imageButtonAddPhoto)
+    public ImageButton imageButton;
     private TextView textViewName;
     private TextView textViewSurname;
     private TextView textViewPesel;
@@ -150,6 +167,50 @@ public class AddNewChildFragment extends Fragment {
         // Apply the adapter to the spinner
         spinnerSex.setAdapter(adapterSpinner1);
         spinnerBlood.setAdapter(adapterSpinner2);
+    }
+
+    public void setImage(String string, Uri resultUri) throws IOException {
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(string, imageButton);
+        croppedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
+    }
+
+    @OnClick(R.id.imageButtonAddPhoto)
+    public void pickPhoto() {
+        IntentHelper.chooseFileIntent(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("crop", "onActivityResult " + requestCode);
+        if (requestCode == IntentHelper.FILE_PICK && resultCode == RESULT_OK) {
+            Uri imageUri = data.getData();
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            Log.d("filePicker", DocumentHelper.getPath(getActivity(), data.getData()));
+            imageUri = data.getData();
+            CropImage.activity(imageUri).setFixAspectRatio(false)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(getActivity());
+        }
+//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//            Log.d("crop", " CROP_IMAGE_ACTIVITY_REQUEST_CODE//// ");
+//            if (resultCode == RESULT_OK) {
+//                Uri resultUri = result.getUri();
+//                Log.d("crop", resultUri + " //// " + resultUri.getPath());
+////                ImageLoader imageLoader = ImageLoader.getInstance();
+////                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
+//                setImage("file://" + resultUri.getPath());
+//                try {
+//                    croppedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+//                Exception error = result.getError();
+//            }
+//        }
+        //super.onActivityResult(requestCode, resultCode, data);
     }
 
     @OnClick(R.id.buttonSaveChild)

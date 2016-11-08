@@ -17,7 +17,7 @@ import android.widget.Button;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddMedicalVisitActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
-import com.example.kamil.ebookyourchildshealth.util;
+import com.example.kamil.ebookyourchildshealth.util.util;
 
 import java.util.ArrayList;
 

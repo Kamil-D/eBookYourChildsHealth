@@ -15,6 +15,7 @@ import com.example.kamil.ebookyourchildshealth.activity.addnewchild.AddNewChildA
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.ChildMainPanelActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.fragment.ChooseChildFragment;
+import com.example.kamil.ebookyourchildshealth.util.ImageLoaderHelper;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,8 +25,8 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
     private CollapsingToolbarLayout collapsingToolbar;
     private Toolbar toolbar;
     private Intent intent;
-    MyDebugger myDebugger;
-    MyDatabaseHelper myDatabaseHelper;
+    private MyDebugger myDebugger;
+    private MyDatabaseHelper myDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +35,15 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
 
         ButterKnife.bind(this);
 
+        ImageLoaderHelper.initialize(this);
+
         myDebugger = new MyDebugger();
         myDatabaseHelper = MyDatabaseHelper.getInstance(this);
 
         setToolbars();
         startFragmentTransactionAddNewFragment();
+
+
     }
 
     private void setToolbars() {

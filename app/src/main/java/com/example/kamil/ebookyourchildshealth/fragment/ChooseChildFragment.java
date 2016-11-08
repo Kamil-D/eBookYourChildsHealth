@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -153,6 +154,8 @@ public class ChooseChildFragment extends Fragment {
             String tagString = String.valueOf(holder.childNameTextViewBottomImageButton.getText());
             holder.pictureImageButton.setTag(R.integer.tagOne, tagString);
             holder.pictureImageButton.setTag(R.integer.tagTwo, idArrayCardViewItem[position % namesArrayCardViewItem.length]);
+            ImageLoader imageLoader = ImageLoader.getInstance();
+//            imageLoader.displayImage(uri, holder.pictureImageButton);   // URI z bd
         }
 
         @Override
