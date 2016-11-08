@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_add_new_child"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/md_keylines"
+    android:layout_marginBottom="@dimen/md_keylines"
+    android:layout_marginLeft="@dimen/md_keylines"
+    android:layout_marginRight="@dimen/md_keylines"
+    android:clipToPadding="false"
+    tools:context="com.example.kamil.ebookyourchildshealth.fragment.AddNewChildFragment">
+
+    <!--android:foreground="?attr/selectableItemBackground">-->
+    <!--app:cardBackgroundColor="@color/colorDivider"-->
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnName1"
+            style="@style/MyTextViewStyle" />
+
+        <EditText
+            android:id="@+id/columnNameValue"
+            android:inputType="textPersonName"
+            style="@style/MyEditTextStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnSurname"
+            style="@style/MyTextViewStyle" />
+
+        <EditText
+            android:id="@+id/columnSurnameValue"
+            android:inputType="textPersonName"
+            style="@style/MyEditTextStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnPesel"
+            style="@style/MyTextViewStyle" />
+
+        <EditText
+            android:id="@+id/columnPeselValue"
+            android:inputType="number"
+            style="@style/MyEditTextStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnSex"
+            style="@style/MyTextViewStyle"/>
+
+        <Spinner
+            android:id="@+id/columnSexValueSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="3"
+            android:textSize="16sp"
+            android:textColor="@color/primaryText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <!--<EditText-->
+            <!--android:id="@+id/columnSexValue"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_weight="3"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textPersonName"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textColor="@color/primaryText"-->
+            <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnBloodGroup"
+            style="@style/MyTextViewStyle"/>
+
+        <Spinner
+            android:id="@+id/columnBloodGroupValueSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="3"
+            android:textSize="16sp"
+            android:textColor="@color/primaryText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <!--<EditText-->
+            <!--android:id="@+id/columnBloodGroupValue"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_weight="3"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textPersonName"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textColor="@color/primaryText"-->
+            <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnBirthDate"
+            style="@style/MyTextViewStyle"/>
+
+        <Button
+            android:id="@+id/buttonDatePicker"
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_date_add_child"
+            android:onClick="showDatePickerDialog"
+            android:textSize="16sp"
+            android:textColor="@color/primaryText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:background="@color/white"/>
+
+        <!--<EditText-->
+            <!--android:id="@+id/columnBirthDateValue"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_weight="3"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="date"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textColor="@color/primaryText"-->
+            <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnBirthPlace"
+            style="@style/MyTextViewStyle"/>
+
+        <EditText
+            android:id="@+id/columnBirthPlaceValue"
+            android:inputType="textPersonName"
+            style="@style/MyEditTextStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnMother"
+            style="@style/MyTextViewStyle"/>
+
+        <EditText
+            android:id="@+id/columnMotherValue"
+            android:inputType="textPersonName"
+            style="@style/MyEditTextStyle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnFather"
+            style="@style/MyTextViewStyle"/>
+
+        <EditText
+            android:id="@+id/columnFatherValue"
+            android:inputType="textPersonName"
+            style="@style/MyEditTextStyle" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/buttonSaveChild"
+        android:text="Save child's data"
+        android:textSize="25sp"
+        style="@style/MyButtonStyle"/>
+
+    <!--saveChildToDatabaseButtonAction-->
+
+</LinearLayout>

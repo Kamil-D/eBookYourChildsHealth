@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_child_main_panel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/activity_child_main_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" >
+        <!--tools:context="com.example.kamil.ebookyourchildshealth.activity.childmainpanel.ChildMainPanelActivity">-->
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_layout_height"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                android:minHeight="50dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+                <ImageView
+                    android:id="@+id/toolbarImageChildPanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/child_main_panel_image_view_height"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/elvispresley"
+                    app:layout_collapseMode="parallax" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+                <!--<android.support.v7.widget.Toolbar-->
+                    <!--android:id="@+id/toolbar_child_panel"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="?attr/actionBarSize"-->
+                    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+                    <!--app:layout_collapseMode="pin"-->
+                    <!--app:layout_scrollFlags="scroll|enterAlways" />-->
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_child_panel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:minHeight="@dimen/toolbar_height"
+                android:background="?colorPrimary"
+                android:layout_marginTop="-47dp"
+                android:layout_gravity="center"
+                android:paddingBottom="10dp"
+                android:textSize="50sp"
+                android:titleTextColor="@color/primaryText"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:subtitleTextColor="@color/white" />
+
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollViewChildPanel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="#BDBDBD"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+            <LinearLayout
+                android:id="@+id/linearLayoutInNestedScrollViewChildPanel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="@color/colorLightPrimaryLighter"
+        app:headerLayout="@layout/nav_header_navigation_drawer"
+        app:menu="@menu/menu_navigation" />
+
+</android.support.v4.widget.DrawerLayout>

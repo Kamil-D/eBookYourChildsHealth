@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.kamil.ebookyourchildshealth">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.ChooseChildMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.childmainpanel.ChildMainPanelActivity"
+            android:parentActivityName=".activity.ChooseChildMainActivity" />
+        <activity
+            android:name=".activity.addnewchild.AddNewChildActivity"
+            android:parentActivityName=".activity.ChooseChildMainActivity" />
+        <activity
+            android:name=".activity.childmainpanel.InfoMedicalVisitActivity"
+            android:parentActivityName=".activity.childmainpanel.ChildMainPanelActivity" />
+        <activity
+            android:name=".activity.childmainpanel.AddMedicalVisitActivity"
+            android:parentActivityName=".activity.childmainpanel.ChildMainPanelActivity" />
+        <activity
+            android:name=".activity.TEMPActivity"
+            android:label="@string/title_activity_temp"
+            android:theme="@style/AppTheme"></activity>
+    </application>
+
+</manifest>

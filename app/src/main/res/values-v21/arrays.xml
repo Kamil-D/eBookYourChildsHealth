@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2016 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+
+    <!--<array name="child_images">-->
+        <!--<item>@drawable/elvispresley</item>-->
+        <!--<item>@drawable/panda</item>-->
+        <!--<item>@drawable/geralt</item>-->
+        <!--<item>@drawable/testoviron</item>-->
+        <!--<item>@drawable/elvispresley</item>-->
+        <!--<item>@drawable/panda</item>-->
+    <!--</array>-->
+    <array name="child_images">
+        <item>@drawable/elvispresley</item>
+        <item>@drawable/elvispresley</item>
+        <item>@drawable/elvispresley</item>
+        <item>@drawable/elvispresley</item>
+        <item>@drawable/elvispresley</item>
+        <item>@drawable/elvispresley</item>
+    </array>
+
+    <array name="child_names">
+        <item>"elvispresley"</item>
+        <item>"panda"</item>
+        <item>"geralt"</item>
+        <item>"testoviron"</item>
+    </array>
+
+    <array name="child_table">
+        <item>"Name:"</item>
+        <item>"Surname:"</item>
+        <item>"Pesel:"</item>
+        <item>"Sex:"</item>
+        <item>"Blood group:</item>
+        <item>"Birth date:"</item>
+        <item>"Birth place:"</item>
+        <item>"Mother's full name"</item>
+        <item>"Father's full name"</item>
+    </array>
+
+    <array name="visit_table">
+        <item>"Name:"</item>
+        <item>"Doctor:"</item>
+        <item>"Disease:"</item>
+        <item>"Date:"</item>
+        <item>"Description:</item>
+        <item>"Recommendations:"</item>
+        <item>"Medicines:"</item>
+    </array>
+
+    <array name="temporary_child_data">
+        <item>"Kamil"</item>
+        <item>"Działek"</item>
+        <item>"12312312312"</item>
+        <item>"Male"</item>
+        <item>"Nie wiem xD</item>
+        <item>"20-12-1740"</item>
+        <item>"Kaer Morhen"</item>
+        <item>"Mama mama"</item>
+        <item>"Tata tata"</item>
+    </array>
+
+</resources>
