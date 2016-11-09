@@ -29,7 +29,6 @@ public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
         myDatabaseHelper = MyDatabaseHelper.getInstance(this);
 
         setToolbars();
-
         startFragmentTransactionAddNewFragment();
     }
 

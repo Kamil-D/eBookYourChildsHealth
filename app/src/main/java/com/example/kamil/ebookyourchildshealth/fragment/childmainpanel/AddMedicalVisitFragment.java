@@ -51,10 +51,10 @@ public class AddMedicalVisitFragment extends Fragment {
     private String[] textViewNamesArray;
     private int day, month, year;
     private Calendar calendar;
-    private int childIDfromIntent;
-    private String childNameFromIntent;
+    private int childIDFromIntent;
     private Visit visitObject;
     private Bitmap croppedImage;
+    private Bundle bundle;
 
     private TextView textViewName;
     private TextView textViewDoctor;
@@ -64,8 +64,6 @@ public class AddMedicalVisitFragment extends Fragment {
     private TextView textViewRecommendations;
     private TextView textViewMedicines;
 
-    @BindView(R.id.imageButtonAddPhoto)
-    public ImageButton imageButton;
     private EditText editTextName;
     private EditText editTextDoctor;
     private Spinner spinnerDisease;
@@ -83,8 +81,9 @@ public class AddMedicalVisitFragment extends Fragment {
         ButterKnife.bind(this, view);
         myDatabaseHelper = new MyDatabaseHelper(getActivity()); // activity czy context???
 
-        getChildNameFromIntent();
-        getChildIDFromIntent();
+        getBundleFromIntent();
+//        getChildNameFromIntent();
+//        getChildIDFromIntent();
         setArrayContainsTextViewNames();
         createTextView(view);
         createEditText(view);
@@ -101,13 +100,14 @@ public class AddMedicalVisitFragment extends Fragment {
         }
     }
 
-    private void getChildNameFromIntent() {
-        childNameFromIntent = getActivity().getIntent().getStringExtra("childNameFromIntent");
+    private void getBundleFromIntent() {
+        bundle = getActivity().getIntent().getBundleExtra("bundle");
+        childIDFromIntent = bundle.getInt("childIDFromIntent");
     }
 
     private void getChildIDFromIntent() {
         int defaultValue = 0;
-        childIDfromIntent = getActivity().getIntent().getIntExtra("childIDFromIntent", defaultValue);
+        childIDFromIntent = getActivity().getIntent().getIntExtra("childIDFromIntent", defaultValue);
     }
 
     private void setArrayContainsTextViewNames() {
@@ -154,13 +154,12 @@ public class AddMedicalVisitFragment extends Fragment {
         spinnerDisease.setAdapter(adapterSpinner);
     }
 
-
     @OnClick(R.id.buttonSaveVisit)
     public void saveChildToDatabaseButtonAction(View v) {
         visitObject = new Visit();
 
         if (checkIfAllFieldAreFilled()) {
-            visitObject.setChild_id(childIDfromIntent);
+            visitObject.setChild_id(childIDFromIntent);
             visitObject.setName(editTextName.getText().toString());
             visitObject.setDoctor(editTextDoctor.getText().toString());
             visitObject.setDisease(spinnerDisease.getSelectedItem().toString());

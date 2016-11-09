@@ -130,6 +130,7 @@
         android:id="@+id/buttonSaveVisit"
         android:text="Save visit"
         android:textSize="25sp"
+        android:onClick="saveChildToDatabaseButtonAction"
         style="@style/MyButtonStyle"/>
 
         <!--saveChildToDatabaseButtonAction-->

@@ -75,8 +75,12 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
         intent = new Intent(this,ChildMainPanelActivity.class);
         String childNameFromIntent = getImageButtonTagString(view);
         int childIDFromIntent = getImageButtonTagInt(view);
-        intent.putExtra("childNameFromIntent", childNameFromIntent);
-        intent.putExtra("childIDFromIntent", childIDFromIntent);
+        Bundle bundle = new Bundle();
+        bundle.putInt("childIDFromIntent", childIDFromIntent);
+        bundle.putString("childNameFromIntent", childNameFromIntent);
+        intent.putExtra("bundle", bundle);
+//        intent.putExtra("childNameFromIntent", imageButtonTagString);
+//        intent.putExtra("childIDFromIntent", imageButtonTagInt);
         startActivity(intent);
     }
 

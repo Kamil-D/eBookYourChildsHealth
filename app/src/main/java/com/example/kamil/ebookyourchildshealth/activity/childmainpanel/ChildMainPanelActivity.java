@@ -28,7 +28,6 @@ import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.MedicalVi
 public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Intent intent;
     private String childNameFromIntent;
     private int childIDFromIntent;
     private ImageView imageView;
@@ -38,7 +37,9 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     private NavigationView navigationView;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private Bundle bundle;
     MyDebugger myDebugger;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,23 +52,25 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
 
         myDebugger = new MyDebugger();
 
-        getChildNameFromIntent();
-        getChildIDFromIntent();
+        getBundleFromIntent();
+//        getChildNameFromIntent();
+//        getChildIDFromIntent();
         setToolbars(childNameFromIntent);
         setToolbarImageView(childNameFromIntent);
         setDrawerLayoutAndNavigationView();
+        startFragmentTransactionAddNewFragment();
+    }
 
 
-        ChildMainPanelFragment childMainPanelFragment = new ChildMainPanelFragment();
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.linearLayoutInNestedScrollViewChildPanel,childMainPanelFragment,"fragment");
-        fragmentTransaction.commit();
-
+    private void getBundleFromIntent() {
+        bundle = getIntent().getBundleExtra("bundle");
+        childIDFromIntent = bundle.getInt("childIDFromIntent");
+        childNameFromIntent = bundle.getString("childNameFromIntent");
     }
 
     private void getChildNameFromIntent() {
         childNameFromIntent = getIntent().getStringExtra("childNameFromIntent");
+        myDebugger.someMethod("CHILD PANEL ACTIVITY NAME:   " + childNameFromIntent);
     }
 
     private void getChildIDFromIntent() {
@@ -75,14 +78,14 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         childIDFromIntent = getIntent().getIntExtra("childIDFromIntent", defaultValue);
     }
 
-    private void setToolbars(String imageButtonTag) {
+    private void setToolbars(String childNameFromIntent) {
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         // Set title of page
-        collapsingToolbar.setTitle(imageButtonTag);
+        collapsingToolbar.setTitle(childNameFromIntent);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_child_panel);
-        setToolbarName(imageButtonTag);
+        setToolbarName(childNameFromIntent);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
     }
@@ -91,8 +94,8 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         toolbar.setTitle(name);
     }
 
-    private void setToolbarImageView(String imageButtonTag) {
-        //int imageResourceID = getResources().getIdentifier(imageButtonTag , "drawable", getPackageName());
+    private void setToolbarImageView(String childNameFromIntent) {
+        //int imageResourceID = getResources().getIdentifier(childNameFromIntent , "drawable", getPackageName());
 
         imageView = (ImageView) findViewById(R.id.toolbarImageChildPanel);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.elvispresley, getApplicationContext().getTheme()));
@@ -117,6 +120,15 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         navigationView.setNavigationItemSelectedListener(this);
 
 //        setupDrawerContent(navigationView);
+    }
+
+    private void startFragmentTransactionAddNewFragment() {
+        ChildMainPanelFragment fragment = new ChildMainPanelFragment();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.linearLayoutInNestedScrollViewChildPanel, fragment, "fragment");
+        fragmentTransaction.commit();
+
     }
 
     // `onPostCreate` called when activity start-up is complete after `onStart()`
@@ -168,25 +180,32 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     }
 
     public void newActivityGoToChildPanelActivity() {
-        intent = new Intent(this,ChildMainPanelActivity.class);
+        Intent intent = new Intent(this, ChildMainPanelActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        int defaultValue = 0;
-        childIDFromIntent = getIntent().getIntExtra("childIDFromIntent", defaultValue);
-        intent.putExtra("childIDFromIntent", childIDFromIntent);
-        intent.putExtra("childNameFromIntent", childNameFromIntent);
+        Bundle bundle = new Bundle();
+        bundle.putInt("childIDFromIntent", childIDFromIntent);
+        bundle.putString("childNameFromIntent", childNameFromIntent);
+        intent.putExtra("bundle", bundle);
+//        intent.putExtra("childIDFromIntent", childIDFromIntent);
+//        intent.putExtra("childNameFromIntent", childNameFromIntent);
         startActivity(intent);
     }
 
     public void newActivityGoToVisitInfoPanel(View view) {
-        intent = new Intent(this,InfoMedicalVisitActivity.class);
+        Intent intent = new Intent(this, InfoMedicalVisitActivity.class);
         int idMedicalVisit = getButtonVisitTag(view);
-        intent.putExtra("childIDFromIntent", childIDFromIntent);
-        intent.putExtra("childNameFromIntent", childNameFromIntent);
-        intent.putExtra("idMedicalVisit", idMedicalVisit);
+        Bundle bundle = new Bundle();
+        bundle.putInt("childIDFromIntent", childIDFromIntent);
+        bundle.putInt("idMedicalVisit", idMedicalVisit);
+        bundle.putString("childNameFromIntent", childNameFromIntent);
+        intent.putExtra("bundle", bundle);
+//        intent.putExtra("childIDFromIntent", childIDFromIntent);
+//        intent.putExtra("childNameFromIntent", childNameFromIntent);
+//        intent.putExtra("idMedicalVisit", idMedicalVisit);
         startActivity(intent);
     }
 
-    private int getButtonVisitTag (View v) {
+    private int getButtonVisitTag(View v) {
         Button button = (Button) v;
         int buttonTag = Integer.parseInt(button.getTag().toString());
         return buttonTag;

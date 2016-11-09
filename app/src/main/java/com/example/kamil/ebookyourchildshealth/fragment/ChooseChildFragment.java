@@ -153,7 +153,7 @@ public class ChooseChildFragment extends Fragment {
              */
             String tagString = String.valueOf(holder.childNameTextViewBottomImageButton.getText());
             holder.pictureImageButton.setTag(R.integer.tagOne, tagString);
-            holder.pictureImageButton.setTag(R.integer.tagTwo, idArrayCardViewItem[position % namesArrayCardViewItem.length]);
+            holder.pictureImageButton.setTag(R.integer.tagTwo, idArrayCardViewItem[position % idArrayCardViewItem.length]);
             ImageLoader imageLoader = ImageLoader.getInstance();
 //            imageLoader.displayImage(uri, holder.pictureImageButton);   // URI z bd
         }

@@ -43,7 +43,8 @@ public class ChildMainPanelFragment extends Fragment {
 
         // najpierw odczytujemy ImageButtonTag, czyli imie dziecka
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
-        getImageButtonTagString();
+        getBundleFromIntent();
+//        getImageButtonTagString();
         getChildDataFromDatabase();
         //setToolbarImageView();
         createAndSetContentAdapter();
@@ -57,6 +58,11 @@ public class ChildMainPanelFragment extends Fragment {
         if (myDatabaseHelper != null) {
             myDatabaseHelper = null;
         }
+    }
+
+    private void getBundleFromIntent() {
+        Bundle bundle = getActivity().getIntent().getBundleExtra("bundle");
+        childNameFromIntent = bundle.getString("childNameFromIntent");
     }
 
     private void getImageButtonTagString() {

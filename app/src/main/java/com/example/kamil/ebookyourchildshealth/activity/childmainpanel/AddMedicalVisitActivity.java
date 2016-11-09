@@ -30,7 +30,6 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
         myDatabaseHelper = MyDatabaseHelper.getInstance(this);
 
         setToolbars();
-
         startFragmentTransactionAddNewFragment();
     }
 
@@ -38,8 +37,8 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
         toolbar = (Toolbar) findViewById(R.id.toolbar_add_medical_visit);
         toolbar.setTitle("Complete all fields");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void startFragmentTransactionAddNewFragment() {
@@ -49,4 +48,14 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
         fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddMedicalVisit,addMedicalVisitFragment,"fragment");
         fragmentTransaction.commit();
     }
+
+//    @Override
+//    public void onBackPressed(){
+//        FragmentManager fm = getSupportFragmentManager();
+//        if (fm.getBackStackEntryCount() > 0) {
+//            fm.popBackStack();
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 }
