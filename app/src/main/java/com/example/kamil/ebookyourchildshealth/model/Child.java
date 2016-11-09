@@ -1,5 +1,7 @@
 package com.example.kamil.ebookyourchildshealth.model;
 
+import android.net.Uri;
+
 /**
  * Created by kamil on 2016-11-01.
  */
@@ -16,6 +18,15 @@ public class Child {
     private String mother;
     private String father;
 
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
+    }
+
+    private Uri imageUri;
 
     public String getName() {
         return name;

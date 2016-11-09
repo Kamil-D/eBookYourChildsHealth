@@ -32,6 +32,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String CHILD_COL_8 = "BIRTH_PLACE";
     public static final String CHILD_COL_9 = "MOTHER";
     public static final String CHILD_COL_10 = "FATHER";
+    public static final String CHILD_COL_11 = "IMAGE_URI";
 
     public static final String VISIT_COL_1 = "ID";
     public static final String VISIT_COL_2 = "CHILD_ID";
@@ -56,7 +57,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         "BIRTH_DATE TEXT," +
                         "BIRTH_PLACE TEXT," +
                         "MOTHER TEXT," +
-                        "FATHER TEXT" +
+                        "FATHER TEXT," +
+                        "IMAGE_URI TEXT" +
                     ")";
 
     public static final String DATABASE_SQL_QUERY_CREATE_VISIT_TABLE =
@@ -152,6 +154,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(CHILD_COL_8, child.getBirth_place());
             contentValues.put(CHILD_COL_9, child.getMother());
             contentValues.put(CHILD_COL_10, child.getFather());
+            contentValues.put(CHILD_COL_11, child.getImageUri().toString());
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
             result = database.insertOrThrow(CHILD_TABLE_NAME, null, contentValues);

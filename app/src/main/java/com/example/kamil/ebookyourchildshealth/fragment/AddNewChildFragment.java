@@ -53,6 +53,7 @@ public class AddNewChildFragment extends Fragment {
     private Button saveChildButton;
     private Unbinder unbinder;
     private Bitmap croppedImage;
+    private Uri uriChildPhoto;
 
     private int day, month, year;
     private Calendar calendar;
@@ -185,6 +186,7 @@ public class AddNewChildFragment extends Fragment {
         Log.d("crop", "onActivityResult " + requestCode);
         if (requestCode == IntentHelper.FILE_PICK && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
+            this.uriChildPhoto = imageUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
             ImageLoader imageLoader = ImageLoader.getInstance();
             Log.d("filePicker", DocumentHelper.getPath(getActivity(), data.getData()));
             imageUri = data.getData();
@@ -228,6 +230,7 @@ public class AddNewChildFragment extends Fragment {
             childObject.setBirth_place(editTextBirthPlace.getText().toString());
             childObject.setMother(editTextMother.getText().toString());
             childObject.setFather(editTextFather.getText().toString());
+            childObject.setImageUri(uriChildPhoto);
 
             boolean isInserted = myDatabaseHelper.insertDataIntoChildTable(childObject);
 
