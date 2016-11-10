@@ -3,6 +3,8 @@ package com.example.kamil.ebookyourchildshealth.activity.childmainpanel;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -25,11 +27,16 @@ import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplem
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.ChildMainPanelFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.MedicalVisitsFragment;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String childNameFromIntent;
     private int childIDFromIntent;
+    private String childUriFromIntent;
+    private Drawable toolbarImageView;
     private ImageView imageView;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -53,10 +60,9 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         myDebugger = new MyDebugger();
 
         getBundleFromIntent();
-//        getChildNameFromIntent();
-//        getChildIDFromIntent();
-        setToolbars(childNameFromIntent);
-        setToolbarImageView(childNameFromIntent);
+        uriToDrawableArray();
+        setToolbars();
+        setToolbarImageView();
         setDrawerLayoutAndNavigationView();
         startFragmentTransactionAddNewFragment();
     }
@@ -66,19 +72,10 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle = getIntent().getBundleExtra("bundle");
         childIDFromIntent = bundle.getInt("childIDFromIntent");
         childNameFromIntent = bundle.getString("childNameFromIntent");
+        childUriFromIntent = bundle.getString("childUriFromIntent");
     }
 
-    private void getChildNameFromIntent() {
-        childNameFromIntent = getIntent().getStringExtra("childNameFromIntent");
-        myDebugger.someMethod("CHILD PANEL ACTIVITY NAME:   " + childNameFromIntent);
-    }
-
-    private void getChildIDFromIntent() {
-        int defaultValue = 0;
-        childIDFromIntent = getIntent().getIntExtra("childIDFromIntent", defaultValue);
-    }
-
-    private void setToolbars(String childNameFromIntent) {
+    private void setToolbars() {
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         // Set title of page
@@ -94,12 +91,23 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         toolbar.setTitle(name);
     }
 
-    private void setToolbarImageView(String childNameFromIntent) {
+    private void setToolbarImageView() {
         //int imageResourceID = getResources().getIdentifier(childNameFromIntent , "drawable", getPackageName());
 
         imageView = (ImageView) findViewById(R.id.toolbarImageChildPanel);
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.elvispresley, getApplicationContext().getTheme()));
+        imageView.setImageDrawable(toolbarImageView);
+//        imageView.setImageDrawable(getResources().getDrawable(R.drawable.elvispresley, getApplicationContext().getTheme()));
 //        imageView.setImageDrawable(getResources().getDrawable(imageResourceID, getApplicationContext().getTheme()));
+    }
+
+    private void uriToDrawableArray() {
+        Uri imageUri = Uri.parse(childUriFromIntent);
+        try {
+            InputStream inputStream = this.getContentResolver().openInputStream(imageUri);
+            toolbarImageView = Drawable.createFromStream(inputStream, imageUri.toString() );
+        } catch (FileNotFoundException e) {
+            toolbarImageView = getResources().getDrawable(R.drawable.elvispresley);
+        }
     }
 
     private void setDrawerLayoutAndNavigationView() {
@@ -185,6 +193,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         Bundle bundle = new Bundle();
         bundle.putInt("childIDFromIntent", childIDFromIntent);
         bundle.putString("childNameFromIntent", childNameFromIntent);
+        bundle.putString("childUriFromIntent", childUriFromIntent);
         intent.putExtra("bundle", bundle);
 //        intent.putExtra("childIDFromIntent", childIDFromIntent);
 //        intent.putExtra("childNameFromIntent", childNameFromIntent);

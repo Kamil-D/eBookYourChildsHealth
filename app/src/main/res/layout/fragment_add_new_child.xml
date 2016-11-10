@@ -29,7 +29,7 @@
             android:textSize="22sp"
             android:textColor="@color/primaryText"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:background="@color/white"/>
+            android:background="@color/colorLightPrimary"/>
 
     </LinearLayout>
 

@@ -73,28 +73,33 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
 
     public void newActivityGoToChildPanelActivity (View view) {
         intent = new Intent(this,ChildMainPanelActivity.class);
-        String childNameFromIntent = getImageButtonTagString(view);
-        int childIDFromIntent = getImageButtonTagInt(view);
         Bundle bundle = new Bundle();
-        bundle.putInt("childIDFromIntent", childIDFromIntent);
-        bundle.putString("childNameFromIntent", childNameFromIntent);
+        bundle.putInt("childIDFromIntent", getImageButtonTagTwo(view));
+        bundle.putString("childNameFromIntent", getImageButtonTagOne(view));
+        bundle.putString("childUriFromIntent", getImageButtonTagThree(view));
         intent.putExtra("bundle", bundle);
 //        intent.putExtra("childNameFromIntent", imageButtonTagString);
 //        intent.putExtra("childIDFromIntent", imageButtonTagInt);
         startActivity(intent);
     }
 
-    private String getImageButtonTagString (View v) {
+    private String getImageButtonTagOne(View v) {
         ImageButton imageButton = (ImageButton) v;
-        String imageButtonTagName = (String) imageButton.getTag(R.integer.tagOne);
+        String imageButtonTagName = (String) imageButton.getTag(R.integer.tagImageButtonOne);
 //        String buttonText = imageButton.getTag().toString();
         return imageButtonTagName;
     }
 
-    private int getImageButtonTagInt (View v) {
+    private int getImageButtonTagTwo(View v) {
         ImageButton imageButton = (ImageButton) v;
-        int imageButtonTagInt = (int) imageButton.getTag(R.integer.tagTwo);
-        return imageButtonTagInt;
+        int imageButtonTagId = (int) imageButton.getTag(R.integer.tagImageButtonTwo);
+        return imageButtonTagId;
+    }
+
+    private String getImageButtonTagThree(View v) {
+        ImageButton imageButton = (ImageButton) v;
+        String imageButtonTagUri = (String) imageButton.getTag(R.integer.tagImageButtonThree);
+        return imageButtonTagUri;
     }
 
 }

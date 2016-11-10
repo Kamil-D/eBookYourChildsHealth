@@ -34,6 +34,7 @@ import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.example.kamil.ebookyourchildshealth.util.DocumentHelper;
 import com.example.kamil.ebookyourchildshealth.util.IntentHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -173,6 +174,7 @@ public class AddNewChildFragment extends Fragment {
     public void setImage(String string, Uri resultUri) throws IOException {
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(string, imageButton);
+
         croppedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
     }
 
@@ -187,12 +189,12 @@ public class AddNewChildFragment extends Fragment {
         if (requestCode == IntentHelper.FILE_PICK && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
             this.uriChildPhoto = imageUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
-            ImageLoader imageLoader = ImageLoader.getInstance();
             Log.d("filePicker", DocumentHelper.getPath(getActivity(), data.getData()));
             imageUri = data.getData();
-            CropImage.activity(imageUri).setFixAspectRatio(false)
+            CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true).setCropShape(CropImageView.CropShape.RECTANGLE)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(getActivity());
+            new  View(getContext()).setOnLongClickListener(); //////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 //        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 //            CropImage.ActivityResult result = CropImage.getActivityResult(data);
@@ -221,25 +223,31 @@ public class AddNewChildFragment extends Fragment {
 
         if (checkIfAllFieldAreFilled()) {
 
-            childObject.setName(editTextName.getText().toString());
-            childObject.setSurname(editTextSurname.getText().toString());
-            childObject.setPesel(editTextPesel.getText().toString());
-            childObject.setSex(spinnerSex.getSelectedItem().toString());
-            childObject.setBlood_group(spinnerBlood.getSelectedItem().toString());
-            childObject.setBirth_date(buttonBirthDate.getText().toString());
-            childObject.setBirth_place(editTextBirthPlace.getText().toString());
-            childObject.setMother(editTextMother.getText().toString());
-            childObject.setFather(editTextFather.getText().toString());
-            childObject.setImageUri(uriChildPhoto);
+            if (checkIfPeselCorrect()) {
+                childObject.setName(editTextName.getText().toString());
+                childObject.setSurname(editTextSurname.getText().toString());
+                childObject.setPesel(editTextPesel.getText().toString());
+                childObject.setSex(spinnerSex.getSelectedItem().toString());
+                childObject.setBlood_group(spinnerBlood.getSelectedItem().toString());
+                childObject.setBirth_date(buttonBirthDate.getText().toString());
+                childObject.setBirth_place(editTextBirthPlace.getText().toString());
+                childObject.setMother(editTextMother.getText().toString());
+                childObject.setFather(editTextFather.getText().toString());
+                childObject.setImageUri(uriChildPhoto);
 
-            boolean isInserted = myDatabaseHelper.insertDataIntoChildTable(childObject);
+                boolean isInserted = myDatabaseHelper.insertDataIntoChildTable(childObject);
 
-            if (isInserted == true)
-                Toast.makeText(getActivity(), "Data inserted", Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(getActivity(), "Data not inserted", Toast.LENGTH_LONG).show();
+                if (isInserted == true) {
+                    Toast.makeText(getActivity(), "Data inserted", Toast.LENGTH_LONG).show();
+                    newActivityBackToChooseChildMainActivity();
+                }
+                else
+                    Toast.makeText(getActivity(), "Data not inserted", Toast.LENGTH_LONG).show();
 
-            newActivityBackToChooseChildMainActivity();
+            } else
+                Toast.makeText(getActivity(), "INCORRECT PESEL!", Toast.LENGTH_LONG).show();
+
+
         } else
             Toast.makeText(getActivity(), "COMPLETE ALL FIELDS!", Toast.LENGTH_LONG).show();
     }
@@ -258,7 +266,23 @@ public class AddNewChildFragment extends Fragment {
         return true;
     }
 
+    private boolean checkIfPeselCorrect() {
+        char tempChar;
+        int charCount = 0;
+        String string = editTextPesel.getText().toString();
 
+        for (int i=0 ; i<string.length() ; i++ ) {
+            tempChar = string.charAt(i);
+            if (tempChar<'0' && tempChar>'9')
+                return false;
+            charCount++;
+        }
+
+        if (charCount!=11)
+            return false;
+
+        return true;
+    }
 
     private DatePickerDialog.OnDateSetListener datePickerListener =
             new DatePickerDialog.OnDateSetListener() {

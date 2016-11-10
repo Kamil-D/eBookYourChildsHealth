@@ -63,9 +63,9 @@ public class ChooseChildFragment extends Fragment {
         while(cursor.moveToNext()) {
             queryResultIdArrayList.add(cursor.getInt(0));
             queryResultNamesArrayList.add(cursor.getString(1));
-            queryResultUriImagesArrayList.add(cursor.getString(10));
+            queryResultUriImagesArrayList.add(cursor.getString(2));
         }
-        // dopiero tutaj tworzyny tablicę Drawable bo znamy już ile elementów ma tablica uri (lub id, name)
+        // dopiero tutaj tworzymy tablicę Drawable bo znamy już ile elementów ma tablica uri (lub id, name)
         drawableArrayFromUriImagesArrayList = new Drawable[queryResultUriImagesArrayList.size()];
     }
 
@@ -130,8 +130,8 @@ public class ChooseChildFragment extends Fragment {
 
             Resources resources = context.getResources();
 
-            tagOne = resources.getInteger(R.integer.tagOne);
-            tagTwo = resources.getInteger(R.integer.tagTwo);
+            tagOne = resources.getInteger(R.integer.tagImageButtonOne);
+            tagTwo = resources.getInteger(R.integer.tagImageButtonTwo);
 
             // konwertowanie ArrayList na Array
             namesArrayCardViewItem = queryResultNamesArrayList.toArray(namesArrayCardViewItem);
@@ -160,11 +160,6 @@ public class ChooseChildFragment extends Fragment {
          */
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-//            String uriImage = uriImagesArrayCard[position % imagesArray.length];
-//            ImageLoader imageLoader = ImageLoader.getInstance();
-//            imageLoader.displayImage(uriImage, holder.pictureImageButton);   // URI z bd
-
-
 //            holder.pictureImageButton.setImageDrawable(imagesArray[position % imagesArray.length]);
             holder.pictureImageButton.setImageDrawable(imagesArray[position % imagesArray.length]);
             holder.childNameTextViewBottomImageButton.setText(namesArrayCardViewItem[position % namesArrayCardViewItem.length]);
@@ -175,8 +170,9 @@ public class ChooseChildFragment extends Fragment {
              * Gdy zostanie podpięta baza danych będzie się to odbywać prawdopodobnie po jakimś ID
              */
             String tagString = String.valueOf(holder.childNameTextViewBottomImageButton.getText());
-            holder.pictureImageButton.setTag(R.integer.tagOne, tagString);
-            holder.pictureImageButton.setTag(R.integer.tagTwo, idArrayCardViewItem[position % idArrayCardViewItem.length]);
+            holder.pictureImageButton.setTag(R.integer.tagImageButtonOne, tagString);
+            holder.pictureImageButton.setTag(R.integer.tagImageButtonTwo, idArrayCardViewItem[position % idArrayCardViewItem.length]);
+            holder.pictureImageButton.setTag(R.integer.tagImageButtonThree, uriImagesArrayCard[position % uriImagesArrayCard.length]);
         }
 
         @Override

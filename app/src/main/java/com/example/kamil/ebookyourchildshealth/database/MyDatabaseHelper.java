@@ -217,7 +217,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor readAllChildIdNamesImages() {
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor result = database.rawQuery("select id, name from " + CHILD_TABLE_NAME, null);
+        Cursor result = database.rawQuery("select id, name, IMAGE_URI from " + CHILD_TABLE_NAME, null);
         return result;
     }
 //    public Cursor readChildMedicalVisitsData(int childId) {
