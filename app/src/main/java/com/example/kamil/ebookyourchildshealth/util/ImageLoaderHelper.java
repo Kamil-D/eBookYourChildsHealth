@@ -20,8 +20,8 @@ public class ImageLoaderHelper {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
                 .cacheOnDisk(true)
-                .cacheInMemory(true)    // nie wczytuje od nowa obrazow i cachuje je w pamieci do ponownego szybszego wczytania
-                .imageScaleType(ImageScaleType.NONE_SAFE)
+                .cacheInMemory(true)
+                .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(300))
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(c)

@@ -66,7 +66,6 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            Log.d("crop", " CROP_IMAGE_ACTIVITY_REQUEST_CODE//// ");
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 Log.d("crop", resultUri + " //// " + resultUri.getPath());

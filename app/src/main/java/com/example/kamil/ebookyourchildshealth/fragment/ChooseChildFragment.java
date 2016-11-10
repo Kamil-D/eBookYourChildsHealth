@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -154,13 +155,15 @@ public class ChooseChildFragment extends Fragment {
             return new ViewHolder(LayoutInflater.from(parent.getContext()), parent);
         }
 
-
         /**
          * Specify the contents of each item of the RecyclerView.
          */
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 //            holder.pictureImageButton.setImageDrawable(imagesArray[position % imagesArray.length]);
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.displayImage(uriImagesArrayCard[position % uriImagesArrayCard.length], holder.pictureImageButton);
+
             holder.pictureImageButton.setImageDrawable(imagesArray[position % imagesArray.length]);
             holder.childNameTextViewBottomImageButton.setText(namesArrayCardViewItem[position % namesArrayCardViewItem.length]);
             /**

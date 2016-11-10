@@ -171,10 +171,10 @@ public class AddNewChildFragment extends Fragment {
         spinnerBlood.setAdapter(adapterSpinner2);
     }
 
-    public void setImage(String string, Uri resultUri) throws IOException {
+    public void setImage(String uri, Uri resultUri) throws IOException {
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(string, imageButton);
-
+        imageLoader.displayImage(uri, imageButton);
+        this.uriChildPhoto = resultUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
         croppedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
     }
 
@@ -188,13 +188,14 @@ public class AddNewChildFragment extends Fragment {
         Log.d("crop", "onActivityResult " + requestCode);
         if (requestCode == IntentHelper.FILE_PICK && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
-            this.uriChildPhoto = imageUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
+//            this.uriChildPhoto = imageUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
             Log.d("filePicker", DocumentHelper.getPath(getActivity(), data.getData()));
             imageUri = data.getData();
-            CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true).setCropShape(CropImageView.CropShape.RECTANGLE)
+            CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true).
+                    setCropShape(CropImageView.CropShape.RECTANGLE)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(getActivity());
-            new  View(getContext()).setOnLongClickListener(); //////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//            new  View(getContext()).setOnLongClickListener(); //////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 //        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 //            CropImage.ActivityResult result = CropImage.getActivityResult(data);
@@ -234,6 +235,8 @@ public class AddNewChildFragment extends Fragment {
                 childObject.setMother(editTextMother.getText().toString());
                 childObject.setFather(editTextFather.getText().toString());
                 childObject.setImageUri(uriChildPhoto);
+
+                myDebugger.someMethod("!!!!! IMAGE URI: " + uriChildPhoto.toString());
 
                 boolean isInserted = myDatabaseHelper.insertDataIntoChildTable(childObject);
 
