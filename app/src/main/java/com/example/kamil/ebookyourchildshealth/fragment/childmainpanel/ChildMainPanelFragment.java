@@ -19,6 +19,8 @@ import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+
 
 public class ChildMainPanelFragment extends Fragment {
 
@@ -65,10 +67,6 @@ public class ChildMainPanelFragment extends Fragment {
         childNameFromIntent = bundle.getString("childNameFromIntent");
     }
 
-    private void getImageButtonTagString() {
-        childNameFromIntent = getActivity().getIntent().getStringExtra("childNameFromIntent");
-    }
-
     public void getChildDataFromDatabase() {
         Cursor cursor = myDatabaseHelper.readChildData(childNameFromIntent);
         if(cursor.getCount() == 0) {
@@ -87,13 +85,6 @@ public class ChildMainPanelFragment extends Fragment {
             queryResultArrayList.add(cursor.getString(8));
             queryResultArrayList.add(cursor.getString(9));
         }
-    }
-
-    private void setToolbarImageView() {
-        childNameFromIntent = queryResultArrayList.get(1);
-        int imageResourceID = getResources().getIdentifier(childNameFromIntent,"drawable", getActivity().getPackageName());
-//        imageView.setImageDrawable(getResources().getDrawable(R.drawable., getApplicationContext().getTheme()));
-        imageView.setImageDrawable(getResources().getDrawable(imageResourceID, getActivity().getApplicationContext().getTheme()));
     }
 
 

@@ -30,6 +30,9 @@ import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.MedicalVi
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,11 +40,26 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     private int childIDFromIntent;
     private String childUriFromIntent;
     private Drawable toolbarImageView;
-    private ImageView imageView;
-    private DrawerLayout mDrawerLayout;
+
+    @BindView(R.id.drawer_child_main_panel)
+    DrawerLayout mDrawerLayout;
+
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private Toolbar toolbar;
-    private NavigationView navigationView;
+
+    @BindView(R.id.toolbarImageChildPanel)
+    ImageView imageView;
+
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+
+    @BindView(R.id.toolbar_child_panel)
+    Toolbar toolbar;
+
+
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private Bundle bundle;
@@ -56,7 +74,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
 
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-
+        ButterKnife.bind(this);
         myDebugger = new MyDebugger();
 
         getBundleFromIntent();
@@ -76,12 +94,10 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     }
 
     private void setToolbars() {
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         // Set title of page
+        myDebugger.someMethod("CHILD NAME:  " + childNameFromIntent);
         collapsingToolbar.setTitle(childNameFromIntent);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_child_panel);
         setToolbarName(childNameFromIntent);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
@@ -94,7 +110,6 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     private void setToolbarImageView() {
         //int imageResourceID = getResources().getIdentifier(childNameFromIntent , "drawable", getPackageName());
 
-        imageView = (ImageView) findViewById(R.id.toolbarImageChildPanel);
         imageView.setImageDrawable(toolbarImageView);
 //        imageView.setImageDrawable(getResources().getDrawable(R.drawable.elvispresley, getApplicationContext().getTheme()));
 //        imageView.setImageDrawable(getResources().getDrawable(imageResourceID, getApplicationContext().getTheme()));
@@ -117,16 +132,13 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         //actionBarDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.app_name, R.string.app_name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_child_main_panel);
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 //        setupDrawerContent(navigationView);
     }
 

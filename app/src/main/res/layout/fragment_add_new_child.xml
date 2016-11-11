@@ -25,9 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:text="@string/pick_photo_add_child"
-            android:textSize="22sp"
-            android:textColor="@color/primaryText"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:background="@color/colorLightPrimary"/>
 

@@ -11,11 +11,13 @@ import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplem
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
 
-    private Toolbar toolbar;
+    @BindView(R.id.toolbar_medical_visit_info)
+    Toolbar toolbar;
     private Intent intent;
     private MyDatabaseHelper myDatabaseHelper;
 
@@ -33,7 +35,6 @@ public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void setToolbars() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_medical_visit_info);
         toolbar.setTitle("Visit info");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -17,13 +17,16 @@ import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.fragment.ChooseChildFragment;
 import com.example.kamil.ebookyourchildshealth.util.ImageLoaderHelper;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
 
-    private CollapsingToolbarLayout collapsingToolbar;
-    private Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+    @BindView(R.id.toolbar_choose_child)
+    Toolbar toolbar;
     private Intent intent;
     private MyDebugger myDebugger;
     private MyDatabaseHelper myDatabaseHelper;
@@ -47,12 +50,9 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void setToolbars() {
-        collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         // Set title of Detail page
         collapsingToolbar.setTitle("Choose or add a child ");
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_choose_child);
         toolbar.setTitle("eBook Child's Health");
         setSupportActionBar(toolbar);
     }

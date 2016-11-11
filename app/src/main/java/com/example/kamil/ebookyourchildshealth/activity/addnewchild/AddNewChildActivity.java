@@ -18,6 +18,7 @@ import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplemented;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.fragment.AddNewChildFragment;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
@@ -27,7 +28,8 @@ import butterknife.ButterKnife;
 
 public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
 
-    private Toolbar toolbar;
+    @BindView(R.id.toolbar_add_child)
+    Toolbar toolbar;
     private Intent intent;
     private MyDatabaseHelper myDatabaseHelper;
     AddNewChildFragment addNewChildFragment;
@@ -47,7 +49,6 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void setToolbars() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_add_child);
         toolbar.setTitle("Complete all fields");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

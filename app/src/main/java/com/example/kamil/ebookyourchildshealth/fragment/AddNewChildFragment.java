@@ -176,6 +176,7 @@ public class AddNewChildFragment extends Fragment {
         imageLoader.displayImage(uri, imageButton);
         this.uriChildPhoto = resultUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
         croppedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
+        myDebugger.someMethod("!!!!!!!!!!!! ROZMIAR FOTKI: " + croppedImage.getByteCount());
     }
 
     @OnClick(R.id.imageButtonAddPhoto)
@@ -191,8 +192,8 @@ public class AddNewChildFragment extends Fragment {
 //            this.uriChildPhoto = imageUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
             Log.d("filePicker", DocumentHelper.getPath(getActivity(), data.getData()));
             imageUri = data.getData();
-            CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true).
-                    setCropShape(CropImageView.CropShape.RECTANGLE)
+            CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true)
+                    .setCropShape(CropImageView.CropShape.RECTANGLE)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(getActivity());
 //            new  View(getContext()).setOnLongClickListener(); //////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -223,6 +224,7 @@ public class AddNewChildFragment extends Fragment {
         childObject = new Child();
 
         if (checkIfAllFieldAreFilled()) {
+//        if (true) {
 
             if (checkIfPeselCorrect()) {
                 childObject.setName(editTextName.getText().toString());
@@ -261,7 +263,7 @@ public class AddNewChildFragment extends Fragment {
                 editTextPesel.getText().toString().matches("") ||
                 spinnerSex.getSelectedItem().toString().matches("") ||
                 spinnerBlood.getSelectedItem().toString().matches("") ||
-                buttonBirthDate.getText().toString().matches("") ||
+                buttonBirthDate.getText().toString().matches("Pick date of birth") ||
                 editTextBirthPlace.getText().toString().matches("") ||
                 editTextMother.getText().toString().matches("") ||
                 editTextFather.getText().toString().matches(""))

@@ -4,11 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,28 +21,18 @@ import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
-import com.example.kamil.ebookyourchildshealth.util.DocumentHelper;
-import com.example.kamil.ebookyourchildshealth.util.IntentHelper;
 import com.example.kamil.ebookyourchildshealth.util.util;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.IOException;
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
-
-import static android.app.Activity.RESULT_OK;
 
 
 public class AddMedicalVisitFragment extends Fragment {
 
     MyDebugger myDebugger;
-    private Intent intent;
     private MyDatabaseHelper myDatabaseHelper;
     private String[] textViewNamesArray;
     private int day, month, year;
@@ -56,21 +42,47 @@ public class AddMedicalVisitFragment extends Fragment {
     private Bitmap croppedImage;
     private Bundle bundle;
 
-    private TextView textViewName;
-    private TextView textViewDoctor;
-    private TextView textViewDisease;
-    private TextView textViewDate;
-    private TextView textViewDescription;
-    private TextView textViewRecommendations;
-    private TextView textViewMedicines;
+    @BindView(R.id.columnVisitName)
+    TextView textViewName;
 
-    private EditText editTextName;
-    private EditText editTextDoctor;
-    private Spinner spinnerDisease;
-    private Button buttonVisitDate;
-    private EditText editTextDescription;
-    private EditText editTextRecommendations;
-    private EditText editTextMedicines;
+    @BindView(R.id.columnDoctor)
+    TextView textViewDoctor;
+
+    @BindView(R.id.columnDisease)
+    TextView textViewDisease;
+
+    @BindView(R.id.columnDate)
+    TextView textViewDate;
+
+    @BindView(R.id.columnDescription)
+    TextView textViewDescription;
+
+    @BindView(R.id.columnRecommendations)
+    TextView textViewRecommendations;
+
+    @BindView(R.id.columnMedicines)
+    TextView textViewMedicines;
+
+    @BindView(R.id.columnVisitNameValue)
+    EditText editTextName;
+
+    @BindView(R.id.columnDoctorValue)
+    EditText editTextDoctor;
+
+    @BindView(R.id.columnDiseaseValueSpinner)
+    Spinner spinnerDisease;
+
+    @BindView(R.id.buttonDatePicker)
+    Button buttonVisitDate;
+
+    @BindView(R.id.columnDescriptionValue)
+    EditText editTextDescription;
+
+    @BindView(R.id.columnRecommendationsValue)
+    EditText editTextRecommendations;
+
+    @BindView(R.id.columnMedicinesValue)
+    EditText editTextMedicines;
 
 
     @Override
@@ -85,8 +97,7 @@ public class AddMedicalVisitFragment extends Fragment {
 //        getChildNameFromIntent();
 //        getChildIDFromIntent();
         setArrayContainsTextViewNames();
-        createTextView(view);
-        createEditText(view);
+        setTextOnTextView(view);
         createAndSetSpinners(view);
 
         return view;
@@ -105,25 +116,12 @@ public class AddMedicalVisitFragment extends Fragment {
         childIDFromIntent = bundle.getInt("childIDFromIntent");
     }
 
-    private void getChildIDFromIntent() {
-        int defaultValue = 0;
-        childIDFromIntent = getActivity().getIntent().getIntExtra("childIDFromIntent", defaultValue);
-    }
-
     private void setArrayContainsTextViewNames() {
         Resources resources = getActivity().getResources();
         textViewNamesArray = resources.getStringArray(R.array.visit_table);
     }
 
-    private void createTextView(View view) {
-        textViewName = (TextView) view.findViewById(R.id.columnVisitName);
-        textViewDoctor = (TextView) view.findViewById(R.id.columnDoctor);
-        textViewDisease = (TextView) view.findViewById(R.id.columnDisease);
-        textViewDate = (TextView) view.findViewById(R.id.columnDate);
-        textViewDescription = (TextView) view.findViewById(R.id.columnDescription);
-        textViewRecommendations = (TextView) view.findViewById(R.id.columnRecommendations);
-        textViewMedicines = (TextView) view.findViewById(R.id.columnMedicines);
-
+    private void setTextOnTextView(View view) {
         textViewName.setText(textViewNamesArray[0].toString());
         textViewDoctor.setText(textViewNamesArray[1].toString());
         textViewDisease.setText(textViewNamesArray[2].toString());
@@ -133,19 +131,7 @@ public class AddMedicalVisitFragment extends Fragment {
         textViewMedicines.setText(textViewNamesArray[6].toString());
     }
 
-    private void createEditText(View view) {
-        editTextName = (EditText) view.findViewById(R.id.columnVisitNameValue);
-        editTextDoctor = (EditText) view.findViewById(R.id.columnDoctorValue);
-        spinnerDisease = (Spinner) view.findViewById(R.id.columnDiseaseValueSpinner);
-        buttonVisitDate = (Button) view.findViewById(R.id.buttonDatePicker);
-        editTextDescription = (EditText) view.findViewById(R.id.columnDescriptionValue);
-        editTextRecommendations = (EditText) view.findViewById(R.id.columnRecommendationsValue);
-        editTextMedicines = (EditText) view.findViewById(R.id.columnMedicinesValue);
-    }
-
     private void createAndSetSpinners(View view) {
-        spinnerDisease = (Spinner) view.findViewById(R.id.columnDiseaseValueSpinner);
-
         ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(getActivity(),
                 R.array.spinner_diseases_array, android.R.layout.simple_spinner_item);
 
@@ -186,7 +172,7 @@ public class AddMedicalVisitFragment extends Fragment {
                 editTextName.getText().toString().matches("") ||
                 editTextDoctor.getText().toString().matches("") ||
                 spinnerDisease.getSelectedItem().toString().matches("") ||
-                buttonVisitDate.getText().toString().matches("") ||
+                buttonVisitDate.getText().toString().matches("Pick date of birth") ||
                 editTextDescription.getText().toString().matches("") ||
                 editTextRecommendations.getText().toString().matches("") ||
                 editTextMedicines.getText().toString().matches(""))
