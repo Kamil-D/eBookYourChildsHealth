@@ -1,43 +1,111 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/md_keylines"
     android:layout_marginBottom="@dimen/md_keylines"
     android:layout_marginLeft="@dimen/md_keylines"
     android:layout_marginRight="@dimen/md_keylines"
+    android:clipToPadding="false"
     android:foreground="?attr/selectableItemBackground"
     tools:context="com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment">
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/info_text_view_card_item_height"
-        android:orientation="horizontal"
-        android:radius="8dp"
-        android:elevation="8dp" >
+        style="@style/MyLinearLayoutStyle1" >
 
         <TextView
-            android:id="@+id/columnName"
-            style="@style/MyTextViewStyle"
-            android:layout_weight="3"
-            android:gravity="center_vertical|left"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:background="@color/colorLightPrimary"
-            android:radius="8dp"
-            android:elevation="8dp" />
+            android:id="@+id/columnVisitName"
+            style="@style/TextViewStyleLeftColumnName" />
 
         <TextView
-            android:id="@+id/columnValue"
-            style="@style/MyTextViewStyle"
-            android:layout_weight="2"
-            android:paddingLeft="@dimen/md_keylines"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"
-            android:background="@color/white"
-            android:radius="8dp"
-            android:elevation="8dp" />
+            android:id="@+id/columnVisitNameValue"
+            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
 
     </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnDoctor"
+            style="@style/TextViewStyleLeftColumnName" />
+
+        <TextView
+            android:id="@+id/columnDoctorValue"
+            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnDisease"
+            style="@style/TextViewStyleLeftColumnName" />
+
+        <TextView
+            android:id="@+id/columnDiseaseValue"
+            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnDate"
+            style="@style/TextViewStyleLeftColumnName" />
+
+        <TextView
+            android:id="@+id/columnDateValue"
+            style="@style/TextViewStyleRightColumnValueReadAndUpdate"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnDescription"
+            style="@style/TextViewStyleLeftColumnName" />
+
+        <TextView
+            android:id="@+id/columnDescriptionValue"
+            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnRecommendations"
+            style="@style/TextViewStyleLeftColumnName" />
+
+        <TextView
+            android:id="@+id/columnRecommendationsValue"
+            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnMedicines"
+            style="@style/TextViewStyleLeftColumnName" />
+
+        <TextView
+            android:id="@+id/columnMedicinesValue"
+            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view_child_panel"
+    android:id="@+id/medical_visits_fragment_card_item"
     android:layout_width="match_parent"
     android:layout_height="@dimen/info_text_view_card_item_height"
     android:layout_gravity="center"

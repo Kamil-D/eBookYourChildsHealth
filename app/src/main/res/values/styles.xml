@@ -36,7 +36,7 @@
         <item name="android:background">@color/colorLightPrimary</item>
     </style>
 
-    <style name="TextViewStyle1InfoMedicalVisit" parent="android:Widget.TextView">
+    <style name="TextViewStyleLeftColumnName" parent="android:Widget.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_weight">3</item>
         <item name="android:layout_height">match_parent</item>
@@ -60,6 +60,19 @@
         <item name="android:paddingRight">@dimen/card_margin</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
         <item name="android:background">@color/colorLightPrimary</item>
+    </style>
+
+    <style name="TextViewStyleRightColumnValueReadAndUpdate" parent="android:Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">45dp</item>
+        <item name="android:paddingLeft">@dimen/md_keylines</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <!--<item name="android:longClickable">true</item>-->
+        <!--<item name="android:onClick">showDialogToChangeValue</item>-->
     </style>
 
     <style name="MyEditTextStyle" parent="android:Widget.EditText">
