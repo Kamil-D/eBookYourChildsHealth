@@ -1,23 +1,29 @@
 package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
+import com.example.kamil.ebookyourchildshealth.activity.ChooseChildMainActivity;
+import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.ChildMainPanelActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 
@@ -38,7 +44,7 @@ public class InfoMedicalVisitFragment extends Fragment {
     private Visit visitObject;
     private static ArrayList<String> queryResultArrayList;
     private RecyclerView recyclerView;
-
+    private static Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +55,8 @@ public class InfoMedicalVisitFragment extends Fragment {
         myDebugger = new MyDebugger();
         queryResultArrayList = new ArrayList<>();
         myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity()); // activity czy context???
+
+        context = getActivity();
 
         // najpierw odczytujemy ImageButtonTag, czyli imie dziecka
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
@@ -101,6 +109,11 @@ public class InfoMedicalVisitFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+    public static Context getAppContext(){
+        return context;
+    }
+
+
     /**
      * Adapter to display recycler view.
      *
@@ -127,6 +140,32 @@ public class InfoMedicalVisitFragment extends Fragment {
                 super(inflater.inflate(R.layout.child_main_panel_fragment_card_item, parent, false));
                 columnNameTextView = (TextView) itemView.findViewById(R.id.columnName);
                 columnValueTextView = (TextView) itemView.findViewById(R.id.columnValue);
+
+                columnValueTextView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        showDialog(columnValueTextView.getText().toString());
+                        return true;
+                    }
+
+                    private void showDialog(String str) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
+                        builder.setTitle("input text");
+                        View view = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
+                        final EditText edit_dialog = (EditText) view.findViewById(R.id.text_view_dialog);
+                        edit_dialog.setText(str);
+                        builder.setView(view);
+                        builder.setNegativeButton("Cancel",null);
+                        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                columnValueTextView.setText(edit_dialog.getText().toString());
+                            }
+                        });
+                        builder.show();
+                    }
+                });
+
             }
         }
 
@@ -157,8 +196,8 @@ public class InfoMedicalVisitFragment extends Fragment {
             holder.columnValueTextView.setText
                     (queryResultArrayList.get((position % queryResultArrayList.size())));
 
-            if (position>3)
-                holder.columnValueTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2f));
+//            if (position>3)
+//                holder.columnValueTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2f));
 
 //            holder.columnValueTextView.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, 2f));
 //            TextView tv = new TextView(v.getContext());

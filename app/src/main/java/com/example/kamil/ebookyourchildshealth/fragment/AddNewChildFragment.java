@@ -223,10 +223,11 @@ public class AddNewChildFragment extends Fragment {
     public void saveChildToDatabaseButtonAction(View v) {
         childObject = new Child();
 
-        if (checkIfAllFieldAreFilled()) {
-//        if (true) {
+//        if (checkIfAllFieldAreFilled()) {
+        if (true) {
 
-            if (checkIfPeselCorrect()) {
+//            if (checkIfPeselCorrect()) {
+                if (true) {
                 childObject.setName(editTextName.getText().toString());
                 childObject.setSurname(editTextSurname.getText().toString());
                 childObject.setPesel(editTextPesel.getText().toString());

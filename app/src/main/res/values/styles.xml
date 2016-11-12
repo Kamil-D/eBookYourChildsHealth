@@ -13,6 +13,10 @@
     <style name="DialogTheme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+    <!--Theme_Holo_Light_Dialog_NoActionBar-->
+    <style name="myDialog" parent="android:Theme.Holo.Light.Dialog.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

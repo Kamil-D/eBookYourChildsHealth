@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_child_panel"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/info_text_view_card_item_height"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/md_keylines"
     android:layout_marginLeft="@dimen/md_keylines"
     android:layout_marginRight="@dimen/md_keylines"
     android:foreground="?attr/selectableItemBackground">
 
+<!--android:layout_height="@dimen/info_text_view_card_item_height"-->
 <!--app:cardBackgroundColor="@color/colorDivider"-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -23,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_weight="3"
             android:layout_height="match_parent"
-            tools:text="Name"
+            android:minHeight="45dp"
             android:textSize="16sp"
             android:textColor="@color/primaryText"
             android:gravity="center_vertical|left"
@@ -37,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_weight="2"
             android:layout_height="wrap_content"
+            android:minHeight="45dp"
             tools:text="Wartosc kolumny"
             android:paddingLeft="@dimen/md_keylines"
             android:textSize="16sp"
