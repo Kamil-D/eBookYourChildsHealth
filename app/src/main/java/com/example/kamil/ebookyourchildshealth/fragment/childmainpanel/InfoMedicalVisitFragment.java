@@ -169,10 +169,6 @@ public class InfoMedicalVisitFragment extends Fragment {
         textViewMedicinesValue.setText(queryResultArray[6]);
     }
 
-    public static Context getAppContext(){
-        return context;
-    }
-
     private void createListeners() {
 
         textViewNameValue.setOnLongClickListener(new View.OnLongClickListener() {
@@ -238,101 +234,8 @@ public class InfoMedicalVisitFragment extends Fragment {
         builder.show();
     }
 
-
-    /**
-     * Adapter to display recycler view.
-     *
-     * Handle the data collection and bind it to the view.
-     *
-     * The adapter is a component that stands between the data model
-     * we want to show in our app UI and the UI component that renders this information.
-     * In other words, an adapter guides the way the information are shown in the UI.
-     *
-     */
-    public static class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHolder> {
-
-        // Set numbers of List in RecyclerView.
-        private int LENGTH = 0;
-
-        private final String[] arrayCardViewItemLeftColumnTextViews;
-
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-
-            public TextView columnNameTextView;
-            public TextView columnValueTextView;
-
-            public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-                super(inflater.inflate(R.layout.child_main_panel_fragment_card_item, parent, false));
-                columnNameTextView = (TextView) itemView.findViewById(R.id.columnName);
-                columnValueTextView = (TextView) itemView.findViewById(R.id.columnValue);
-
-                columnValueTextView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        showDialog(columnValueTextView.getText().toString());
-                        return true;
-                    }
-
-                    private void showDialog(String str) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
-                        builder.setTitle("input text");
-                        View view = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
-                        final EditText edit_dialog = (EditText) view.findViewById(R.id.text_view_dialog);
-                        edit_dialog.setText(str);
-                        builder.setView(view);
-                        builder.setNegativeButton("Cancel",null);
-                        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                columnValueTextView.setText(edit_dialog.getText().toString());
-                            }
-                        });
-                        builder.show();
-                    }
-                });
-
-            }
-        }
-
-        public ContentAdapter(Context context) {
-
-            Resources resources = context.getResources();
-
-            arrayCardViewItemLeftColumnTextViews = resources.getStringArray(R.array.visit_table);
-
-            this.LENGTH = arrayCardViewItemLeftColumnTextViews.length;
-        }
-
-        @Override
-        public ContentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ContentAdapter.ViewHolder(LayoutInflater.from(parent.getContext()), parent);
-        }
-
-
-        /**
-         * Specify the contents of each item of the RecyclerView.
-         */
-        @Override
-        public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
-            holder.columnNameTextView.setText
-                    (arrayCardViewItemLeftColumnTextViews
-                            [position % arrayCardViewItemLeftColumnTextViews.length]);
-
-//            holder.columnValueTextView.setText
-//                    (queryResultArrayList.get((position % queryResultArrayList.size())));
-
-//            if (position>3)
-//                holder.columnValueTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 2f));
-
-//            holder.columnValueTextView.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT, 2f));
-//            TextView tv = new TextView(v.getContext());
-//            tv.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
-//            holder.columnValueTextView.setText(arrayCardViewItemRightColumnTextViews[position % arrayCardViewItemRightColumnTextViews.length]);
-        }
-
-        @Override
-        public int getItemCount() {
-            return LENGTH;
-        }
+    public static Context getAppContext(){
+        return context;
     }
+
 }
