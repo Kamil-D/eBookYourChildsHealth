@@ -257,7 +257,11 @@ public class AddNewChildFragment extends Fragment {
     }
 
     private boolean checkIfAllFieldAreFilled() {
-        if (uriChildPhoto.toString().matches("") ||
+        String temp = "";
+        if (uriChildPhoto != null)
+            temp += uriChildPhoto.toString();
+
+        if (temp.matches("") ||
                 editTextName.getText().toString().matches("") ||
                 editTextSurname.getText().toString().matches("") ||
                 editTextPesel.getText().toString().matches("") ||
