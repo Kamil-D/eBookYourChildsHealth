@@ -223,11 +223,11 @@ public class AddNewChildFragment extends Fragment {
     public void saveChildToDatabaseButtonAction(View v) {
         childObject = new Child();
 
-//        if (checkIfAllFieldAreFilled()) {
-        if (true) {
+        if (checkIfAllFieldAreFilled()) {
+//        if (true) {
 
-//            if (checkIfPeselCorrect()) {
-                if (true) {
+            if (checkIfPeselCorrect()) {
+//                if (true) {
                 childObject.setName(editTextName.getText().toString());
                 childObject.setSurname(editTextSurname.getText().toString());
                 childObject.setPesel(editTextPesel.getText().toString());
@@ -238,8 +238,6 @@ public class AddNewChildFragment extends Fragment {
                 childObject.setMother(editTextMother.getText().toString());
                 childObject.setFather(editTextFather.getText().toString());
                 childObject.setImageUri(uriChildPhoto);
-
-                myDebugger.someMethod("!!!!! IMAGE URI: " + uriChildPhoto.toString());
 
                 boolean isInserted = myDatabaseHelper.insertDataIntoChildTable(childObject);
 
@@ -259,7 +257,8 @@ public class AddNewChildFragment extends Fragment {
     }
 
     private boolean checkIfAllFieldAreFilled() {
-        if (editTextName.getText().toString().matches("") ||
+        if (uriChildPhoto.toString().matches("") ||
+                editTextName.getText().toString().matches("") ||
                 editTextSurname.getText().toString().matches("") ||
                 editTextPesel.getText().toString().matches("") ||
                 spinnerSex.getSelectedItem().toString().matches("") ||
