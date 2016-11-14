@@ -26,6 +26,7 @@
         <EditText
             android:id="@+id/columnVisitNameValue"
             android:inputType="textPersonName"
+            android:maxLength="40"
             style="@style/MyEditTextStyle" />
 
     </LinearLayout>
@@ -40,6 +41,7 @@
         <EditText
             android:id="@+id/columnDoctorValue"
             android:layout_width="match_parent"
+            android:maxLength="60"
             style="@style/MyEditTextStyle" />
 
     </LinearLayout>

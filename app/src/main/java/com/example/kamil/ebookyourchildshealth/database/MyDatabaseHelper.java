@@ -184,7 +184,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(VISIT_COL_5, visit.getDisease());
             contentValues.put(VISIT_COL_6, visit.getDate());
             contentValues.put(VISIT_COL_7, visit.getDescription());
-            contentValues.put(VISIT_COL_8, visit.getDescription());
+            contentValues.put(VISIT_COL_8, visit.getRecommendations());
             contentValues.put(VISIT_COL_9, visit.getMedicines());
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
@@ -220,13 +220,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor result = database.rawQuery("select id, name, IMAGE_URI from " + CHILD_TABLE_NAME, null);
         return result;
     }
-//    public Cursor readChildMedicalVisitsData(int childId) {
+//    public Cursor readAllChildMedicalVisitsData(int childId) {
 //        SQLiteDatabase database = this.getReadableDatabase();
 //        Cursor result = database.rawQuery("select * from " + VISIT_TABLE_NAME , null);
 //        return result;
 //    }
 
-    public Cursor readChildMedicalVisitsData(int childId) {
+    public Cursor readAllChildMedicalVisitsData(int childId) {
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor result = database.rawQuery("select * from " + VISIT_TABLE_NAME + " WHERE CHILD_ID = ? ;" ,
                 new String[] { String.valueOf(childId) });
@@ -238,6 +238,31 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor result = database.rawQuery("select * from " + VISIT_TABLE_NAME + " WHERE id = ? ;" ,
                 new String[] { String.valueOf(id) });
         return result;
+    }
+
+    public boolean updateMedicalVisitData(Visit visit, int visitID) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+//        contentValues.put(VISIT_COL_1, visitID);
+        contentValues.put(VISIT_COL_2, visit.getChild_id());
+        contentValues.put(VISIT_COL_3, visit.getName());
+        contentValues.put(VISIT_COL_4, visit.getDoctor());
+        contentValues.put(VISIT_COL_5, visit.getDisease());
+        contentValues.put(VISIT_COL_6, visit.getDate());
+        contentValues.put(VISIT_COL_7, visit.getDescription());
+        contentValues.put(VISIT_COL_8, visit.getRecommendations());
+        contentValues.put(VISIT_COL_9, visit.getMedicines());
+
+        String selection = VISIT_COL_1 + "= ?";
+        String[] selectionArgs = new String[] { String.valueOf(visitID) };
+
+        int numberOfRowsAffected = database.update(VISIT_TABLE_NAME, contentValues, selection, selectionArgs);
+
+        if (numberOfRowsAffected==1)
+            return true;
+        else
+            return false;
     }
 
 }

@@ -97,21 +97,12 @@ public class MedicalVisitsFragment extends Fragment {
         childNameFromIntent = bundle.getString("childNameFromIntent");
     }
 
-    private void getChildNameFromIntent() {
-        childNameFromIntent = getActivity().getIntent().getStringExtra("childNameFromIntent");
-    }
-
-    private void getChildIDFromIntent() {
-        int defaultValue = 0;
-        childIDFromIntent = getActivity().getIntent().getIntExtra("childIDFromIntent", defaultValue);
-    }
-
     public void getVisitDataFromDatabase() {
         queryResultIdArrayList = new ArrayList<>();
         queryResultNamesArrayList = new ArrayList<>();
         queryResultDatesArrayList = new ArrayList<>();
 
-        Cursor cursor = myDatabaseHelper.readChildMedicalVisitsData(childIDFromIntent);
+        Cursor cursor = myDatabaseHelper.readAllChildMedicalVisitsData(childIDFromIntent);
 
         if(cursor.getCount() == 0) {
             return;

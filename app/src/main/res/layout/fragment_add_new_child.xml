@@ -18,7 +18,16 @@
     <!--app:cardBackgroundColor="@color/colorDivider"-->
 
     <LinearLayout
-        style="@style/MyLinearLayoutStyle1" >
+        style="@style/MyLinearLayoutStyle1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="center_horizontal"
+            android:text="PICK A PHOTO!"
+            android:textSize="20sp"
+            android:textColor="@color/primaryText" />
 
         <ImageButton
             android:id="@+id/imageButtonAddPhoto"
@@ -40,6 +49,7 @@
         <EditText
             android:id="@+id/columnNameValue"
             android:inputType="textPersonName"
+            android:maxLength="40"
             style="@style/MyEditTextStyle" />
 
     </LinearLayout>
@@ -54,6 +64,7 @@
         <EditText
             android:id="@+id/columnSurnameValue"
             android:inputType="textPersonName"
+            android:maxLength="40"
             style="@style/MyEditTextStyle" />
 
     </LinearLayout>
@@ -169,6 +180,7 @@
         <EditText
             android:id="@+id/columnBirthPlaceValue"
             android:inputType="textPersonName"
+            android:maxLength="40"
             style="@style/MyEditTextStyle" />
 
     </LinearLayout>
@@ -183,6 +195,7 @@
         <EditText
             android:id="@+id/columnMotherValue"
             android:inputType="textPersonName"
+            android:maxLength="60"
             style="@style/MyEditTextStyle" />
 
     </LinearLayout>
@@ -197,6 +210,7 @@
         <EditText
             android:id="@+id/columnFatherValue"
             android:inputType="textPersonName"
+            android:maxLength="60"
             style="@style/MyEditTextStyle" />
 
     </LinearLayout>

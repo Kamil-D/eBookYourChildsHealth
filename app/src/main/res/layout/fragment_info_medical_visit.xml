@@ -107,5 +107,11 @@
     </LinearLayout>
 
 
+    <Button
+        android:id="@+id/buttonUpdateVisit"
+        android:text="@string/button_edit_visit"
+        android:textSize="25sp"
+        style="@style/MyButtonStyle"/>
+
 
 </LinearLayout>

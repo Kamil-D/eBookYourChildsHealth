@@ -22,6 +22,9 @@
     <integer name="tagImageButtonTwo">2</integer>
     <integer name="tagImageButtonThree">3</integer>
 
+    <string name="button_edit_visit">Edit visit</string>
+
+
     <string-array name="spinner_sex_array">
         <item>Male</item>
         <item>Female</item>

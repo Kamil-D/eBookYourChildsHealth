@@ -122,22 +122,26 @@ public class AddMedicalVisitFragment extends Fragment {
     }
 
     private void setTextOnTextView(View view) {
-        textViewName.setText(textViewNamesArray[0].toString());
-        textViewDoctor.setText(textViewNamesArray[1].toString());
-        textViewDisease.setText(textViewNamesArray[2].toString());
-        textViewDate.setText(textViewNamesArray[3].toString());
-        textViewDescription.setText(textViewNamesArray[4].toString());
-        textViewRecommendations.setText(textViewNamesArray[5].toString());
-        textViewMedicines.setText(textViewNamesArray[6].toString());
+        textViewName.setText(textViewNamesArray[0]);
+        textViewDoctor.setText(textViewNamesArray[1]);
+        textViewDisease.setText(textViewNamesArray[2]);
+        textViewDate.setText(textViewNamesArray[3]);
+        textViewDescription.setText(textViewNamesArray[4]);
+        textViewRecommendations.setText(textViewNamesArray[5]);
+        textViewMedicines.setText(textViewNamesArray[6]);
     }
 
     private void createAndSetSpinners(View view) {
         ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(getActivity(),
                 R.array.spinner_diseases_array, android.R.layout.simple_spinner_item);
-
+        // z bazy danych
+        // http://www.androidhive.info/2012/06/android-populating-spinner-data-from-sqlite-database/
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerDisease.setAdapter(adapterSpinner);
+
+//        id aktualnie zaznaczonego obiektu
+//        spinnerDisease.getSelectedItemId();
     }
 
     @OnClick(R.id.buttonSaveVisit)
