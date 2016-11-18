@@ -171,12 +171,12 @@ public class AddNewChildFragment extends Fragment {
         spinnerBlood.setAdapter(adapterSpinner2);
     }
 
-    public void setImage(String uri, Uri resultUri) throws IOException {
+    public void setImageOnImageButton(String uri, Uri resultUri) throws IOException {
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(uri, imageButton);
         this.uriChildPhoto = resultUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
         croppedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
-        myDebugger.someMethod("!!!!!!!!!!!! ROZMIAR FOTKI: " + croppedImage.getByteCount());
+        myDebugger.someMethod("!!!!!!!!!!!! ADRES FOTKI: " + uriChildPhoto.toString());
     }
 
     @OnClick(R.id.imageButtonAddPhoto)
@@ -206,7 +206,7 @@ public class AddNewChildFragment extends Fragment {
 //                Log.d("crop", resultUri + " //// " + resultUri.getPath());
 ////                ImageLoader imageLoader = ImageLoader.getInstance();
 ////                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
-//                setImage("file://" + resultUri.getPath());
+//                setImageOnImageButton("file://" + resultUri.getPath());
 //                try {
 //                    croppedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
 //                } catch (IOException e) {

@@ -2,23 +2,16 @@ package com.example.kamil.ebookyourchildshealth.activity.addnewchild;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplemented;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.fragment.AddNewChildFragment;
-import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
@@ -73,7 +66,7 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
 //                ImageLoader imageLoader = ImageLoader.getInstance();
 //                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
                 try {
-                    addNewChildFragment.setImage("file://" + resultUri.getPath(), resultUri);
+                    addNewChildFragment.setImageOnImageButton("file://" + resultUri.getPath(), resultUri);
 //                    croppedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri);
                 } catch (IOException e) {
                     e.printStackTrace();

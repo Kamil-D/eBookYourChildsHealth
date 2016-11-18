@@ -8,6 +8,7 @@
     <dimen name="card_margin">5dp</dimen>
     <dimen name="choose_child_card_item_height">260dp</dimen>
     <dimen name="child_main_panel_image_view_height">200dp</dimen>
+    <dimen name="child_main_panel_image_view_height_second">250dp</dimen>
     <dimen name="choose_child_image_button_height">200dp</dimen>
     <dimen name="choose_child_text_view_height">40dp</dimen>
     <dimen name="app_bar_layout_height">250dp</dimen>

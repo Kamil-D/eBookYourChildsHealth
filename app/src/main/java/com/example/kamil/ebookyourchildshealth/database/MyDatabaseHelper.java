@@ -19,8 +19,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
     public static final String DATABASE_NAME = "child.db";
-    public static final String CHILD_TABLE_NAME = "child_table";
-    public static final String VISIT_TABLE_NAME = "visit_table";
+    public static final String CHILD_TABLE_NAME = "child";
+    public static final String MEDICAL_VISITS_TABLE_NAME = "medicalVisits";
+    public static final String DISEASES_TABLE_NAME = "diseases";
+    public static final String DISEASES_NOTES_TABLE_NAME = "diseasesNotes";
 
     public static final String CHILD_COL_1 = "ID";
     public static final String CHILD_COL_2 = "NAME";
@@ -62,7 +64,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     ")";
 
     public static final String DATABASE_SQL_QUERY_CREATE_VISIT_TABLE =
-            "CREATE TABLE " + VISIT_TABLE_NAME +
+            "CREATE TABLE " + MEDICAL_VISITS_TABLE_NAME +
                     " (" +
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "CHILD_ID INTEGER REFERENCES " + CHILD_TABLE_NAME + ", " +
@@ -80,7 +82,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             "DROP TABLE IF EXISTS " + CHILD_TABLE_NAME;
 
     public static final String DATABASE_SQL_QUERY_DROP_VISIT_TABLE =
-            "DROP TABLE IF EXISTS " + VISIT_TABLE_NAME;
+            "DROP TABLE IF EXISTS " + MEDICAL_VISITS_TABLE_NAME;
 
 
     public MyDatabaseHelper(Context context) {
@@ -188,7 +190,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(VISIT_COL_9, visit.getMedicines());
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
-            result = database.insertOrThrow(VISIT_TABLE_NAME, null, contentValues);
+            result = database.insertOrThrow(MEDICAL_VISITS_TABLE_NAME, null, contentValues);
             database.setTransactionSuccessful();
         } catch (Exception e) {
 
@@ -222,20 +224,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 //    public Cursor readAllChildMedicalVisitsData(int childId) {
 //        SQLiteDatabase database = this.getReadableDatabase();
-//        Cursor result = database.rawQuery("select * from " + VISIT_TABLE_NAME , null);
+//        Cursor result = database.rawQuery("select * from " + MEDICAL_VISITS_TABLE_NAME , null);
 //        return result;
 //    }
 
     public Cursor readAllChildMedicalVisitsData(int childId) {
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor result = database.rawQuery("select * from " + VISIT_TABLE_NAME + " WHERE CHILD_ID = ? ;" ,
+        Cursor result = database.rawQuery("select * from " + MEDICAL_VISITS_TABLE_NAME + " WHERE CHILD_ID = ? ;" ,
                 new String[] { String.valueOf(childId) });
         return result;
     }
 
     public Cursor readMedicalVisitData(int id) {
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor result = database.rawQuery("select * from " + VISIT_TABLE_NAME + " WHERE id = ? ;" ,
+        Cursor result = database.rawQuery("select * from " + MEDICAL_VISITS_TABLE_NAME + " WHERE id = ? ;" ,
                 new String[] { String.valueOf(id) });
         return result;
     }
@@ -257,7 +259,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String selection = VISIT_COL_1 + "= ?";
         String[] selectionArgs = new String[] { String.valueOf(visitID) };
 
-        int numberOfRowsAffected = database.update(VISIT_TABLE_NAME, contentValues, selection, selectionArgs);
+        int numberOfRowsAffected = database.update(MEDICAL_VISITS_TABLE_NAME, contentValues, selection, selectionArgs);
 
         if (numberOfRowsAffected==1)
             return true;
