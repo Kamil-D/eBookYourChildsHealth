@@ -29,7 +29,6 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
     Toolbar toolbar;
     private Intent intent;
     private MyDebugger myDebugger;
-    private MyDatabaseHelper myDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +36,8 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
         setContentView(R.layout.activity_choose_child_main);
 
         ButterKnife.bind(this);
-
         ImageLoaderHelper.initialize(this);
-
         myDebugger = new MyDebugger();
-        myDatabaseHelper = MyDatabaseHelper.getInstance(this);
 
         setToolbars();
         startFragmentTransactionAddNewFragment();
@@ -51,7 +47,7 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
 
     private void setToolbars() {
         // Set title of Detail page
-        collapsingToolbar.setTitle("Choose or add a child ");
+        collapsingToolbar.setTitle("Wybierz lub dodaj dziecko");
 
         toolbar.setTitle("eBook Child's Health");
         setSupportActionBar(toolbar);
@@ -65,21 +61,13 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
         fragmentTransaction.commit();
     }
 
-    @OnClick(R.id.buttonAddChild)
-    public void newActivityAddNewChildActivity (View view) {
-        intent = new Intent(this,AddNewChildActivity.class);
-        startActivity(intent);
-    }
-
-    public void newActivityGoToChildPanelActivity (View view) {
+    public void newActivityGoToChildMainPanelActivity(View view) {
         intent = new Intent(this,ChildMainPanelActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("childIDFromIntent", getImageButtonTagTwo(view));
         bundle.putString("childNameFromIntent", getImageButtonTagOne(view));
         bundle.putString("childUriFromIntent", getImageButtonTagThree(view));
         intent.putExtra("bundle", bundle);
-//        intent.putExtra("childNameFromIntent", imageButtonTagString);
-//        intent.putExtra("childIDFromIntent", imageButtonTagInt);
         startActivity(intent);
     }
 

@@ -18,7 +18,6 @@ public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
 
     @BindView(R.id.toolbar_medical_visit_info)
     Toolbar toolbar;
-    private Intent intent;
     private MyDatabaseHelper myDatabaseHelper;
 
     @Override
@@ -35,7 +34,7 @@ public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void setToolbars() {
-        toolbar.setTitle("Visit info");
+        toolbar.setTitle("Informacje nt. wizyty");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

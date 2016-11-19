@@ -52,7 +52,6 @@ public class AddNewChildFragment extends Fragment {
     private String[] textViewNamesArray;
     private MyDatabaseHelper myDatabaseHelper;
     private Button saveChildButton;
-    private Unbinder unbinder;
     private Bitmap croppedImage;
     private Uri uriChildPhoto;
 
@@ -89,7 +88,7 @@ public class AddNewChildFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_new_child, container, false);
 
         myDebugger = new MyDebugger();
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity()); // activity czy context???
         saveChildButton = (Button) view.findViewById(R.id.buttonSaveChild);
 
@@ -160,9 +159,9 @@ public class AddNewChildFragment extends Fragment {
          * You can define your own or use one of Android’s, such as:
          */
         ArrayAdapter<CharSequence> adapterSpinner1 = ArrayAdapter.createFromResource(getActivity(),
-                R.array.spinner_sex_array, android.R.layout.simple_spinner_item);
+                R.array.spinner_sex_array, R.layout.spinner_item);
         ArrayAdapter<CharSequence> adapterSpinner2 = ArrayAdapter.createFromResource(getActivity(),
-                R.array.spinner_blood_array, android.R.layout.simple_spinner_item);
+                R.array.spinner_blood_array, R.layout.spinner_item);
         // Specify the layout to use when the list of choices appears
         adapterSpinner1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterSpinner2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -189,7 +188,6 @@ public class AddNewChildFragment extends Fragment {
         Log.d("crop", "onActivityResult " + requestCode);
         if (requestCode == IntentHelper.FILE_PICK && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
-//            this.uriChildPhoto = imageUri;  // kopiujemy uri obrazka do zmiennej klasy, którą wrzucimy do bd
             Log.d("filePicker", DocumentHelper.getPath(getActivity(), data.getData()));
             imageUri = data.getData();
             CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true)

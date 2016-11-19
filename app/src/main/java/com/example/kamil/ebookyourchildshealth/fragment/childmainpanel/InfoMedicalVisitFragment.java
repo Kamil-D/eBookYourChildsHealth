@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,14 +96,13 @@ public class InfoMedicalVisitFragment extends Fragment {
         ButterKnife.bind(this, view);
         myDebugger = new MyDebugger();
         queryResultArrayList = new ArrayList<>();
-        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity()); // activity czy context???
+        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity());
 
         context = getActivity();
 
         // najpierw odczytujemy ImageButtonTag, czyli imie dziecka
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
         getBundleFromIntent();
-//        getChildNameFromIntent();
         getChildDataFromDatabase();
         setTextOnTextViewLeftColumn();
         setTextFromDBOnTextViewRightColumn();
@@ -110,6 +110,17 @@ public class InfoMedicalVisitFragment extends Fragment {
         showOrHideButtonEditVisit();
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+//        Toast.makeText(getActivity(), "Przytrzymaj wybrane pole, aby edytować", Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(getActivity(), "Przytrzymaj wybrane pole, aby edytować", Toast.LENGTH_LONG);
+        ViewGroup group = (ViewGroup) toast.getView();
+        TextView messageTextView = (TextView) group.getChildAt(0);
+        messageTextView.setTextSize(25);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override
@@ -131,7 +142,6 @@ public class InfoMedicalVisitFragment extends Fragment {
         if(cursor.getCount() == 0) {
             return;
         }
-
         while(cursor.moveToNext()) {
             queryResultArrayList.add(cursor.getString(2));
             queryResultArrayList.add(cursor.getString(3));
@@ -260,8 +270,6 @@ public class InfoMedicalVisitFragment extends Fragment {
                 ifEdited = true;
         }
 
-        myDebugger.someMethod("EDITED:  " + ifEdited);
-
         return ifEdited;
     }
 
@@ -294,12 +302,12 @@ public class InfoMedicalVisitFragment extends Fragment {
             boolean isInserted = myDatabaseHelper.updateMedicalVisitData(visitObject, idMedicalVisit);
 
             if (isInserted == true)
-                Toast.makeText(getActivity(), "Data updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Dane zapisane", Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(getActivity(), "Data not updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
 
         } else
-            Toast.makeText(getActivity(), "COMPLETE ALL FIELDS!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();
     }
 
     private boolean checkIfAllFieldAreFilled() {

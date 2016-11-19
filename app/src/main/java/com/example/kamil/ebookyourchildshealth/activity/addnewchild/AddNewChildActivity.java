@@ -23,7 +23,6 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
 
     @BindView(R.id.toolbar_add_child)
     Toolbar toolbar;
-    private Intent intent;
     private MyDatabaseHelper myDatabaseHelper;
     AddNewChildFragment addNewChildFragment;
 
@@ -37,12 +36,11 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
         myDatabaseHelper = MyDatabaseHelper.getInstance(this);
 
         setToolbars();
-
         startFragmentTransactionAddNewFragment();
     }
 
     private void setToolbars() {
-        toolbar.setTitle("Complete all fields");
+        toolbar.setTitle("Uzupełnij wszystkie pola");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

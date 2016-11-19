@@ -24,7 +24,7 @@ public class ImageLoaderHelper {
 
     public static void initialize(Context c) {
         // UNIVERSAL IMAGE LOADER SETUP
-// http://stacktips.com/tutorials/android/universal-image-loader-library-in-android
+        // http://stacktips.com/tutorials/android/universal-image-loader-library-in-android
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
                 .cacheOnDisk(true)

@@ -32,6 +32,7 @@ import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -95,7 +96,6 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
 
     private void setToolbars() {
         // Set title of page
-        myDebugger.someMethod("CHILD NAME:  " + childNameFromIntent);
         collapsingToolbar.setTitle(childNameFromIntent);
 
         setToolbarName(childNameFromIntent);
@@ -207,12 +207,10 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putString("childNameFromIntent", childNameFromIntent);
         bundle.putString("childUriFromIntent", childUriFromIntent);
         intent.putExtra("bundle", bundle);
-//        intent.putExtra("childIDFromIntent", childIDFromIntent);
-//        intent.putExtra("childNameFromIntent", childNameFromIntent);
         startActivity(intent);
     }
 
-    public void newActivityGoToVisitInfoPanel(View view) {
+    public void newActivityGoToInfoMedicalVisitActivity(View view) {
         Intent intent = new Intent(this, InfoMedicalVisitActivity.class);
         int idMedicalVisit = getButtonVisitTag(view);
         Bundle bundle = new Bundle();
@@ -220,9 +218,6 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putInt("idMedicalVisit", idMedicalVisit);
         bundle.putString("childNameFromIntent", childNameFromIntent);
         intent.putExtra("bundle", bundle);
-//        intent.putExtra("childIDFromIntent", childIDFromIntent);
-//        intent.putExtra("childNameFromIntent", childNameFromIntent);
-//        intent.putExtra("idMedicalVisit", idMedicalVisit);
         startActivity(intent);
     }
 

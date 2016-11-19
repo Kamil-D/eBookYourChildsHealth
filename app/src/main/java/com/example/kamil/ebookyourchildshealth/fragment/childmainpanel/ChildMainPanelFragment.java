@@ -38,17 +38,16 @@ public class ChildMainPanelFragment extends Fragment {
 
         recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.recycler_view2, container, false);
+
         myDebugger = new MyDebugger();
         queryResultArrayList = new ArrayList<>();
         imageView = (ImageView) getActivity().findViewById(R.id.toolbarImageChildPanel);
-        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity()); // activity czy context???
+        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity());
 
         // najpierw odczytujemy ImageButtonTag, czyli imie dziecka
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
         getBundleFromIntent();
-//        getImageButtonTagString();
         getChildDataFromDatabase();
-        //setToolbarImageView();
         createAndSetContentAdapter();
 
         return recyclerView;
@@ -72,7 +71,6 @@ public class ChildMainPanelFragment extends Fragment {
         if(cursor.getCount() == 0) {
             return;
         }
-
         while(cursor.moveToNext()) {
             queryResultArrayList.add(cursor.getString(0));
             queryResultArrayList.add(cursor.getString(1));
@@ -86,7 +84,6 @@ public class ChildMainPanelFragment extends Fragment {
             queryResultArrayList.add(cursor.getString(9));
         }
     }
-
 
     private void createAndSetContentAdapter() {
         ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
@@ -128,11 +125,9 @@ public class ChildMainPanelFragment extends Fragment {
         }
 
         public ContentAdapter(Context context) {
-
             Resources resources = context.getResources();
 
             arrayCardViewItemLeftColumnTextViews = resources.getStringArray(R.array.child_table);
-
             arrayCardViewItemToSetRightColumnTextViews = resources.getStringArray(R.array.temporary_child_data);
 
             this.LENGTH = arrayCardViewItemToSetRightColumnTextViews.length;
@@ -155,7 +150,6 @@ public class ChildMainPanelFragment extends Fragment {
 
             holder.columnValueTextView.setText
                     (queryResultArrayList.get((position % arrayCardViewItemLeftColumnTextViews.length)+1));
-//            holder.columnValueTextView.setText(arrayCardViewItemToSetRightColumnTextViews[position % arrayCardViewItemToSetRightColumnTextViews.length]);
         }
 
         @Override

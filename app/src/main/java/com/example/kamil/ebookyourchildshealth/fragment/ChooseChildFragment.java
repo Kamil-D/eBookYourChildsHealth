@@ -1,6 +1,7 @@
 package com.example.kamil.ebookyourchildshealth.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -17,12 +18,17 @@ import android.widget.TextView;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
+import com.example.kamil.ebookyourchildshealth.activity.addnewchild.AddNewChildActivity;
+import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.ChildMainPanelActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class ChooseChildFragment extends Fragment {
@@ -32,27 +38,28 @@ public class ChooseChildFragment extends Fragment {
     private static ArrayList<Integer> queryResultIdArrayList;
     private static ArrayList<String> queryResultUriImagesArrayList;
     private static Drawable[] drawableArrayFromUriImagesArrayList;
+    private Intent intent;
     static MyDebugger myDebugger;
     private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_choose_child, container, false);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_choose_child);
+        ButterKnife.bind(this, view);
         queryResultNamesArrayList = new ArrayList<>();
         queryResultIdArrayList = new ArrayList<>();
         queryResultUriImagesArrayList = new ArrayList<>();
-
         myDebugger = new MyDebugger();
-        recyclerView = (RecyclerView) inflater.inflate(
-                R.layout.recycler_view2, container, false);
+        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity());
 
-        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity()); // activity czy context???
         getChildNamesAndImagesFromDatabase();
         uriToDrawableArray();
-
         createAndSetContentAdapter();
 
-        return recyclerView;
+        return view;
     }
 
     public void getChildNamesAndImagesFromDatabase() {
@@ -88,6 +95,13 @@ public class ChooseChildFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+
+    @OnClick(R.id.buttonAddChild)
+    public void newActivityAddNewChildActivity() {
+        intent = new Intent(this.getActivity(),AddNewChildActivity.class);
+        startActivity(intent);
     }
 
 
@@ -139,15 +153,9 @@ public class ChooseChildFragment extends Fragment {
             idArrayCardViewItem = queryResultIdArrayList.toArray(idArrayCardViewItem);
             uriImagesArrayCard = queryResultUriImagesArrayList.toArray(uriImagesArrayCard);
 
-//            TypedArray typedArray = resources.obtainTypedArray(R.array.child_images);
-//            imagesArray = new Drawable[typedArray.length()];
             imagesArray = drawableArrayFromUriImagesArrayList;
 
-//            for (int i = 0; i < imagesArray.length; i++) {
-//                imagesArray[i] = typedArray.getDrawable(i);
-//            }
             LENGTH = namesArrayCardViewItem.length;
-//            typedArray.recycle();
         }
 
         @Override
@@ -160,7 +168,6 @@ public class ChooseChildFragment extends Fragment {
          */
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-//            holder.pictureImageButton.setImageDrawable(imagesArray[position % imagesArray.length]);
             ImageLoader imageLoader = ImageLoader.getInstance();
             imageLoader.displayImage(uriImagesArrayCard[position % uriImagesArrayCard.length], holder.pictureImageButton);
 

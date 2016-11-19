@@ -18,11 +18,11 @@
 
         <TextView
             android:id="@+id/columnVisitName"
-            style="@style/TextViewStyleLeftColumnName" />
+            style="@style/MyTextViewStyle" />
 
         <TextView
             android:id="@+id/columnVisitNameValue"
-            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+            style="@style/MyTextViewStyle2" />
 
     </LinearLayout>
 
@@ -31,11 +31,11 @@
 
         <TextView
             android:id="@+id/columnDoctor"
-            style="@style/TextViewStyleLeftColumnName" />
+            style="@style/MyTextViewStyle" />
 
         <TextView
             android:id="@+id/columnDoctorValue"
-            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+            style="@style/MyTextViewStyle2" />
 
     </LinearLayout>
 
@@ -44,11 +44,11 @@
 
         <TextView
             android:id="@+id/columnDisease"
-            style="@style/TextViewStyleLeftColumnName" />
+            style="@style/MyTextViewStyle" />
 
         <TextView
             android:id="@+id/columnDiseaseValue"
-            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+            style="@style/MyTextViewStyle2" />
 
     </LinearLayout>
 
@@ -58,11 +58,11 @@
 
         <TextView
             android:id="@+id/columnDate"
-            style="@style/TextViewStyleLeftColumnName" />
+            style="@style/MyTextViewStyle" />
 
         <TextView
             android:id="@+id/columnDateValue"
-            style="@style/TextViewStyleRightColumnValueReadAndUpdate"/>
+            style="@style/MyTextViewStyle2"/>
 
     </LinearLayout>
 
@@ -72,11 +72,12 @@
 
         <TextView
             android:id="@+id/columnDescription"
-            style="@style/TextViewStyleLeftColumnName" />
+            style="@style/MyTextViewStyle" />
 
         <TextView
             android:id="@+id/columnDescriptionValue"
-            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+            android:inputType="textMultiLine"
+            style="@style/MyTextViewStyle2" />
 
     </LinearLayout>
 
@@ -85,11 +86,13 @@
 
         <TextView
             android:id="@+id/columnRecommendations"
-            style="@style/TextViewStyleLeftColumnName" />
+            style="@style/MyTextViewStyle" />
 
         <TextView
             android:id="@+id/columnRecommendationsValue"
-            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+            android:text="xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult"
+            android:inputType="textMultiLine"
+            style="@style/MyTextViewStyle2" />
 
     </LinearLayout>
 
@@ -98,11 +101,13 @@
 
         <TextView
             android:id="@+id/columnMedicines"
-            style="@style/TextViewStyleLeftColumnName" />
+            style="@style/MyTextViewStyle" />
 
         <TextView
             android:id="@+id/columnMedicinesValue"
-            style="@style/TextViewStyleRightColumnValueReadAndUpdate" />
+            android:inputType="textMultiLine"
+            android:text="Brak"
+            style="@style/MyTextViewStyle2" />
 
     </LinearLayout>
 

@@ -13,8 +13,6 @@
     android:layout_marginRight="@dimen/md_keylines"
     android:foreground="?attr/selectableItemBackground">
 
-<!--app:cardBackgroundColor="@color/colorDivider"-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,10 +21,10 @@
         <Button
             android:id="@+id/buttonMedicalVisitsList"
             android:background="@drawable/buttonmedicalvisitstyle"
-            android:onClick="newActivityGoToVisitInfoPanel"
-            android:layout_margin="5dp"
+            android:layout_margin="1dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:onClick="newActivityGoToInfoMedicalVisitActivity"/>
 
     </LinearLayout>
 

@@ -25,14 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:gravity="center_horizontal"
-            android:text="PICK A PHOTO!"
+            android:text="@string/pick_photo_add_child"
             android:textSize="20sp"
             android:textColor="@color/primaryText" />
 
         <ImageButton
             android:id="@+id/imageButtonAddPhoto"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/choose_child_image_button_height"
             android:scaleType="centerCrop"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:background="@color/colorLightPrimary"/>
@@ -92,22 +92,7 @@
 
         <Spinner
             android:id="@+id/columnSexValueSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="3"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-        <!--<EditText-->
-            <!--android:id="@+id/columnSexValue"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_weight="3"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:inputType="textPersonName"-->
-            <!--android:textSize="16sp"-->
-            <!--android:textColor="@color/primaryText"-->
-            <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
+            style="@style/MySpinnerStyle" />
 
     </LinearLayout>
 
@@ -120,22 +105,7 @@
 
         <Spinner
             android:id="@+id/columnBloodGroupValueSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="3"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-        <!--<EditText-->
-            <!--android:id="@+id/columnBloodGroupValue"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_weight="3"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:inputType="textPersonName"-->
-            <!--android:textSize="16sp"-->
-            <!--android:textColor="@color/primaryText"-->
-            <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
+            style="@style/MySpinnerStyle" />
 
     </LinearLayout>
 
@@ -148,25 +118,7 @@
 
         <Button
             android:id="@+id/buttonDatePicker"
-            android:layout_width="match_parent"
-            android:layout_weight="3"
-            android:layout_height="wrap_content"
-            android:text="@string/pick_date_add_child"
-            android:onClick="showDatePickerDialog"
-            android:textSize="16sp"
-            android:textColor="@color/primaryText"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:background="@color/white"/>
-
-        <!--<EditText-->
-            <!--android:id="@+id/columnBirthDateValue"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_weight="3"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:inputType="date"-->
-            <!--android:textSize="16sp"-->
-            <!--android:textColor="@color/primaryText"-->
-            <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
+            style="@style/MyButtonPickDateStyle" />
 
     </LinearLayout>
 
@@ -218,10 +170,8 @@
 
     <Button
         android:id="@+id/buttonSaveChild"
-        android:text="Save child's data"
+        android:text="@string/button_save_child"
         android:textSize="25sp"
         style="@style/MyButtonStyle"/>
-
-    <!--saveChildToDatabaseButtonAction-->
 
 </LinearLayout>

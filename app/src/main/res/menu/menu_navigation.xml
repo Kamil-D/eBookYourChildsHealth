@@ -19,21 +19,21 @@
             android:id="@+id/navigation_item_home_page"
             android:icon="@drawable/ic_home_black_24dp"
             android:tint="@color/colorSecondary"
-            android:title="Home Page" />
+            android:title="Główny panel" />
         <item
             android:id="@+id/navigation_item_child_panel"
             android:icon="@drawable/ic_home_black_24dp"
             android:tint="@color/colorSecondary"
-            android:title="Child Panel" />
+            android:title="Panel dziecka" />
         <item
             android:id="@+id/navigation_item_medical_visits"
             android:icon="@drawable/ic_bookmark_border_black_24dp"
             android:tint="@color/colorSecondary"
-            android:title="Medical visits" />
+            android:title="Wizyty lekarskie" />
         <item
             android:id="@+id/navigation_item_diseases_history"
             android:icon="@drawable/ic_bookmark_border_black_24dp"
             android:tint="@color/colorSecondary"
-            android:title="Diseases history" />
+            android:title="Historia chorób" />
     </group>
 </menu>

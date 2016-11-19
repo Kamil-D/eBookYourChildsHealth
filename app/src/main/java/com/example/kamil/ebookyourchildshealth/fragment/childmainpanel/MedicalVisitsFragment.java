@@ -31,7 +31,6 @@ public class MedicalVisitsFragment extends Fragment {
     private final int REQUEST_CODE = 1;
     private RecyclerView recyclerView;
     private MyDatabaseHelper myDatabaseHelper;
-    private Unbinder unbinder;
     private Intent intent;
     private int childIDFromIntent;
     private String childNameFromIntent;
@@ -45,7 +44,7 @@ public class MedicalVisitsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_medical_visits, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_medical_visits);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity()); // activity czy context???
 
         queryResultIdArrayList = new ArrayList<>();
@@ -53,8 +52,6 @@ public class MedicalVisitsFragment extends Fragment {
         queryResultDatesArrayList = new ArrayList<>();
 
         getBundleFromIntent();
-//        getChildIDFromIntent();
-//        getChildNameFromIntent();
         getVisitDataFromDatabase();
         createAndSetContentAdapter();
 
@@ -76,18 +73,14 @@ public class MedicalVisitsFragment extends Fragment {
         bundle.putInt("childIDFromIntent", childIDFromIntent);
         bundle.putString("childNameFromIntent", childNameFromIntent);
         intent.putExtra("bundle", bundle);
-//        intent.putExtra("childNameFromIntent", childNameFromIntent);
-//        intent.putExtra("childIDFromIntent", childIDFromIntent);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("chuj", "on act result"+resultCode+" " + requestCode);
         if (resultCode== util.RESULT_CODE) {
             getVisitDataFromDatabase();
             createAndSetContentAdapter();
-            Log.d("chuj", "dziala");
         }
     }
 
@@ -148,11 +141,9 @@ public class MedicalVisitsFragment extends Fragment {
         }
 
         public ContentAdapter(Context context) {
-
             Resources resources = context.getResources();
 
             visitNamesArrayButtonFromCardView = queryResultNamesArrayList.toArray(visitNamesArrayButtonFromCardView);
-
             visitDatesArrayButtonFromCardView = queryResultDatesArrayList.toArray(visitDatesArrayButtonFromCardView);
 
             this.LENGTH = visitNamesArrayButtonFromCardView.length;

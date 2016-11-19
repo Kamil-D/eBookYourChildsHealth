@@ -40,27 +40,50 @@
         <item>"testoviron"</item>
     </array>
 
+    <!--<array name="child_table">-->
+        <!--<item>"Name:"</item>-->
+        <!--<item>"Surname:"</item>-->
+        <!--<item>"Pesel:"</item>-->
+        <!--<item>"Sex:"</item>-->
+        <!--<item>"Blood group:</item>-->
+        <!--<item>"Birth date:"</item>-->
+        <!--<item>"Birth place:"</item>-->
+        <!--<item>"Mother's full name"</item>-->
+        <!--<item>"Father's full name"</item>-->
+    <!--</array>-->
+
     <array name="child_table">
-        <item>"Name:"</item>
-        <item>"Surname:"</item>
+        <item>"Imię:"</item>
+        <item>"Nazwisko:"</item>
         <item>"Pesel:"</item>
-        <item>"Sex:"</item>
-        <item>"Blood group:</item>
-        <item>"Birth date:"</item>
-        <item>"Birth place:"</item>
-        <item>"Mother's full name"</item>
-        <item>"Father's full name"</item>
+        <item>"Płeć:"</item>
+        <item>"Grupa krwii:</item>
+        <item>"Data urodzenia:"</item>
+        <item>"Miejsce urodzenia:"</item>
+        <item>"Imię i nazwisko matki"</item>
+        <item>"Imię i nazwisko ojca"</item>
     </array>
 
+    <!--<array name="visit_table">-->
+        <!--<item>"Name:"</item>-->
+        <!--<item>"Doctor:"</item>-->
+        <!--<item>"Disease:"</item>-->
+        <!--<item>"Date:"</item>-->
+        <!--<item>"Description:</item>-->
+        <!--<item>"Recommendations:"</item>-->
+        <!--<item>"Medicines:"</item>-->
+    <!--</array>-->
+
     <array name="visit_table">
-        <item>"Name:"</item>
-        <item>"Doctor:"</item>
-        <item>"Disease:"</item>
-        <item>"Date:"</item>
-        <item>"Description:</item>
-        <item>"Recommendations:"</item>
-        <item>"Medicines:"</item>
+        <item>"Nazwa:"</item>
+        <item>"Lekarz:"</item>
+        <item>"Choroba:"</item>
+        <item>"Data:"</item>
+        <item>"Opis:</item>
+        <item>"Zalecenia:"</item>
+        <item>"Leki:"</item>
     </array>
+
 
     <array name="temporary_child_data">
         <item>"Kamil"</item>

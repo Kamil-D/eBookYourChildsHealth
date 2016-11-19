@@ -89,16 +89,15 @@ public class AddMedicalVisitFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_medical_visit, container, false);
+
         myDebugger = new MyDebugger();
         ButterKnife.bind(this, view);
-        myDatabaseHelper = new MyDatabaseHelper(getActivity()); // activity czy context???
+        myDatabaseHelper = new MyDatabaseHelper(getActivity());
 
         getBundleFromIntent();
-//        getChildNameFromIntent();
-//        getChildIDFromIntent();
         setArrayContainsTextViewNames();
-        setTextOnTextView(view);
-        createAndSetSpinners(view);
+        setTextOnTextView();
+        createAndSetSpinners();
 
         return view;
     }
@@ -121,7 +120,7 @@ public class AddMedicalVisitFragment extends Fragment {
         textViewNamesArray = resources.getStringArray(R.array.visit_table);
     }
 
-    private void setTextOnTextView(View view) {
+    private void setTextOnTextView() {
         textViewName.setText(textViewNamesArray[0]);
         textViewDoctor.setText(textViewNamesArray[1]);
         textViewDisease.setText(textViewNamesArray[2]);
@@ -131,9 +130,9 @@ public class AddMedicalVisitFragment extends Fragment {
         textViewMedicines.setText(textViewNamesArray[6]);
     }
 
-    private void createAndSetSpinners(View view) {
+    private void createAndSetSpinners() {
         ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(getActivity(),
-                R.array.spinner_diseases_array, android.R.layout.simple_spinner_item);
+                R.array.spinner_diseases_array, R.layout.spinner_item);
         // z bazy danych
         // http://www.androidhive.info/2012/06/android-populating-spinner-data-from-sqlite-database/
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -161,14 +160,14 @@ public class AddMedicalVisitFragment extends Fragment {
             boolean isInserted = myDatabaseHelper.insertDataIntoVisitTable(visitObject);
 
             if (isInserted == true)
-                Toast.makeText(getActivity(), "Data inserted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Dane zapisane", Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(getActivity(), "Data not inserted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
 
             getActivity().setResult(util.RESULT_CODE, null);
             getActivity().finish();
         } else
-            Toast.makeText(getActivity(), "COMPLETE ALL FIELDS!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();
     }
 
     private boolean checkIfAllFieldAreFilled() {
@@ -176,26 +175,12 @@ public class AddMedicalVisitFragment extends Fragment {
                 editTextName.getText().toString().matches("") ||
                 editTextDoctor.getText().toString().matches("") ||
                 spinnerDisease.getSelectedItem().toString().matches("") ||
-                buttonVisitDate.getText().toString().matches("Pick date of birth") ||
+                buttonVisitDate.getText().toString().matches("Wybierz datę") ||
                 editTextDescription.getText().toString().matches("") ||
                 editTextRecommendations.getText().toString().matches("") ||
                 editTextMedicines.getText().toString().matches(""))
             return false;
         return true;
-    }
-
-    private DatePickerDialog.OnDateSetListener datePickerListener =
-            new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    String date = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear+1) // +1 bo miesiące numeruje od 0
-                            + "/" +String.valueOf(year);
-                    setDateOnButton(date);
-                }
-            };
-
-    private void setDateOnButton(String date) {
-        buttonVisitDate.setText(date);
     }
 
     @OnClick(R.id.buttonDatePicker)
@@ -212,6 +197,20 @@ public class AddMedicalVisitFragment extends Fragment {
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener =
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    String date = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear+1) // +1 bo miesiące numeruje od 0
+                            + "/" +String.valueOf(year);
+                    setDateOnButton(date);
+                }
+            };
+
+    private void setDateOnButton(String date) {
+        buttonVisitDate.setText(date);
     }
 
 }

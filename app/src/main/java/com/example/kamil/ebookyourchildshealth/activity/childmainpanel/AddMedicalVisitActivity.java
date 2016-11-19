@@ -19,7 +19,6 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
 
     @BindView(R.id.toolbar_add_medical_visit)
      Toolbar toolbar;
-    private Intent intent;
     private MyDatabaseHelper myDatabaseHelper;
 
     @Override
@@ -36,7 +35,7 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void setToolbars() {
-        toolbar.setTitle("Complete all fields");
+        toolbar.setTitle("Uzupełnij wszystkie pola");
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeButtonEnabled(true);
@@ -50,13 +49,4 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
         fragmentTransaction.commit();
     }
 
-//    @Override
-//    public void onBackPressed(){
-//        FragmentManager fm = getSupportFragmentManager();
-//        if (fm.getBackStackEntryCount() > 0) {
-//            fm.popBackStack();
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
 }

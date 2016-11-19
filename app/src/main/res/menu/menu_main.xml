@@ -24,25 +24,25 @@
 
     <item
         android:id="@+id/action_main_panel"
-        android:title="Home Page"
+        android:title="Główny panel"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"
-        android:title="Settings"
+        android:title="Ustawienia"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_about"
-        android:title="About"
+        android:title="O aplikacji"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_author"
-        android:title="Author"
+        android:title="Autor"
         android:orderInCategory="100"
         app:showAsAction="never" />
 

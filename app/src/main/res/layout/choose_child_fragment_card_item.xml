@@ -19,8 +19,9 @@
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="match_parent"
+            android:padding="0dp"
             android:layout_height="@dimen/choose_child_image_button_height"
-            android:onClick="newActivityGoToChildPanelActivity"
+            android:onClick="newActivityGoToChildMainPanelActivity"
             android:src="@drawable/elvispresley"
             android:scaleType="centerCrop" />
 
@@ -30,7 +31,6 @@
             android:layout_height="@dimen/choose_child_text_view_height"
             android:layout_below="@+id/imageButton"
             android:layout_marginLeft="@dimen/md_keylines"
-            tools:text="Elvis"
             android:textSize="30sp"
             android:textColor="@color/primaryText"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
