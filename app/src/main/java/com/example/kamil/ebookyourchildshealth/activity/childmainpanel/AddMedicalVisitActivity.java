@@ -10,13 +10,16 @@ import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplem
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.AddMedicalVisitFragment;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
 
     @BindView(R.id.toolbar_add_medical_visit)
-     Toolbar toolbar;
+    Toolbar toolbar;
+    @BindString(R.string.complete_all_fields)
+    String toolbarTitle;
     private MyDatabaseHelper myDatabaseHelper;
 
     @Override
@@ -33,7 +36,7 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void setToolbars() {
-        toolbar.setTitle("Uzupełnij wszystkie pola");
+        toolbar.setTitle(toolbarTitle);
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeButtonEnabled(true);

@@ -16,6 +16,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,6 +24,8 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
 
     @BindView(R.id.toolbar_add_child)
     Toolbar toolbar;
+    @BindString(R.string.complete_all_fields)
+    String toolbarTitle;
     private MyDatabaseHelper myDatabaseHelper;
     AddNewChildFragment addNewChildFragment;
 
@@ -40,7 +43,7 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void setToolbars() {
-        toolbar.setTitle("Uzupełnij wszystkie pola");
+        toolbar.setTitle(toolbarTitle);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

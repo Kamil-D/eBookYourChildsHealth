@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,7 +46,8 @@ import static android.app.Activity.RESULT_OK;
 public class AddNewChildFragment extends Fragment {
 
     static MyDebugger myDebugger;
-
+    @BindString(R.string.pick_date)
+    String pickDateString;
     private Intent intent;
     private String[] textViewNamesArray;
     private MyDatabaseHelper myDatabaseHelper;
@@ -238,18 +240,18 @@ public class AddNewChildFragment extends Fragment {
                 boolean isInserted = myDatabaseHelper.insertDataIntoChildTable(childObject);
 
                 if (isInserted == true) {
-                    Toast.makeText(getActivity(), "Data inserted", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Dane zapisane", Toast.LENGTH_LONG).show();
                     newActivityBackToChooseChildMainActivity();
                 }
                 else
-                    Toast.makeText(getActivity(), "Data not inserted", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
 
             } else
-                Toast.makeText(getActivity(), "INCORRECT PESEL!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "NIEPOPRAWNY PESEL!", Toast.LENGTH_LONG).show();
 
 
         } else
-            Toast.makeText(getActivity(), "COMPLETE ALL FIELDS!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();
     }
 
     private boolean checkIfAllFieldAreFilled() {
@@ -263,7 +265,7 @@ public class AddNewChildFragment extends Fragment {
                 editTextPesel.getText().toString().matches("") ||
                 spinnerSex.getSelectedItem().toString().matches("") ||
                 spinnerBlood.getSelectedItem().toString().matches("") ||
-                buttonBirthDate.getText().toString().matches("Pick date of birth") ||
+                buttonBirthDate.getText().toString().matches(pickDateString) ||
                 editTextBirthPlace.getText().toString().matches("") ||
                 editTextMother.getText().toString().matches("") ||
                 editTextFather.getText().toString().matches(""))

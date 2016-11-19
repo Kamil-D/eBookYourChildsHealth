@@ -25,6 +25,7 @@ import com.example.kamil.ebookyourchildshealth.util.util;
 
 import java.util.Calendar;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,6 +42,8 @@ public class AddMedicalVisitFragment extends Fragment {
     private Visit visitObject;
     private Bitmap croppedImage;
     private Bundle bundle;
+    @BindString(R.string.pick_date)
+    String pickDateString;
 
     @BindView(R.id.columnVisitName)
     TextView textViewName;
@@ -175,7 +178,7 @@ public class AddMedicalVisitFragment extends Fragment {
                 editTextName.getText().toString().matches("") ||
                 editTextDoctor.getText().toString().matches("") ||
                 spinnerDisease.getSelectedItem().toString().matches("") ||
-                buttonVisitDate.getText().toString().matches("Wybierz datę") ||
+                buttonVisitDate.getText().toString().matches(pickDateString) ||
                 editTextDescription.getText().toString().matches("") ||
                 editTextRecommendations.getText().toString().matches("") ||
                 editTextMedicines.getText().toString().matches(""))

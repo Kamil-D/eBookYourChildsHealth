@@ -24,6 +24,7 @@ import com.example.kamil.ebookyourchildshealth.model.Visit;
 
 import java.util.ArrayList;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,6 +33,8 @@ import butterknife.OnClick;
 public class InfoMedicalVisitFragment extends Fragment {
 
     MyDebugger myDebugger;
+    @BindString(R.string.pick_date)
+    String pickDateString;
     private MyDatabaseHelper myDatabaseHelper;
     private String[] textViewLeftColumnNamesArray;
     private int idMedicalVisit;
@@ -314,7 +317,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         if ( textViewNameValue.getText().toString().matches("") ||
                 textViewDoctorValue.getText().toString().matches("") ||
                 textViewDiseaseValue.getText().toString().matches("") ||
-                textViewDateValue.getText().toString().matches("Pick date of birth") ||
+                textViewDateValue.getText().toString().matches(pickDateString) ||
                 textViewDescriptionValue.getText().toString().matches("") ||
                 textViewRecommendationsValue.getText().toString().matches("") ||
                 textViewMedicinesValue.getText().toString().matches(""))

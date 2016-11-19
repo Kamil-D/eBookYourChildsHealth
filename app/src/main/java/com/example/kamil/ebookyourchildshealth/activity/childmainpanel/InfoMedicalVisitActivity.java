@@ -10,6 +10,7 @@ import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplem
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -17,6 +18,8 @@ public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
 
     @BindView(R.id.toolbar_medical_visit_info)
     Toolbar toolbar;
+    @BindString(R.string.visit_info)
+    String toolbarTitle;
     private MyDatabaseHelper myDatabaseHelper;
 
     @Override
@@ -33,7 +36,7 @@ public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void setToolbars() {
-        toolbar.setTitle("Informacje nt. wizyty");
+        toolbar.setTitle(toolbarTitle);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
