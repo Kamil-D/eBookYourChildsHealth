@@ -33,7 +33,7 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
         setContentView(R.layout.activity_add_new_child);
 
         ButterKnife.bind(this);
-        myDatabaseHelper = MyDatabaseHelper.getInstance(this);
+        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(this);
 
         setToolbars();
         startFragmentTransactionAddNewFragment();
@@ -61,7 +61,7 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 Log.d("crop", resultUri + " //// " + resultUri.getPath());
-//                ImageLoader imageLoader = ImageLoader.getInstance();
+//                ImageLoader imageLoader = ImageLoader.getMyDatabaseHelperInstance();
 //                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
                 try {
                     addNewChildFragment.setImageOnImageButton("file://" + resultUri.getPath(), resultUri);

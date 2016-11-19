@@ -24,7 +24,6 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
@@ -34,7 +33,6 @@ import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.example.kamil.ebookyourchildshealth.util.DocumentHelper;
 import com.example.kamil.ebookyourchildshealth.util.IntentHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -89,7 +87,7 @@ public class AddNewChildFragment extends Fragment {
 
         myDebugger = new MyDebugger();
         ButterKnife.bind(this, view);
-        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity()); // activity czy context???
+        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity()); // activity czy context???
         saveChildButton = (Button) view.findViewById(R.id.buttonSaveChild);
 
         setArrayContainsTextViewNames();
@@ -202,7 +200,7 @@ public class AddNewChildFragment extends Fragment {
 //            if (resultCode == RESULT_OK) {
 //                Uri resultUri = result.getUri();
 //                Log.d("crop", resultUri + " //// " + resultUri.getPath());
-////                ImageLoader imageLoader = ImageLoader.getInstance();
+////                ImageLoader imageLoader = ImageLoader.getMyDatabaseHelperInstance();
 ////                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
 //                setImageOnImageButton("file://" + resultUri.getPath());
 //                try {

@@ -96,7 +96,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         ButterKnife.bind(this, view);
         myDebugger = new MyDebugger();
         queryResultArrayList = new ArrayList<>();
-        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity());
+        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity());
 
         context = getActivity();
 

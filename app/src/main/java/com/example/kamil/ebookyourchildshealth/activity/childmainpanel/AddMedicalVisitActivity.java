@@ -1,9 +1,7 @@
 package com.example.kamil.ebookyourchildshealth.activity.childmainpanel;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
@@ -28,7 +26,7 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
         setContentView(R.layout.activity_add_medical_visit);
 
         ButterKnife.bind(this);
-        myDatabaseHelper = MyDatabaseHelper.getInstance(this);
+        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(this);
 
         setToolbars();
         startFragmentTransactionAddNewFragment();

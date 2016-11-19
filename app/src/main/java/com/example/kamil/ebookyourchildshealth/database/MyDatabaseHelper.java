@@ -15,7 +15,7 @@ import com.example.kamil.ebookyourchildshealth.model.Visit;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    private static MyDatabaseHelper sInstance;
+    private static MyDatabaseHelper myDatabaseHelperInstance;
 
 
     public static final String DATABASE_NAME = "child.db";
@@ -90,15 +90,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 //        SQLiteDatabase db = this.getWritableDatabase();
     }
 
-
-    public static synchronized MyDatabaseHelper getInstance(Context context) {
+    public static synchronized MyDatabaseHelper getMyDatabaseHelperInstance(Context context) {
         // Use the application context, which will ensure that you
         // don't accidentally leak an Activity's context.
         // See this article for more information: http://bit.ly/6LRzfx
-        if (sInstance == null) {
-            sInstance = new MyDatabaseHelper(context.getApplicationContext());
+        if (myDatabaseHelperInstance == null) {
+            myDatabaseHelperInstance = new MyDatabaseHelper(context.getApplicationContext());
         }
-        return sInstance;
+        return myDatabaseHelperInstance;
     }
 
     /**
@@ -133,9 +132,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      * Następnie cały zbiór takich wartości (w postaci obiektu ContentValues)
      * przekazujemy do metody insert(…). Zwraca ona id ostatnio zapisanego wiersza, lub -1 w wypadku błędu
      */
-//    public boolean insertDataIntoChildTable(String name, String surname, String pesel,
-//                                            String sex, String blood_group, String birth_date,
-//                                            String birth_place, String mother, String father) {
     public boolean insertDataIntoChildTable(Child child) {
 
         long result=0;
@@ -143,7 +139,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         database.beginTransaction();
 
-//        result = database.insert(CHILD_TABLE_NAME, null, contentValues);
         try {
 
             ContentValues contentValues = new ContentValues();
@@ -222,11 +217,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor result = database.rawQuery("select id, name, IMAGE_URI from " + CHILD_TABLE_NAME, null);
         return result;
     }
-//    public Cursor readAllChildMedicalVisitsData(int childId) {
-//        SQLiteDatabase database = this.getReadableDatabase();
-//        Cursor result = database.rawQuery("select * from " + MEDICAL_VISITS_TABLE_NAME , null);
-//        return result;
-//    }
 
     public Cursor readAllChildMedicalVisitsData(int childId) {
         SQLiteDatabase database = this.getWritableDatabase();
@@ -246,7 +236,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-//        contentValues.put(VISIT_COL_1, visitID);
         contentValues.put(VISIT_COL_2, visit.getChild_id());
         contentValues.put(VISIT_COL_3, visit.getName());
         contentValues.put(VISIT_COL_4, visit.getDoctor());

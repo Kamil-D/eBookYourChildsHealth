@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 public class MedicalVisitsFragment extends Fragment {
@@ -45,7 +43,7 @@ public class MedicalVisitsFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_medical_visits);
         ButterKnife.bind(this, view);
-        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity()); // activity czy context???
+        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity()); // activity czy context???
 
         queryResultIdArrayList = new ArrayList<>();
         queryResultNamesArrayList = new ArrayList<>();

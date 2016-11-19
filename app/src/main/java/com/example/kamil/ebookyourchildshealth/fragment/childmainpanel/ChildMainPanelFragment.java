@@ -19,8 +19,6 @@ import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
-
 
 public class ChildMainPanelFragment extends Fragment {
 
@@ -42,7 +40,7 @@ public class ChildMainPanelFragment extends Fragment {
         myDebugger = new MyDebugger();
         queryResultArrayList = new ArrayList<>();
         imageView = (ImageView) getActivity().findViewById(R.id.toolbarImageChildPanel);
-        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity());
+        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity());
 
         // najpierw odczytujemy ImageButtonTag, czyli imie dziecka
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka

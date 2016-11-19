@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.addnewchild.AddNewChildActivity;
-import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.ChildMainPanelActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -53,7 +52,7 @@ public class ChooseChildFragment extends Fragment {
         queryResultIdArrayList = new ArrayList<>();
         queryResultUriImagesArrayList = new ArrayList<>();
         myDebugger = new MyDebugger();
-        myDatabaseHelper = MyDatabaseHelper.getInstance(getActivity());
+        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity());
 
         getChildNamesAndImagesFromDatabase();
         uriToDrawableArray();
