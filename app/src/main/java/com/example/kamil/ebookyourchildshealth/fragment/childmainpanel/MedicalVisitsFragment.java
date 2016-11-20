@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddMedicalVisitActivity;
+import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.InfoMedicalVisitActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.util.util;
 
@@ -80,6 +81,10 @@ public class MedicalVisitsFragment extends Fragment {
             getVisitDataFromDatabase();
             createAndSetContentAdapter();
         }
+    }
+
+    public void newActivityGoToInfoMedicalVisitActivity(Intent intent) {
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     private void getBundleFromIntent() {

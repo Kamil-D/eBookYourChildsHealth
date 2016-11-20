@@ -17,7 +17,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private static MyDatabaseHelper myDatabaseHelperInstance;
 
-
     public static final String DATABASE_NAME = "child.db";
     public static final String CHILD_TABLE_NAME = "child";
     public static final String MEDICAL_VISITS_TABLE_NAME = "medicalVisits";
@@ -77,6 +76,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     "MEDICINES TEXT" +
                     ") ";
 
+    public static final String DATABASE_SQL_QUERY_CREATE_DISEASES_TABLE =
+            "CREATE TABLE " + DISEASES_TABLE_NAME +
+                    " (" +
+                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "CHILD_ID INTEGER REFERENCES " + CHILD_TABLE_NAME + ", " +
+                    "NAME TEXT," +
+                    "DATE TEXT" +
+                    ") ";
+
+    public static final String DATABASE_SQL_QUERY_CREATE_DISEASES_NOTES_TABLE =
+            "CREATE TABLE " + DISEASES_NOTES_TABLE_NAME +
+                    " (" +
+                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "DISEASES_ID INTEGER REFERENCES " + DISEASES_TABLE_NAME + ", " +
+                    "MESSAGE TEXT" +
+                    ") ";
 
     public static final String DATABASE_SQL_QUERY_DROP_CHILD_TABLE =
             "DROP TABLE IF EXISTS " + CHILD_TABLE_NAME;
@@ -84,6 +99,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_SQL_QUERY_DROP_VISIT_TABLE =
             "DROP TABLE IF EXISTS " + MEDICAL_VISITS_TABLE_NAME;
 
+    public static final String DATABASE_SQL_QUERY_DROP_DISEASES =
+            "DROP TABLE IF EXISTS " + DISEASES_TABLE_NAME;
+
+    public static final String DATABASE_SQL_QUERY_DROP_DISEASES_NOTES =
+            "DROP TABLE IF EXISTS " + DISEASES_NOTES_TABLE_NAME;
 
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -108,6 +128,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DATABASE_SQL_QUERY_CREATE_VISIT_TABLE);
         db.execSQL(DATABASE_SQL_QUERY_CREATE_CHILD_TABLE);
+        db.execSQL(DATABASE_SQL_QUERY_CREATE_DISEASES_TABLE);
+        db.execSQL(DATABASE_SQL_QUERY_CREATE_DISEASES_NOTES_TABLE);
     }
 
     // Called when the database connection is being configured.
@@ -122,6 +144,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DATABASE_SQL_QUERY_DROP_CHILD_TABLE);
         db.execSQL(DATABASE_SQL_QUERY_DROP_VISIT_TABLE);
+        db.execSQL(DATABASE_SQL_QUERY_DROP_DISEASES);
+        db.execSQL(DATABASE_SQL_QUERY_DROP_DISEASES_NOTES);
         onCreate(db);
     }
 

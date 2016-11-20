@@ -46,41 +46,75 @@ import static android.app.Activity.RESULT_OK;
 public class AddNewChildFragment extends Fragment {
 
     static MyDebugger myDebugger;
-    @BindString(R.string.pick_date)
-    String pickDateString;
     private Intent intent;
     private String[] textViewNamesArray;
     private MyDatabaseHelper myDatabaseHelper;
     private Button saveChildButton;
     private Bitmap croppedImage;
     private Uri uriChildPhoto;
-
     private int day, month, year;
     private Calendar calendar;
-
     private Child childObject;
 
-    @BindView(R.id.imageButtonAddPhoto)
-    public ImageButton imageButton;
-    private TextView textViewName;
-    private TextView textViewSurname;
-    private TextView textViewPesel;
-    private TextView textViewSex;
-    private TextView textViewBlood;
-    private TextView textViewBirthDate;
-    private TextView textViewBirthPlace;
-    private TextView textViewMother;
-    private TextView textViewFather;
+    @BindString(R.string.pick_date)
+    String pickDateString;
 
-    private EditText editTextName;
-    private EditText editTextSurname;
-    private EditText editTextPesel;
-    private Spinner spinnerSex;
-    private Spinner spinnerBlood;
-    private Button buttonBirthDate;
-    private EditText editTextBirthPlace;
-    private EditText editTextMother;
-    private EditText editTextFather;
+    @BindView(R.id.imageButtonAddPhoto)
+    ImageButton imageButton;
+
+    @BindView(R.id.columnName1)
+    TextView textViewName;
+
+    @BindView(R.id.columnSurname)
+    TextView textViewSurname;
+
+    @BindView(R.id.columnPesel)
+    TextView textViewPesel;
+
+    @BindView(R.id.columnSex)
+    TextView textViewSex;
+
+    @BindView(R.id.columnBloodGroup)
+    TextView textViewBlood;
+
+    @BindView(R.id.columnBirthDate)
+    TextView textViewBirthDate;
+
+    @BindView(R.id.columnBirthPlace)
+    TextView textViewBirthPlace;
+
+    @BindView(R.id.columnMother)
+    TextView textViewMother;
+
+    @BindView(R.id.columnFather)
+    TextView textViewFather;
+
+    @BindView(R.id.columnNameValue)
+    EditText editTextName;
+
+    @BindView(R.id.columnSurnameValue)
+    EditText editTextSurname;
+
+    @BindView(R.id.columnPeselValue)
+    EditText editTextPesel;
+
+    @BindView(R.id.columnSexValueSpinner)
+    Spinner spinnerSex;
+
+    @BindView(R.id.columnBloodGroupValueSpinner)
+    Spinner spinnerBlood;
+
+    @BindView(R.id.buttonDatePicker)
+    Button buttonBirthDate;
+
+    @BindView(R.id.columnBirthPlaceValue)
+    EditText editTextBirthPlace;
+
+    @BindView(R.id.columnMotherValue)
+    EditText editTextMother;
+
+    @BindView(R.id.columnFatherValue)
+    EditText editTextFather;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,8 +127,7 @@ public class AddNewChildFragment extends Fragment {
         saveChildButton = (Button) view.findViewById(R.id.buttonSaveChild);
 
         setArrayContainsTextViewNames();
-        createTextView(view);
-        createEditText(view);
+        createTextView();
         createAndSetSpinners(view);
         return view;
     }
@@ -112,38 +145,16 @@ public class AddNewChildFragment extends Fragment {
         textViewNamesArray = resources.getStringArray(R.array.child_table);
     }
 
-    private void createTextView(View view) {
-        textViewName = (TextView) view.findViewById(R.id.columnName1);
-        textViewSurname = (TextView) view.findViewById(R.id.columnSurname);
-        textViewPesel = (TextView) view.findViewById(R.id.columnPesel);
-        textViewSex = (TextView) view.findViewById(R.id.columnSex);
-        textViewBlood = (TextView) view.findViewById(R.id.columnBloodGroup);
-        textViewBirthDate = (TextView) view.findViewById(R.id.columnBirthDate);
-        textViewBirthPlace = (TextView) view.findViewById(R.id.columnBirthPlace);
-        textViewMother = (TextView) view.findViewById(R.id.columnMother);
-        textViewFather = (TextView) view.findViewById(R.id.columnFather);
-
-        textViewName.setText(textViewNamesArray[0].toString());
-        textViewSurname.setText(textViewNamesArray[1].toString());
-        textViewPesel.setText(textViewNamesArray[2].toString());
-        textViewSex.setText(textViewNamesArray[3].toString());
-        textViewBlood.setText(textViewNamesArray[4].toString());
-        textViewBirthDate.setText(textViewNamesArray[5].toString());
-        textViewBirthPlace.setText(textViewNamesArray[6].toString());
-        textViewMother.setText(textViewNamesArray[7].toString());
-        textViewFather.setText(textViewNamesArray[8].toString());
-    }
-
-    private void createEditText(View view) {
-        editTextName = (EditText) view.findViewById(R.id.columnNameValue);
-        editTextSurname = (EditText) view.findViewById(R.id.columnSurnameValue);
-        editTextPesel = (EditText) view.findViewById(R.id.columnPeselValue);
-        spinnerSex = (Spinner) view.findViewById(R.id.columnSexValueSpinner);
-        spinnerBlood = (Spinner) view.findViewById(R.id.columnBloodGroupValueSpinner);
-        buttonBirthDate = (Button) view.findViewById(R.id.buttonDatePicker);
-        editTextBirthPlace = (EditText) view.findViewById(R.id.columnBirthPlaceValue);
-        editTextMother = (EditText) view.findViewById(R.id.columnMotherValue);
-        editTextFather = (EditText) view.findViewById(R.id.columnFatherValue);
+    private void createTextView() {
+        textViewName.setText(textViewNamesArray[0]);
+        textViewSurname.setText(textViewNamesArray[1]);
+        textViewPesel.setText(textViewNamesArray[2]);
+        textViewSex.setText(textViewNamesArray[3]);
+        textViewBlood.setText(textViewNamesArray[4]);
+        textViewBirthDate.setText(textViewNamesArray[5]);
+        textViewBirthPlace.setText(textViewNamesArray[6]);
+        textViewMother.setText(textViewNamesArray[7]);
+        textViewFather.setText(textViewNamesArray[8]);
     }
 
     private void createAndSetSpinners(View view) {
@@ -245,10 +256,8 @@ public class AddNewChildFragment extends Fragment {
                 }
                 else
                     Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
-
             } else
                 Toast.makeText(getActivity(), "NIEPOPRAWNY PESEL!", Toast.LENGTH_LONG).show();
-
 
         } else
             Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();

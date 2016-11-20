@@ -16,11 +16,13 @@ import butterknife.ButterKnife;
 
 public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
 
+    private MyDatabaseHelper myDatabaseHelper;
+
     @BindView(R.id.toolbar_add_medical_visit)
     Toolbar toolbar;
+
     @BindString(R.string.complete_all_fields)
     String toolbarTitle;
-    private MyDatabaseHelper myDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,8 @@ public class AddMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
     private void setToolbars() {
         toolbar.setTitle(toolbarTitle);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void startFragmentTransactionAddNewFragment() {

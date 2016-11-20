@@ -18,9 +18,9 @@ public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
 
     @BindView(R.id.toolbar_medical_visit_info)
     Toolbar toolbar;
+
     @BindString(R.string.visit_info)
     String toolbarTitle;
-    private MyDatabaseHelper myDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,6 @@ public class InfoMedicalVisitActivity extends MyActivityOnlyMenuImplemented {
         setContentView(R.layout.activity_medical_visit_info);
 
         ButterKnife.bind(this);
-        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(this);
 
         setToolbars();
         startFragmentTransactionAddNewFragment();

@@ -27,7 +27,6 @@ public class ChildMainPanelFragment extends Fragment {
     private String childNameFromIntent;
     private ImageView imageView;
     private RecyclerView recyclerView;
-
     MyDebugger myDebugger;
 
     @Override

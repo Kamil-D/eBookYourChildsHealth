@@ -21,6 +21,7 @@ import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
+import com.example.kamil.ebookyourchildshealth.util.util;
 
 import java.util.ArrayList;
 
@@ -33,8 +34,6 @@ import butterknife.OnClick;
 public class InfoMedicalVisitFragment extends Fragment {
 
     MyDebugger myDebugger;
-    @BindString(R.string.pick_date)
-    String pickDateString;
     private MyDatabaseHelper myDatabaseHelper;
     private String[] textViewLeftColumnNamesArray;
     private int idMedicalVisit;
@@ -44,6 +43,9 @@ public class InfoMedicalVisitFragment extends Fragment {
     private String[] queryResultArray;
     private Visit visitObject;
     private static Context context;
+
+    @BindString(R.string.pick_date)
+    String pickDateString;
 
     @BindView(R.id.columnVisitName)
     TextView textViewName;
@@ -309,6 +311,8 @@ public class InfoMedicalVisitFragment extends Fragment {
             else
                 Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
 
+            getActivity().setResult(util.RESULT_CODE, null);
+            getActivity().finish();
         } else
             Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();
     }

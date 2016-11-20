@@ -24,14 +24,18 @@ import butterknife.OnClick;
 
 public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
 
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
-    @BindView(R.id.toolbar_choose_child)
-    Toolbar toolbar;
-    @BindString(R.string.choose_or_add_child)
-    String toolbarTitle;
     private Intent intent;
     private MyDebugger myDebugger;
+
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+
+    @BindView(R.id.toolbar_choose_child)
+    Toolbar toolbar;
+
+    @BindString(R.string.choose_or_add_child)
+    String toolbarTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

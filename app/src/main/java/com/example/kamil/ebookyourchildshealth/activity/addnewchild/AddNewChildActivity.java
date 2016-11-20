@@ -22,21 +22,20 @@ import butterknife.ButterKnife;
 
 public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
 
+    AddNewChildFragment addNewChildFragment;
+
     @BindView(R.id.toolbar_add_child)
     Toolbar toolbar;
+
     @BindString(R.string.complete_all_fields)
     String toolbarTitle;
-    private MyDatabaseHelper myDatabaseHelper;
-    AddNewChildFragment addNewChildFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_child);
-
         ButterKnife.bind(this);
-        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(this);
 
         setToolbars();
         startFragmentTransactionAddNewFragment();

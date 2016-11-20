@@ -25,6 +25,7 @@ import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplemented;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.ChildMainPanelFragment;
+import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.MedicalVisitsFragment;
 
 import java.io.FileNotFoundException;
@@ -37,15 +38,20 @@ import butterknife.OnClick;
 public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    MyDebugger myDebugger;
+    private final int REQUEST_CODE = 1;
     private String childNameFromIntent;
     private int childIDFromIntent;
     private String childUriFromIntent;
     private Drawable toolbarImageView;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private Bundle bundle;
+    private Fragment fragment;
 
     @BindView(R.id.drawer_child_main_panel)
     DrawerLayout mDrawerLayout;
-
-    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @BindView(R.id.toolbarImageChildPanel)
     ImageView imageView;
@@ -56,15 +62,8 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     @BindView(R.id.toolbar_child_panel)
     Toolbar toolbar;
 
-
-
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
-    private Bundle bundle;
-    MyDebugger myDebugger;
 
 
     @Override
@@ -171,7 +170,8 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     public boolean onNavigationItemSelected(MenuItem item) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         int id = item.getItemId();
-        Fragment fragment = null;
+
+        fragment = null;
 
         if (id == R.id.navigation_item_home_page) {
             NavUtils.navigateUpFromSameTask(this);
@@ -187,15 +187,13 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
             fragmentManager = getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
-                    .replace(R.id.linearLayoutInNestedScrollViewChildPanel, fragment)
+                    .replace(R.id.linearLayoutInNestedScrollViewChildPanel, fragment, "myfragment")
                     .commit();
 
             navigationView.setCheckedItem(id);
             setToolbarName(item.getTitle().toString());
         }
-
         mDrawerLayout.closeDrawers();
-
         return true;
     }
 
@@ -218,7 +216,16 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putInt("idMedicalVisit", idMedicalVisit);
         bundle.putString("childNameFromIntent", childNameFromIntent);
         intent.putExtra("bundle", bundle);
-        startActivity(intent);
+
+        MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag("myfragment");
+        if (myFragment != null && myFragment.isVisible()) {
+            myFragment.newActivityGoToInfoMedicalVisitActivity(intent);
+        }
+
+//        MedicalVisitsFragment medicalVisitsFragment = new MedicalVisitsFragment();
+//        medicalVisitsFragment.newActivityGoToInfoMedicalVisitActivity(intent);
+//        startActivity(intent);
+//        startActivityForResult(intent, REQUEST_CODE);
     }
 
     private int getButtonVisitTag(View v) {
