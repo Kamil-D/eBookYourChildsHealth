@@ -11,16 +11,13 @@ import android.widget.ImageButton;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
-import com.example.kamil.ebookyourchildshealth.activity.addnewchild.AddNewChildActivity;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.ChildMainPanelActivity;
-import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.fragment.ChooseChildFragment;
-import com.example.kamil.ebookyourchildshealth.util.ImageLoaderHelper;
+import com.example.kamil.ebookyourchildshealth.util.ImageLoaderConfigurationHelper;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
 
@@ -43,7 +40,7 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
         setContentView(R.layout.activity_choose_child_main);
 
         ButterKnife.bind(this);
-        ImageLoaderHelper.initialize(this);
+        ImageLoaderConfigurationHelper.initialize(this);
         myDebugger = new MyDebugger();
 
         setToolbars();

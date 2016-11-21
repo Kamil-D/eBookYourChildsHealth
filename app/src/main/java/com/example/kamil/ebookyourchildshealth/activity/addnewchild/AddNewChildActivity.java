@@ -62,7 +62,6 @@ public class AddNewChildActivity extends MyActivityOnlyMenuImplemented {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-                Log.d("crop", resultUri + " //// " + resultUri.getPath());
 //                ImageLoader imageLoader = ImageLoader.getMyDatabaseHelperInstance();
 //                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
                 try {

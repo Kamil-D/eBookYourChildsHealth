@@ -33,6 +33,7 @@ import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.example.kamil.ebookyourchildshealth.util.DocumentHelper;
 import com.example.kamil.ebookyourchildshealth.util.IntentHelper;
+import com.example.kamil.ebookyourchildshealth.util.Util;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -188,15 +189,16 @@ public class AddNewChildFragment extends Fragment {
 
     @OnClick(R.id.imageButtonAddPhoto)
     public void pickPhoto() {
-        IntentHelper.chooseFileIntent(this);
+//        IntentHelper.chooseFileIntent(this);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);  // nowy intent i ustawia typ na pobranie plików
+        intent.setType("image/*");  // typ pliku
+        this.startActivityForResult(intent, Util.FILE_PICK);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("crop", "onActivityResult " + requestCode);
-        if (requestCode == IntentHelper.FILE_PICK && resultCode == RESULT_OK) {
-            Uri imageUri = data.getData();
-            Log.d("filePicker", DocumentHelper.getPath(getActivity(), data.getData()));
+        if (requestCode == Util.FILE_PICK && resultCode == RESULT_OK) {
+            Uri imageUri;
             imageUri = data.getData();
             CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)

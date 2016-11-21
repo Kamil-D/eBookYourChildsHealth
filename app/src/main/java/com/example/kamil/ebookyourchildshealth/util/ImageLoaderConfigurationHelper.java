@@ -20,7 +20,7 @@ import java.io.File;
  * Created by KamilosD on 2016-11-08.
  */
 
-public class ImageLoaderHelper {
+public class ImageLoaderConfigurationHelper {
 
     public static void initialize(Context c) {
         // UNIVERSAL IMAGE LOADER SETUP

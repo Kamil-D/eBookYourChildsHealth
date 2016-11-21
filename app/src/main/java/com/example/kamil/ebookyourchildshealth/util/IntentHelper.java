@@ -9,7 +9,7 @@ import android.os.Bundle;
  * Created by KamilosD on 2016-11-08.
  */
 public class IntentHelper {
-    public final static int FILE_PICK = 1001;
+    public final static int FILE_PICK = 11;
 
     public static void chooseFileIntent(Fragment fragment){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);  // nowy intent i ustawia typ na pobranie plików

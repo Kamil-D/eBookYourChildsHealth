@@ -14,15 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddMedicalVisitActivity;
-import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.InfoMedicalVisitActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
-import com.example.kamil.ebookyourchildshealth.util.util;
+import com.example.kamil.ebookyourchildshealth.util.Util;
 
 import java.util.ArrayList;
 
@@ -84,7 +81,7 @@ public class MedicalVisitsFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode== util.RESULT_CODE) {
+        if (resultCode== Util.RESULT_CODE) {
             getVisitDataFromDatabase();
             createAndSetContentAdapter();
         }

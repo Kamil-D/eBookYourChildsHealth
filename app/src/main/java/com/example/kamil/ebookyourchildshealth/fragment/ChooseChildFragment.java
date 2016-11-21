@@ -118,8 +118,6 @@ public class ChooseChildFragment extends Fragment {
 
         // Set numbers of List in RecyclerView.
         private int LENGTH = 0;
-        int tagOne = 0;
-        int tagTwo = 0;
 
         private String[] namesArrayCardViewItem = new String[queryResultNamesArrayList.size()];
         private Integer[] idArrayCardViewItem = new Integer[queryResultIdArrayList.size()];
@@ -141,12 +139,6 @@ public class ChooseChildFragment extends Fragment {
         }
 
         public ContentAdapter(Context context) {
-
-            Resources resources = context.getResources();
-
-            tagOne = resources.getInteger(R.integer.tagImageButtonOne);
-            tagTwo = resources.getInteger(R.integer.tagImageButtonTwo);
-
             // konwertowanie ArrayList na Array
             namesArrayCardViewItem = queryResultNamesArrayList.toArray(namesArrayCardViewItem);
             idArrayCardViewItem = queryResultIdArrayList.toArray(idArrayCardViewItem);
