@@ -1,17 +1,22 @@
 package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddMedicalVisitActivity;
@@ -33,6 +38,7 @@ public class MedicalVisitsFragment extends Fragment {
     private Intent intent;
     private int childIDFromIntent;
     private String childNameFromIntent;
+    private static Context context;
     private static ArrayList<Integer> queryResultIdArrayList;
     private static ArrayList<String> queryResultNamesArrayList;
     private static ArrayList<String> queryResultDatesArrayList;
@@ -45,6 +51,7 @@ public class MedicalVisitsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_medical_visits);
         ButterKnife.bind(this, view);
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity()); // activity czy context???
+        context = getActivity();
 
         queryResultIdArrayList = new ArrayList<>();
         queryResultNamesArrayList = new ArrayList<>();
@@ -85,6 +92,33 @@ public class MedicalVisitsFragment extends Fragment {
 
     public void newActivityGoToInfoMedicalVisitActivity(Intent intent) {
         startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    public void deleteMedicalVisit(Intent intent) {
+        Bundle bundle = intent.getBundleExtra("bundle");
+        int idMedicalVisit = bundle.getInt("idMedicalVisit");
+        showDialogToChangeValue(idMedicalVisit);
+    }
+
+    public void showDialogToChangeValue(int idMedicalVisit) {
+        final int visitID = idMedicalVisit;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
+        builder.setTitle("Czy chcesz usunąć wizytę?");
+        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
+        builder.setView(myView);
+        builder.setNegativeButton("NIE",null);
+        builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              myDatabaseHelper.deleteMedicalVisitData(visitID);
+            }
+        });
+        builder.show();
+    }
+
+    public static Context getAppContext(){
+        return context;
     }
 
     private void getBundleFromIntent() {
@@ -135,11 +169,14 @@ public class MedicalVisitsFragment extends Fragment {
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
             public Button button;
+            public ImageButton deleteButton;
 
             public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
 
                 super(inflater.inflate(R.layout.medical_visits_fragment_card_item, parent, false));
                 button = (Button) itemView.findViewById(R.id.buttonMedicalVisitsList);
+                deleteButton = (ImageButton) itemView.findViewById(R.id.buttonDeleteVisit);
+
             }
         }
 
@@ -167,7 +204,9 @@ public class MedicalVisitsFragment extends Fragment {
             tempString += visitNamesArrayButtonFromCardView[position % visitNamesArrayButtonFromCardView.length];
             tempString += "  -  " + visitDatesArrayButtonFromCardView[position % visitDatesArrayButtonFromCardView.length];
             holder.button.setText(tempString);
+            // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
             holder.button.setTag(queryResultIdArrayList.get(position));
+            holder.deleteButton.setTag(queryResultIdArrayList.get(position));
         }
 
         @Override

@@ -19,6 +19,7 @@ android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
@@ -217,6 +218,8 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putString("childNameFromIntent", childNameFromIntent);
         intent.putExtra("bundle", bundle);
 
+        myDebugger.someMethod("INFO VISIT ID: " + idMedicalVisit);
+
         MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag("myfragment");
         if (myFragment != null && myFragment.isVisible()) {
             myFragment.newActivityGoToInfoMedicalVisitActivity(intent);
@@ -228,10 +231,30 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
 //        startActivityForResult(intent, REQUEST_CODE);
     }
 
+    public void deleteMedicalVisit(View view) {
+        Intent intent = new Intent(this, InfoMedicalVisitActivity.class);
+        int idMedicalVisit = getImageButtonDeleteVisitTag(view);
+        Bundle bundle = new Bundle();
+        bundle.putInt("idMedicalVisit", idMedicalVisit);
+        intent.putExtra("bundle", bundle);
+
+        myDebugger.someMethod("DELETE VISIT ID: " + idMedicalVisit);
+
+        MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag("myfragment");
+        if (myFragment != null && myFragment.isVisible()) {
+            myFragment.deleteMedicalVisit(intent);
+        }
+    }
+
     private int getButtonVisitTag(View v) {
         Button button = (Button) v;
         int buttonTag = Integer.parseInt(button.getTag().toString());
         return buttonTag;
     }
 
+    private int getImageButtonDeleteVisitTag(View v) {
+        ImageButton button = (ImageButton) v;
+        int buttonTag = Integer.parseInt(button.getTag().toString());
+        return buttonTag;
+    }
 }

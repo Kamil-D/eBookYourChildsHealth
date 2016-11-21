@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 
@@ -273,6 +274,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = new String[] { String.valueOf(visitID) };
 
         int numberOfRowsAffected = database.update(MEDICAL_VISITS_TABLE_NAME, contentValues, selection, selectionArgs);
+
+        if (numberOfRowsAffected==1)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean deleteMedicalVisitData(int visitID) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        String selection = VISIT_COL_1 + "= ?";
+        String[] selectionArgs = new String[] { String.valueOf(visitID) };
+
+        MyDebugger myDebugger = new MyDebugger();
+        myDebugger.someMethod("ID WIZYTY DB:    " + visitID);
+
+        int numberOfRowsAffected = database.delete(MEDICAL_VISITS_TABLE_NAME, selection, selectionArgs);
 
         if (numberOfRowsAffected==1)
             return true;

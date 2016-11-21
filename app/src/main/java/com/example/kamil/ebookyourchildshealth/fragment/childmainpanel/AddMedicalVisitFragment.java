@@ -150,6 +150,8 @@ public class AddMedicalVisitFragment extends Fragment {
     public void saveChildToDatabaseButtonAction(View v) {
         visitObject = new Visit();
 
+        spinnerDisease.getSelectedItemId();
+
         if (checkIfAllFieldAreFilled()) {
             visitObject.setChild_id(childIDFromIntent);
             visitObject.setName(editTextName.getText().toString());
