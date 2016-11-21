@@ -46,15 +46,14 @@ import static android.app.Activity.RESULT_OK;
 public class AddNewChildFragment extends Fragment {
 
     static MyDebugger myDebugger;
-    private Intent intent;
     private String[] textViewNamesArray;
     private MyDatabaseHelper myDatabaseHelper;
     private Button saveChildButton;
     private Bitmap croppedImage;
-    private Uri uriChildPhoto;
-    private int day, month, year;
     private Calendar calendar;
+    private int day, month, year;
     private Child childObject;
+    private Uri uriChildPhoto;
 
     @BindString(R.string.pick_date)
     String pickDateString;
@@ -123,11 +122,11 @@ public class AddNewChildFragment extends Fragment {
 
         myDebugger = new MyDebugger();
         ButterKnife.bind(this, view);
-        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity()); // activity czy context???
+        myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity());
         saveChildButton = (Button) view.findViewById(R.id.buttonSaveChild);
 
         setArrayContainsTextViewNames();
-        createTextView();
+        setTextView();
         createAndSetSpinners(view);
         return view;
     }
@@ -145,7 +144,7 @@ public class AddNewChildFragment extends Fragment {
         textViewNamesArray = resources.getStringArray(R.array.child_table);
     }
 
-    private void createTextView() {
+    private void setTextView() {
         textViewName.setText(textViewNamesArray[0]);
         textViewSurname.setText(textViewNamesArray[1]);
         textViewPesel.setText(textViewNamesArray[2]);
@@ -158,8 +157,6 @@ public class AddNewChildFragment extends Fragment {
     }
 
     private void createAndSetSpinners(View view) {
-        spinnerSex = (Spinner) view.findViewById(R.id.columnSexValueSpinner);
-        spinnerBlood = (Spinner) view.findViewById(R.id.columnBloodGroupValueSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         /**An ArrayAdapter is an adapter backed by an array of objects.
          * It links the array to the Adapter View.
@@ -264,11 +261,11 @@ public class AddNewChildFragment extends Fragment {
     }
 
     private boolean checkIfAllFieldAreFilled() {
-        String temp = "";
+        String uriString = "";
         if (uriChildPhoto != null)
-            temp += uriChildPhoto.toString();
+            uriString += uriChildPhoto.toString();
 
-        if (temp.matches("") ||
+        if (uriString.matches("") ||
                 editTextName.getText().toString().matches("") ||
                 editTextSurname.getText().toString().matches("") ||
                 editTextPesel.getText().toString().matches("") ||
@@ -331,7 +328,7 @@ public class AddNewChildFragment extends Fragment {
     }
 
     private void newActivityBackToChooseChildMainActivity () {
-        intent = new Intent(this.getActivity(), ChooseChildMainActivity.class);
+        Intent intent = new Intent(this.getActivity(), ChooseChildMainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

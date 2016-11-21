@@ -238,16 +238,16 @@ public class InfoMedicalVisitFragment extends Fragment {
         final TextView textView = (TextView) view;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
-        builder.setTitle("Enter new data");
+        builder.setTitle("Edytuj dane:");
         View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
-        final EditText edit_dialog = (EditText) myView.findViewById(R.id.text_view_dialog);
-        edit_dialog.setText(str);
+        final EditText editTextDialog = (EditText) myView.findViewById(R.id.text_view_dialog);
+        editTextDialog.setText(str);
         builder.setView(myView);
-        builder.setNegativeButton("Cancel",null);
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Anuluj",null);
+        builder.setPositiveButton("Potwiedź", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                textView.setText(edit_dialog.getText().toString());
+                textView.setText(editTextDialog.getText().toString());
                 showOrHideButtonEditVisit();
             }
         });
