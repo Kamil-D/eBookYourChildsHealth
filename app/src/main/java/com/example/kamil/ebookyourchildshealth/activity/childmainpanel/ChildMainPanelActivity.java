@@ -238,8 +238,6 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putInt("idMedicalVisit", idMedicalVisit);
         intent.putExtra("bundle", bundle);
 
-        myDebugger.someMethod("DELETE VISIT ID: " + idMedicalVisit);
-
         MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag("myfragment");
         if (myFragment != null && myFragment.isVisible()) {
             myFragment.deleteMedicalVisit(intent);

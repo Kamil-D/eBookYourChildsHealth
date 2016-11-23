@@ -45,14 +45,11 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
 
         setToolbars();
         startFragmentTransactionAddNewFragment();
-
-
     }
 
     private void setToolbars() {
         // Set title of Detail page
         collapsingToolbar.setTitle(toolbarTitle);
-
         setSupportActionBar(toolbar);
     }
 

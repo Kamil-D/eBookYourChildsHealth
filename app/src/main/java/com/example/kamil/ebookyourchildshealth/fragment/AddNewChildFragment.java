@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +30,6 @@ import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.ChooseChildMainActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Child;
-import com.example.kamil.ebookyourchildshealth.util.DocumentHelper;
-import com.example.kamil.ebookyourchildshealth.util.IntentHelper;
 import com.example.kamil.ebookyourchildshealth.util.Util;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -192,20 +189,38 @@ public class AddNewChildFragment extends Fragment {
 //        IntentHelper.chooseFileIntent(this);
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);  // nowy intent i ustawia typ na pobranie plików
         intent.setType("image/*");  // typ pliku
-        this.startActivityForResult(intent, Util.FILE_PICK);
+        this.startActivityForResult(intent, Util.FILE_PICK_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Util.FILE_PICK && resultCode == RESULT_OK) {
+        if (requestCode == Util.FILE_PICK_CODE && resultCode == RESULT_OK) {
             Uri imageUri;
             imageUri = data.getData();
             CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(getActivity());
+                    .setGuidelines(CropImageView.Guidelines.OFF)
+                    .start(getContext(), this);
 //            new  View(getContext()).setOnLongClickListener(); //////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+//                ImageLoader imageLoader = ImageLoader.getMyDatabaseHelperInstance();
+//                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
+                try {
+                    setImageOnImageButton("file://" + resultUri.getPath(), resultUri);
+//                    croppedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
 //        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 //            CropImage.ActivityResult result = CropImage.getActivityResult(data);
 //            Log.d("crop", " CROP_IMAGE_ACTIVITY_REQUEST_CODE//// ");

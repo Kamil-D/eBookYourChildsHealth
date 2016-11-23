@@ -2,7 +2,6 @@ package com.example.kamil.ebookyourchildshealth.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.addnewchild.AddNewChildActivity;
+import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.ChildMainPanelActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -72,7 +72,7 @@ public class ChooseChildFragment extends Fragment {
             queryResultNamesArrayList.add(cursor.getString(1));
             queryResultUriImagesArrayList.add(cursor.getString(2));
         }
-        // dopiero tutaj tworzymy tablicę Drawable bo znamy już ile elementów ma tablica uri (lub id, name)
+        // dopiero tutaj tworzymy tablicę Drawable bo wiemy już ile elementów ma tablica uri (lub id, name)
         drawableArrayFromUriImagesArrayList = new Drawable[queryResultUriImagesArrayList.size()];
     }
 
@@ -103,7 +103,6 @@ public class ChooseChildFragment extends Fragment {
         startActivity(intent);
     }
 
-
     /**
      * Adapter to display recycler view.
      *
@@ -123,7 +122,7 @@ public class ChooseChildFragment extends Fragment {
         private Integer[] idArrayCardViewItem = new Integer[queryResultIdArrayList.size()];
         private String[] uriImagesArrayCard = new String[queryResultUriImagesArrayList.size()];
 
-        private final Drawable[] imagesArray;
+        private final Drawable[] imagesDrawableArray;
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -136,6 +135,12 @@ public class ChooseChildFragment extends Fragment {
                 pictureImageButton = (ImageButton) itemView.findViewById(R.id.imageButton);
                 childNameTextViewBottomImageButton = (TextView) itemView.findViewById(R.id.childName);
             }
+
+            public int getPos(View view) {
+
+                int position = view.getId();
+                return position;
+            }
         }
 
         public ContentAdapter(Context context) {
@@ -144,7 +149,7 @@ public class ChooseChildFragment extends Fragment {
             idArrayCardViewItem = queryResultIdArrayList.toArray(idArrayCardViewItem);
             uriImagesArrayCard = queryResultUriImagesArrayList.toArray(uriImagesArrayCard);
 
-            imagesArray = drawableArrayFromUriImagesArrayList;
+            imagesDrawableArray = drawableArrayFromUriImagesArrayList;
 
             LENGTH = namesArrayCardViewItem.length;
         }
@@ -162,7 +167,7 @@ public class ChooseChildFragment extends Fragment {
             ImageLoader imageLoader = ImageLoader.getInstance();
             imageLoader.displayImage(uriImagesArrayCard[position % uriImagesArrayCard.length], holder.pictureImageButton);
 
-            holder.pictureImageButton.setImageDrawable(imagesArray[position % imagesArray.length]);
+            //holder.pictureImageButton.setImageDrawable(imagesDrawableArray[position % imagesDrawableArray.length]);
             holder.childNameTextViewBottomImageButton.setText(namesArrayCardViewItem[position % namesArrayCardViewItem.length]);
             /**
              * ImageButton ma ustawiony tag o nazwie imienia dziecka, aby można było później
@@ -174,6 +179,13 @@ public class ChooseChildFragment extends Fragment {
             holder.pictureImageButton.setTag(R.integer.tagImageButtonOne, tagString);
             holder.pictureImageButton.setTag(R.integer.tagImageButtonTwo, idArrayCardViewItem[position % idArrayCardViewItem.length]);
             holder.pictureImageButton.setTag(R.integer.tagImageButtonThree, uriImagesArrayCard[position % uriImagesArrayCard.length]);
+
+//            holder.pictureImageButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    newActivity();
+//                }
+//            });
         }
 
         @Override

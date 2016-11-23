@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.kamil.ebookyourchildshealth.R;
@@ -94,21 +95,27 @@ public class MedicalVisitsFragment extends Fragment {
     public void deleteMedicalVisit(Intent intent) {
         Bundle bundle = intent.getBundleExtra("bundle");
         int idMedicalVisit = bundle.getInt("idMedicalVisit");
-        showDialogToChangeValue(idMedicalVisit);
+        showDialogToConfirmDeleteOperation(idMedicalVisit);
     }
 
-    public void showDialogToChangeValue(int idMedicalVisit) {
+    public void showDialogToConfirmDeleteOperation(int idMedicalVisit) {
         final int visitID = idMedicalVisit;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
         builder.setTitle("Czy chcesz usunąć wizytę?");
         View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
+        final EditText editTextDialog = (EditText) myView.findViewById(R.id.text_view_dialog);
+        editTextDialog.setFocusable(false);
+        editTextDialog.setClickable(false);
         builder.setView(myView);
         builder.setNegativeButton("NIE",null);
         builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-              myDatabaseHelper.deleteMedicalVisitData(visitID);
+                myDatabaseHelper.deleteMedicalVisitData(visitID);
+                // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
+                getVisitDataFromDatabase();
+                createAndSetContentAdapter();
             }
         });
         builder.show();
