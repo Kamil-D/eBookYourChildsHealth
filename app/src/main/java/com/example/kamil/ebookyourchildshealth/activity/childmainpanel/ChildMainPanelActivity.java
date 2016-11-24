@@ -99,7 +99,6 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         collapsingToolbar.setTitle(childNameFromIntent);
 
         setToolbarName(childNameFromIntent);
-        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
     }
 

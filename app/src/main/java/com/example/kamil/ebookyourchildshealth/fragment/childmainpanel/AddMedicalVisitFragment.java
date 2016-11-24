@@ -34,7 +34,7 @@ public class AddMedicalVisitFragment extends Fragment {
 
     MyDebugger myDebugger;
     private MyDatabaseHelper myDatabaseHelper;
-    private String[] textViewNamesArray;
+    private String[] textViewLeftColumnNamesArray;
     private int day, month, year;
     private Calendar calendar;
     private int childIDFromIntent;
@@ -119,17 +119,17 @@ public class AddMedicalVisitFragment extends Fragment {
 
     private void setArrayContainsTextViewNames() {
         Resources resources = getActivity().getResources();
-        textViewNamesArray = resources.getStringArray(R.array.visit_table);
+        textViewLeftColumnNamesArray = resources.getStringArray(R.array.visit_table);
     }
 
     private void setTextOnTextView() {
-        textViewName.setText(textViewNamesArray[0]);
-        textViewDoctor.setText(textViewNamesArray[1]);
-        textViewDisease.setText(textViewNamesArray[2]);
-        textViewDate.setText(textViewNamesArray[3]);
-        textViewDescription.setText(textViewNamesArray[4]);
-        textViewRecommendations.setText(textViewNamesArray[5]);
-        textViewMedicines.setText(textViewNamesArray[6]);
+        textViewName.setText(textViewLeftColumnNamesArray[0]);
+        textViewDoctor.setText(textViewLeftColumnNamesArray[1]);
+        textViewDisease.setText(textViewLeftColumnNamesArray[2]);
+        textViewDate.setText(textViewLeftColumnNamesArray[3]);
+        textViewDescription.setText(textViewLeftColumnNamesArray[4]);
+        textViewRecommendations.setText(textViewLeftColumnNamesArray[5]);
+        textViewMedicines.setText(textViewLeftColumnNamesArray[6]);
     }
 
     private void createAndSetSpinners() {

@@ -44,7 +44,7 @@ import static android.app.Activity.RESULT_OK;
 public class AddNewChildFragment extends Fragment {
 
     static MyDebugger myDebugger;
-    private String[] textViewNamesArray;
+    private String[] textViewLeftColumnNamesArray;
     private MyDatabaseHelper myDatabaseHelper;
     private Button saveChildButton;
     private Bitmap croppedImage;
@@ -139,19 +139,19 @@ public class AddNewChildFragment extends Fragment {
 
     private void setArrayContainsTextViewNames () {
         Resources resources = getActivity().getResources();
-        textViewNamesArray = resources.getStringArray(R.array.child_table);
+        textViewLeftColumnNamesArray = resources.getStringArray(R.array.child_table);
     }
 
     private void setTextView() {
-        textViewName.setText(textViewNamesArray[0]);
-        textViewSurname.setText(textViewNamesArray[1]);
-        textViewPesel.setText(textViewNamesArray[2]);
-        textViewSex.setText(textViewNamesArray[3]);
-        textViewBlood.setText(textViewNamesArray[4]);
-        textViewBirthDate.setText(textViewNamesArray[5]);
-        textViewBirthPlace.setText(textViewNamesArray[6]);
-        textViewMother.setText(textViewNamesArray[7]);
-        textViewFather.setText(textViewNamesArray[8]);
+        textViewName.setText(textViewLeftColumnNamesArray[0]);
+        textViewSurname.setText(textViewLeftColumnNamesArray[1]);
+        textViewPesel.setText(textViewLeftColumnNamesArray[2]);
+        textViewSex.setText(textViewLeftColumnNamesArray[3]);
+        textViewBlood.setText(textViewLeftColumnNamesArray[4]);
+        textViewBirthDate.setText(textViewLeftColumnNamesArray[5]);
+        textViewBirthPlace.setText(textViewLeftColumnNamesArray[6]);
+        textViewMother.setText(textViewLeftColumnNamesArray[7]);
+        textViewFather.setText(textViewLeftColumnNamesArray[8]);
     }
 
     private void createAndSetSpinners(View view) {
@@ -248,7 +248,6 @@ public class AddNewChildFragment extends Fragment {
 
         if (checkIfAllFieldAreFilled()) {
 //        if (true) {
-
             if (checkIfPeselCorrect()) {
 //                if (true) {
                 childObject.setName(editTextName.getText().toString());

@@ -26,38 +26,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginEnd="@dimen/expanded_title_margin_end"
                 app:expandedTitleMarginStart="@dimen/expanded_title_margin_start"
                 android:minHeight="@dimen/collapsing_toolbar_min_height"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:subtitleTextColor="@color/white" >
 
 
                 <ImageView
                     android:id="@+id/toolbarImageChildPanel"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/child_main_panel_image_view_height"
+                    android:layout_height="match_parent"
                     android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
                     app:layout_collapseMode="parallax" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_child_panel"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolbar_height"
+                    android:fitsSystemWindows="true"
+                    android:background="?colorPrimary"
+                    app:subtitleTextColor="@color/white"
+                    android:titleTextColor="@color/primaryText"
+                    android:textSize="50sp"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_child_panel"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_height"
-                android:minHeight="@dimen/toolbar_height"
-                android:background="?colorPrimary"
-                android:layout_marginTop="-47dp"
-                android:layout_gravity="center"
-                android:paddingBottom="10dp"
-                android:textSize="50sp"
-                android:titleTextColor="@color/primaryText"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                android:fitsSystemWindows="true"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:subtitleTextColor="@color/white" />
+            <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/toolbar_child_panel"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/toolbar_height"-->
+                <!--android:minHeight="@dimen/toolbar_height"-->
+                <!--android:background="?colorPrimary"-->
+                <!--android:layout_marginTop="-47dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:paddingBottom="10dp"-->
+                <!--android:textSize="50sp"-->
+                <!--android:titleTextColor="@color/primaryText"-->
+                <!--app:layout_collapseMode="pin"-->
+                <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+                <!--android:fitsSystemWindows="true"-->
+                <!--app:layout_scrollFlags="scroll|enterAlways"-->
+                <!--app:subtitleTextColor="@color/white" />-->
 
 
         </android.support.design.widget.AppBarLayout>

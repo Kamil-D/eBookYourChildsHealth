@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddMedicalVisitActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
+import com.example.kamil.ebookyourchildshealth.model.VisitListItem;
 import com.example.kamil.ebookyourchildshealth.util.Util;
 
 import java.util.ArrayList;
@@ -37,9 +38,7 @@ public class MedicalVisitsFragment extends Fragment {
     private int childIDFromIntent;
     private String childNameFromIntent;
     private static Context context;
-    private static ArrayList<Integer> queryResultIdArrayList;
-    private static ArrayList<String> queryResultNamesArrayList;
-    private static ArrayList<String> queryResultDatesArrayList;
+    private static ArrayList<VisitListItem> visitListItemObjectsArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,10 +49,6 @@ public class MedicalVisitsFragment extends Fragment {
         ButterKnife.bind(this, view);
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity()); // activity czy context???
         context = getActivity();
-
-        queryResultIdArrayList = new ArrayList<>();
-        queryResultNamesArrayList = new ArrayList<>();
-        queryResultDatesArrayList = new ArrayList<>();
 
         getBundleFromIntent();
         getVisitDataFromDatabase();
@@ -132,9 +127,8 @@ public class MedicalVisitsFragment extends Fragment {
     }
 
     public void getVisitDataFromDatabase() {
-        queryResultIdArrayList = new ArrayList<>();
-        queryResultNamesArrayList = new ArrayList<>();
-        queryResultDatesArrayList = new ArrayList<>();
+        visitListItemObjectsArrayList = new ArrayList<>();
+        VisitListItem visitListItem;
 
         Cursor cursor = myDatabaseHelper.readAllChildMedicalVisitsData(childIDFromIntent);
 
@@ -143,16 +137,10 @@ public class MedicalVisitsFragment extends Fragment {
         }
 
         while(cursor.moveToNext()) {
-            queryResultIdArrayList.add(cursor.getInt(0));
-            queryResultNamesArrayList.add(cursor.getString(2));
-            queryResultDatesArrayList.add(cursor.getString(5));
+            visitListItem = new VisitListItem(cursor.getInt(0), cursor.getString(2), cursor.getString(5));
+            visitListItemObjectsArrayList.add(visitListItem);
         }
-//        StringBuffer stringBuffer = new StringBuffer();
-//        while(cursor.moveToNext()) {
-//            stringBuffer.append("ID :" + cursor.getString(0) + "\n");
-//            queryResultIdArrayList.add(cursor.getInt(0));
-//            queryResultNamesArrayList.add(cursor.getString(1));
-//        }
+
     }
 
     private void createAndSetContentAdapter() {
@@ -167,8 +155,7 @@ public class MedicalVisitsFragment extends Fragment {
         // Set numbers of List in RecyclerView.
         private int LENGTH = 0;
 
-        private String[] visitNamesArrayButtonFromCardView = new String[queryResultNamesArrayList.size()];
-        private String[] visitDatesArrayButtonFromCardView = new String[queryResultDatesArrayList.size()];
+        private ArrayList<VisitListItem> visitListItemObjectsCardViewItem = new ArrayList<>();
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -187,10 +174,9 @@ public class MedicalVisitsFragment extends Fragment {
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
 
-            visitNamesArrayButtonFromCardView = queryResultNamesArrayList.toArray(visitNamesArrayButtonFromCardView);
-            visitDatesArrayButtonFromCardView = queryResultDatesArrayList.toArray(visitDatesArrayButtonFromCardView);
+            visitListItemObjectsCardViewItem = visitListItemObjectsArrayList;
 
-            this.LENGTH = visitNamesArrayButtonFromCardView.length;
+            this.LENGTH = visitListItemObjectsCardViewItem.size();
         }
 
         @Override
@@ -205,12 +191,13 @@ public class MedicalVisitsFragment extends Fragment {
         @Override
         public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
             String tempString = "";
-            tempString += visitNamesArrayButtonFromCardView[position % visitNamesArrayButtonFromCardView.length];
-            tempString += "  -  " + visitDatesArrayButtonFromCardView[position % visitDatesArrayButtonFromCardView.length];
+            tempString += visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getName()
+                    + "  -  " + visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getDate();
             holder.button.setText(tempString);
             // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
-            holder.button.setTag(queryResultIdArrayList.get(position));
-            holder.deleteButton.setTag(queryResultIdArrayList.get(position));
+            int id = visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getId();
+            holder.button.setTag(id);
+            holder.deleteButton.setTag(id);
         }
 
         @Override

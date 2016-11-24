@@ -38,10 +38,8 @@ public class InfoMedicalVisitFragment extends Fragment {
     private String[] textViewLeftColumnNamesArray;
     private int idMedicalVisit;
     private int childIDFromIntent;
-    private ArrayList<String> queryResultArrayList;
-    private ArrayList<String> editedDataToUpdateArrayList;
-    private String[] queryResultArray;
     private Visit visitObject;
+    private Visit visitUpdatedObject;
     private static Context context;
 
     @BindString(R.string.pick_date)
@@ -100,19 +98,17 @@ public class InfoMedicalVisitFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_info_medical_visit, container, false);
         ButterKnife.bind(this, view);
         myDebugger = new MyDebugger();
-        queryResultArrayList = new ArrayList<>();
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity());
-
         context = getActivity();
+        buttonUpdateVisit.setVisibility(View.GONE);
 
         // najpierw odczytujemy ImageButtonTag, czyli imie dziecka
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
         getBundleFromIntent();
         getChildDataFromDatabase();
         setTextOnTextViewLeftColumn();
-        setTextFromDBOnTextViewRightColumn();
+        setDataFromDBOnTextViewRightColumn();
         createListeners();
-        showOrHideButtonEditVisit();
 
         return view;
     }
@@ -144,22 +140,22 @@ public class InfoMedicalVisitFragment extends Fragment {
 
     public void getChildDataFromDatabase() {
         Cursor cursor = myDatabaseHelper.readMedicalVisitData(idMedicalVisit);
+        visitObject = new Visit();
+
         if(cursor.getCount() == 0) {
             return;
         }
         while(cursor.moveToNext()) {
-            queryResultArrayList.add(cursor.getString(2));
-            queryResultArrayList.add(cursor.getString(3));
-            queryResultArrayList.add(cursor.getString(4));
-            queryResultArrayList.add(cursor.getString(5));
-            queryResultArrayList.add(cursor.getString(6));
-            queryResultArrayList.add(cursor.getString(7));
-            queryResultArrayList.add(cursor.getString(8));
+            visitObject.setName(cursor.getString(2));
+            visitObject.setDoctor(cursor.getString(3));
+            visitObject.setDisease(cursor.getString(4));
+            visitObject.setDate(cursor.getString(5));
+            visitObject.setDescription(cursor.getString(6));
+            visitObject.setRecommendations(cursor.getString(7));
+            visitObject.setMedicines(cursor.getString(8));
 
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_medical_visit_info);
-            toolbar.setTitle(queryResultArrayList.get(3));
-
-            queryResultArray = new String[queryResultArrayList.size()];
+            toolbar.setTitle(visitObject.getDate());
         }
     }
 
@@ -176,17 +172,14 @@ public class InfoMedicalVisitFragment extends Fragment {
         textViewMedicines.setText(textViewLeftColumnNamesArray[6]);
     }
 
-    private void setTextFromDBOnTextViewRightColumn() {
-        // wynik z bazy danych mamy w ArrayList dlatego zamieniamy na Array
-        queryResultArray = queryResultArrayList.toArray(queryResultArray);
-
-        textViewNameValue.setText(queryResultArray[0]);
-        textViewDoctorValue.setText(queryResultArray[1]);
-        textViewDiseaseValue.setText(queryResultArray[2]);
-        textViewDateValue.setText(queryResultArray[3]);
-        textViewDescriptionValue.setText(queryResultArray[4]);
-        textViewRecommendationsValue.setText(queryResultArray[5]);
-        textViewMedicinesValue.setText(queryResultArray[6]);
+    private void setDataFromDBOnTextViewRightColumn() {
+        textViewNameValue.setText(visitObject.getName());
+        textViewDoctorValue.setText(visitObject.getDoctor());
+        textViewDiseaseValue.setText(visitObject.getDisease());
+        textViewDateValue.setText(visitObject.getDate());
+        textViewDescriptionValue.setText(visitObject.getDescription());
+        textViewRecommendationsValue.setText(visitObject.getRecommendations());
+        textViewMedicinesValue.setText(visitObject.getMedicines());
     }
 
     private void createListeners() {
@@ -260,34 +253,45 @@ public class InfoMedicalVisitFragment extends Fragment {
     }
 
     private void showOrHideButtonEditVisit() {
-        if (!checkIfDataEdited())
-            buttonUpdateVisit.setVisibility(View.GONE);
-        else
+        if (checkIfDataEdited())
             buttonUpdateVisit.setVisibility(View.VISIBLE);
+        else
+            buttonUpdateVisit.setVisibility(View.GONE);
     }
 
     private boolean checkIfDataEdited() {
         getEditedDataFromTextViews();
 
         boolean ifEdited = false;
-        for (int i=0 ; i<editedDataToUpdateArrayList.size() ; i++) {
-            if (!editedDataToUpdateArrayList.get(i).equals(queryResultArrayList.get(i)))
-                ifEdited = true;
-        }
+
+        if (visitUpdatedObject.getName().equals(visitObject.getName()))
+            ifEdited = true;
+        else if (visitUpdatedObject.getDoctor().equals(visitObject.getDoctor()))
+            ifEdited = true;
+        else if (visitUpdatedObject.getDisease().equals(visitObject.getDisease()))
+            ifEdited = true;
+        else if  (visitUpdatedObject.getDate().equals(visitObject.getDate()))
+            ifEdited = true;
+        else if (visitUpdatedObject.getDescription().equals(visitObject.getDescription()))
+            ifEdited = true;
+        else if (visitUpdatedObject.getRecommendations().equals(visitObject.getRecommendations()))
+            ifEdited = true;
+        else if (visitUpdatedObject.getMedicines().equals(visitObject.getMedicines()))
+            ifEdited = true;
 
         return ifEdited;
     }
 
     private void getEditedDataFromTextViews() {
-        editedDataToUpdateArrayList = new ArrayList<>();
+        visitUpdatedObject = new Visit();
 
-        editedDataToUpdateArrayList.add(textViewNameValue.getText().toString());
-        editedDataToUpdateArrayList.add(textViewDoctorValue.getText().toString());
-        editedDataToUpdateArrayList.add(textViewDiseaseValue.getText().toString());
-        editedDataToUpdateArrayList.add(textViewDateValue.getText().toString());
-        editedDataToUpdateArrayList.add(textViewDescriptionValue.getText().toString());
-        editedDataToUpdateArrayList.add(textViewRecommendationsValue.getText().toString());
-        editedDataToUpdateArrayList.add(textViewMedicinesValue.getText().toString());
+        visitUpdatedObject.setName(textViewNameValue.getText().toString());
+        visitUpdatedObject.setDoctor(textViewDoctorValue.getText().toString());
+        visitUpdatedObject.setDisease(textViewDiseaseValue.getText().toString());
+        visitUpdatedObject.setDate(textViewDateValue.getText().toString());
+        visitUpdatedObject.setDescription(textViewDescriptionValue.getText().toString());
+        visitUpdatedObject.setRecommendations(textViewRecommendationsValue.getText().toString());
+        visitUpdatedObject.setMedicines(textViewMedicinesValue.getText().toString());
     }
 
     @OnClick(R.id.buttonUpdateVisit)
