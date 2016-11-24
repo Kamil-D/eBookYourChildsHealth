@@ -124,7 +124,7 @@ public class AddNewChildFragment extends Fragment {
         saveChildButton = (Button) view.findViewById(R.id.buttonSaveChild);
 
         setArrayContainsTextViewNames();
-        setTextView();
+        setTextOnLeftColumnTextView();
         createAndSetSpinners(view);
         return view;
     }
@@ -142,7 +142,7 @@ public class AddNewChildFragment extends Fragment {
         textViewLeftColumnNamesArray = resources.getStringArray(R.array.child_table);
     }
 
-    private void setTextView() {
+    private void setTextOnLeftColumnTextView() {
         textViewName.setText(textViewLeftColumnNamesArray[0]);
         textViewSurname.setText(textViewLeftColumnNamesArray[1]);
         textViewPesel.setText(textViewLeftColumnNamesArray[2]);

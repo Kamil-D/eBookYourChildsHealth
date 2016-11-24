@@ -98,7 +98,7 @@ public class AddMedicalVisitFragment extends Fragment {
 
         getBundleFromIntent();
         setArrayContainsTextViewNames();
-        setTextOnTextView();
+        setTextOnLeftColumnTextView();
         createAndSetSpinners();
 
         return view;
@@ -122,7 +122,7 @@ public class AddMedicalVisitFragment extends Fragment {
         textViewLeftColumnNamesArray = resources.getStringArray(R.array.visit_table);
     }
 
-    private void setTextOnTextView() {
+    private void setTextOnLeftColumnTextView() {
         textViewName.setText(textViewLeftColumnNamesArray[0]);
         textViewDoctor.setText(textViewLeftColumnNamesArray[1]);
         textViewDisease.setText(textViewLeftColumnNamesArray[2]);

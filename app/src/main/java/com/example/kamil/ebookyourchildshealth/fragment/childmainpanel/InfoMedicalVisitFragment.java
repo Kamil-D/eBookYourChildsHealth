@@ -23,8 +23,6 @@ import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.Util;
 
-import java.util.ArrayList;
-
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,8 +104,8 @@ public class InfoMedicalVisitFragment extends Fragment {
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
         getBundleFromIntent();
         getChildDataFromDatabase();
-        setTextOnTextViewLeftColumn();
-        setDataFromDBOnTextViewRightColumn();
+        setTextOnLeftColumnTextView();
+        setDataFromDBOnLeftColumnTextView();
         createListeners();
 
         return view;
@@ -159,7 +157,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         }
     }
 
-    private void setTextOnTextViewLeftColumn() {
+    private void setTextOnLeftColumnTextView() {
         Resources resources = getContext().getResources();
         textViewLeftColumnNamesArray = resources.getStringArray(R.array.visit_table);
 
@@ -172,7 +170,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         textViewMedicines.setText(textViewLeftColumnNamesArray[6]);
     }
 
-    private void setDataFromDBOnTextViewRightColumn() {
+    private void setDataFromDBOnLeftColumnTextView() {
         textViewNameValue.setText(visitObject.getName());
         textViewDoctorValue.setText(visitObject.getDoctor());
         textViewDiseaseValue.setText(visitObject.getDisease());
