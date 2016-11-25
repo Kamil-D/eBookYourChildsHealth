@@ -2,6 +2,7 @@ package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 
 import android.app.DatePickerDialog;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.Util;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.BindString;
@@ -39,7 +41,7 @@ public class AddMedicalVisitFragment extends Fragment {
     private Calendar calendar;
     private int childIDFromIntent;
     private Visit visitObject;
-    private Bitmap croppedImage;
+    private static ArrayList<String> diseasesArrayList;
     private Bundle bundle;
     @BindString(R.string.pick_date)
     String pickDateString;
@@ -95,6 +97,7 @@ public class AddMedicalVisitFragment extends Fragment {
         myDebugger = new MyDebugger();
         ButterKnife.bind(this, view);
         myDatabaseHelper = new MyDatabaseHelper(getActivity());
+        diseasesArrayList = new ArrayList<>();
 
         getBundleFromIntent();
         setArrayContainsTextViewNames();
@@ -133,29 +136,35 @@ public class AddMedicalVisitFragment extends Fragment {
     }
 
     private void createAndSetSpinners() {
-        ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(getActivity(),
-                R.array.spinner_diseases_array, R.layout.spinner_item);
-        // z bazy danych
-        // http://www.androidhive.info/2012/06/android-populating-spinner-data-from-sqlite-database/
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        getVisitDataFromDatabase();
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_item, diseasesArrayList);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDisease.setAdapter(adapterSpinner);
 
 //        id aktualnie zaznaczonego obiektu
-//        spinnerDisease.getSelectedItemId();
+//        spinnerDisease.getSelectedItemPosition();
+    }
+
+    private void getVisitDataFromDatabase() {
+        Cursor cursor = myDatabaseHelper.readAllChildDiseasesData(childIDFromIntent);
+
+        while(cursor.moveToNext()) {
+            diseasesArrayList.add( cursor.getString(2) + " - " + cursor.getString(3) );
+        }
     }
 
     @OnClick(R.id.buttonSaveVisit)
     public void saveVisitToDatabaseButtonAction(View v) {
         visitObject = new Visit();
 
-        spinnerDisease.getSelectedItemId();
-
         if (checkIfAllFieldAreFilled()) {
             visitObject.setChildId(childIDFromIntent);
             visitObject.setName(editTextName.getText().toString());
             visitObject.setDoctor(editTextDoctor.getText().toString());
-            visitObject.setDisease(spinnerDisease.getSelectedItem().toString());
+            visitObject.setDiseaseId(spinnerDisease.getSelectedItemPosition()+1);
             visitObject.setDate(buttonVisitDate.getText().toString());
             visitObject.setDescription(editTextDescription.getText().toString());
             visitObject.setRecommendations(editTextRecommendations.getText().toString());
@@ -178,7 +187,6 @@ public class AddMedicalVisitFragment extends Fragment {
         if (editTextName.getText().toString().matches("") ||
                 editTextName.getText().toString().matches("") ||
                 editTextDoctor.getText().toString().matches("") ||
-                spinnerDisease.getSelectedItem().toString().matches("") ||
                 buttonVisitDate.getText().toString().matches(pickDateString) ||
                 editTextDescription.getText().toString().matches("") ||
                 editTextRecommendations.getText().toString().matches("") ||

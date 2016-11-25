@@ -41,7 +41,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String VISIT_COL_2 = "CHILD_ID";
     public static final String VISIT_COL_3 = "NAME";
     public static final String VISIT_COL_4 = "DOCTOR";
-    public static final String VISIT_COL_5 = "DISEASE";
+    public static final String VISIT_COL_5 = "DISEASE_ID";
     public static final String VISIT_COL_6 = "DATE";
     public static final String VISIT_COL_7 = "DESCRIPTION";
     public static final String VISIT_COL_8 = "RECOMMENDATIONS";
@@ -76,7 +76,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     "CHILD_ID INTEGER REFERENCES " + CHILD_TABLE_NAME + ", " +
                     "NAME TEXT," +
                     "DOCTOR TEXT," +
-                    "DISEASE TEXT," +
+                    "DISEASE_ID INTEGER REFERENCES " + DISEASES_TABLE_NAME + ", " +
                     "DATE TEXT," +
                     "DESCRIPTION TEXT," +
                     "RECOMMENDATIONS TEXT," +
@@ -210,7 +210,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(VISIT_COL_2, visit.getChildId());
             contentValues.put(VISIT_COL_3, visit.getName());
             contentValues.put(VISIT_COL_4, visit.getDoctor());
-            contentValues.put(VISIT_COL_5, visit.getDisease());
+            contentValues.put(VISIT_COL_5, visit.getDiseaseId());
             contentValues.put(VISIT_COL_6, visit.getDate());
             contentValues.put(VISIT_COL_7, visit.getDescription());
             contentValues.put(VISIT_COL_8, visit.getRecommendations());
@@ -310,7 +310,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(VISIT_COL_2, visit.getChildId());
         contentValues.put(VISIT_COL_3, visit.getName());
         contentValues.put(VISIT_COL_4, visit.getDoctor());
-        contentValues.put(VISIT_COL_5, visit.getDisease());
+        contentValues.put(VISIT_COL_5, visit.getDiseaseId());
         contentValues.put(VISIT_COL_6, visit.getDate());
         contentValues.put(VISIT_COL_7, visit.getDescription());
         contentValues.put(VISIT_COL_8, visit.getRecommendations());

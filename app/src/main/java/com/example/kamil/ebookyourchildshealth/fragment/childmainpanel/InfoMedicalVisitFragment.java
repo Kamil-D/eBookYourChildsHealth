@@ -146,7 +146,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         while(cursor.moveToNext()) {
             visitObject.setName(cursor.getString(2));
             visitObject.setDoctor(cursor.getString(3));
-            visitObject.setDisease(cursor.getString(4));
+            visitObject.setDiseaseId(cursor.getInt(4));
             visitObject.setDate(cursor.getString(5));
             visitObject.setDescription(cursor.getString(6));
             visitObject.setRecommendations(cursor.getString(7));
@@ -173,11 +173,25 @@ public class InfoMedicalVisitFragment extends Fragment {
     private void setDataFromDBOnLeftColumnTextView() {
         textViewNameValue.setText(visitObject.getName());
         textViewDoctorValue.setText(visitObject.getDoctor());
-        textViewDiseaseValue.setText(visitObject.getDisease());
+        textViewDiseaseValue.setText(getDiseaseDataFromDatabase());
         textViewDateValue.setText(visitObject.getDate());
         textViewDescriptionValue.setText(visitObject.getDescription());
         textViewRecommendationsValue.setText(visitObject.getRecommendations());
         textViewMedicinesValue.setText(visitObject.getMedicines());
+    }
+
+    private String getDiseaseDataFromDatabase() {
+        Cursor cursor = myDatabaseHelper.readDiseaseData(visitObject.getDiseaseId());
+        String nameDateDisease = "";
+
+        if(cursor.getCount() == 0) {
+            nameDateDisease = "Nie przypisano choroby";
+            return nameDateDisease;
+        }
+        while(cursor.moveToNext()) {
+            nameDateDisease = cursor.getString(2) + " - " + cursor.getString(3);
+        }
+        return nameDateDisease;
     }
 
     private void createListeners() {
@@ -265,9 +279,7 @@ public class InfoMedicalVisitFragment extends Fragment {
             ifEdited = true;
         else if (!visitUpdatedObject.getDoctor().equals(visitObject.getDoctor()))
             ifEdited = true;
-        else if (!visitUpdatedObject.getDisease().equals(visitObject.getDisease()))
-            ifEdited = true;
-        else if  (!visitUpdatedObject.getDate().equals(visitObject.getDate()))
+        else if (!visitUpdatedObject.getDate().equals(visitObject.getDate()))
             ifEdited = true;
         else if (!visitUpdatedObject.getDescription().equals(visitObject.getDescription()))
             ifEdited = true;
@@ -284,7 +296,6 @@ public class InfoMedicalVisitFragment extends Fragment {
 
         visitUpdatedObject.setName(textViewNameValue.getText().toString());
         visitUpdatedObject.setDoctor(textViewDoctorValue.getText().toString());
-        visitUpdatedObject.setDisease(textViewDiseaseValue.getText().toString());
         visitUpdatedObject.setDate(textViewDateValue.getText().toString());
         visitUpdatedObject.setDescription(textViewDescriptionValue.getText().toString());
         visitUpdatedObject.setRecommendations(textViewRecommendationsValue.getText().toString());
@@ -299,7 +310,6 @@ public class InfoMedicalVisitFragment extends Fragment {
             visitObject.setChildId(childIDFromIntent);
             visitObject.setName(textViewNameValue.getText().toString());
             visitObject.setDoctor(textViewDoctorValue.getText().toString());
-            visitObject.setDisease(textViewDiseaseValue.getText().toString());
             visitObject.setDate(textViewDateValue.getText().toString());
             visitObject.setDescription(textViewDescriptionValue.getText().toString());
             visitObject.setRecommendations(textViewRecommendationsValue.getText().toString());

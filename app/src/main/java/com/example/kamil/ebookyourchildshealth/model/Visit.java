@@ -9,7 +9,7 @@ public class Visit {
     private int childId;
     private String name;
     private String doctor;
-    private String disease;
+    private int diseaseId;
     private String date;
     private String description;
     private String recommendations;
@@ -40,12 +40,12 @@ public class Visit {
         this.doctor = doctor;
     }
 
-    public String getDisease() {
-        return disease;
+    public int getDiseaseId() {
+        return diseaseId;
     }
 
-    public void setDisease(String disease) {
-        this.disease = disease;
+    public void setDiseaseId(int diseaseId) {
+        this.diseaseId = diseaseId;
     }
 
     public String getDate() {
