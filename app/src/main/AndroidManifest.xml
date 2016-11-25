@@ -27,7 +27,7 @@
             android:name=".activity.addnewchild.AddNewChildActivity"
             android:parentActivityName=".activity.ChooseChildMainActivity" />
         <activity
-            android:name=".activity.childmainpanel.InfoMedicalVisitActivity"
+            android:name=".activity.childmainpanel.InfoObjectActivity"
             android:parentActivityName=".activity.childmainpanel.ChildMainPanelActivity" />
         <activity
             android:name=".activity.childmainpanel.AddObjectActivity"

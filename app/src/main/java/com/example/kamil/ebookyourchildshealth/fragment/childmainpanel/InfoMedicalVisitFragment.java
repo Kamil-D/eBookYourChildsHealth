@@ -103,7 +103,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         // najpierw odczytujemy ImageButtonTag, czyli imie dziecka
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
         getBundleFromIntent();
-        getChildDataFromDatabase();
+        getMedicalVisitDataFromDatabase();
         setTextOnLeftColumnTextView();
         setDataFromDBOnLeftColumnTextView();
         createListeners();
@@ -118,7 +118,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         ViewGroup group = (ViewGroup) toast.getView();
         TextView messageTextView = (TextView) group.getChildAt(0);
         messageTextView.setTextSize(25);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 0);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 70);
         toast.show();
     }
 
@@ -132,11 +132,11 @@ public class InfoMedicalVisitFragment extends Fragment {
 
     private void getBundleFromIntent() {
         Bundle bundle = getActivity().getIntent().getBundleExtra("bundle");
-        idMedicalVisit = bundle.getInt("idMedicalVisit");
+        idMedicalVisit = bundle.getInt("idObjectToShow");
         childIDFromIntent = bundle.getInt("childIDFromIntent");
     }
 
-    public void getChildDataFromDatabase() {
+    public void getMedicalVisitDataFromDatabase() {
         Cursor cursor = myDatabaseHelper.readMedicalVisitData(idMedicalVisit);
         visitObject = new Visit();
 
@@ -152,7 +152,7 @@ public class InfoMedicalVisitFragment extends Fragment {
             visitObject.setRecommendations(cursor.getString(7));
             visitObject.setMedicines(cursor.getString(8));
 
-            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_medical_visit_info);
+            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_object_info);
             toolbar.setTitle("Wizyta z dnia " + visitObject.getDate());
         }
     }
@@ -224,7 +224,6 @@ public class InfoMedicalVisitFragment extends Fragment {
 
     }
 
-
     public void showDialogToChangeValue(String str, View view) {
         final TextView textView = (TextView) view;
 
@@ -253,7 +252,7 @@ public class InfoMedicalVisitFragment extends Fragment {
     private void showOrHideButtonEditVisit() {
         if (checkIfDataEdited())
             buttonUpdateVisit.setVisibility(View.VISIBLE);
-        else
+        else if (!checkIfDataEdited())
             buttonUpdateVisit.setVisibility(View.GONE);
     }
 
@@ -262,19 +261,19 @@ public class InfoMedicalVisitFragment extends Fragment {
 
         boolean ifEdited = false;
 
-        if (visitUpdatedObject.getName().equals(visitObject.getName()))
+        if (!visitUpdatedObject.getName().equals(visitObject.getName()))
             ifEdited = true;
-        else if (visitUpdatedObject.getDoctor().equals(visitObject.getDoctor()))
+        else if (!visitUpdatedObject.getDoctor().equals(visitObject.getDoctor()))
             ifEdited = true;
-        else if (visitUpdatedObject.getDisease().equals(visitObject.getDisease()))
+        else if (!visitUpdatedObject.getDisease().equals(visitObject.getDisease()))
             ifEdited = true;
-        else if  (visitUpdatedObject.getDate().equals(visitObject.getDate()))
+        else if  (!visitUpdatedObject.getDate().equals(visitObject.getDate()))
             ifEdited = true;
-        else if (visitUpdatedObject.getDescription().equals(visitObject.getDescription()))
+        else if (!visitUpdatedObject.getDescription().equals(visitObject.getDescription()))
             ifEdited = true;
-        else if (visitUpdatedObject.getRecommendations().equals(visitObject.getRecommendations()))
+        else if (!visitUpdatedObject.getRecommendations().equals(visitObject.getRecommendations()))
             ifEdited = true;
-        else if (visitUpdatedObject.getMedicines().equals(visitObject.getMedicines()))
+        else if (!visitUpdatedObject.getMedicines().equals(visitObject.getMedicines()))
             ifEdited = true;
 
         return ifEdited;

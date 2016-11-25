@@ -218,37 +218,42 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         startActivity(intent);
     }
 
-    public void newActivityGoToInfoMedicalVisitActivity(View view) {
-        Intent intent = new Intent(this, InfoMedicalVisitActivity.class);
-        int idMedicalVisit = getButtonVisitTag(view);
+    public void newActivityGoToInfoPanelActivity(View view) {
+        int idObjectToShow = getButtonVisitTag(view);
+        MedicalVisitsFragment medicalVisitsFragment;
+        DiseasesFragment diseasesFragment;
+
+        Intent intent = new Intent(this, InfoObjectActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("childIDFromIntent", childIDFromIntent);
-        bundle.putInt("idMedicalVisit", idMedicalVisit);
+        bundle.putInt("idObjectToShow", idObjectToShow);
         bundle.putString("childNameFromIntent", childNameFromIntent);
-        intent.putExtra("bundle", bundle);
 
-        MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag(fragmentDecisionVisit);
-        if (myFragment != null && myFragment.isVisible()) {
-            myFragment.newActivityGoToInfoMedicalVisitActivity(intent);
+        if (fragmentType==fragmentDecisionVisit) {
+            medicalVisitsFragment = (MedicalVisitsFragment) getSupportFragmentManager().findFragmentByTag(fragmentType);
+
+            bundle.putString("fragmentDecision",fragmentDecisionVisit);
+            intent.putExtra("bundle", bundle);
+
+            if (medicalVisitsFragment != null && medicalVisitsFragment.isVisible()) {
+                medicalVisitsFragment.newActivityGoToInfoMedicalVisitActivity(intent);
+            }
+        }
+        else if (fragmentType==fragmentDecisionDisease) {
+            diseasesFragment = (DiseasesFragment) getSupportFragmentManager().findFragmentByTag(fragmentType);
+
+            bundle.putString("fragmentDecision",fragmentDecisionDisease);
+            intent.putExtra("bundle", bundle);
+
+            if (diseasesFragment != null && diseasesFragment.isVisible()) {
+                diseasesFragment.newActivityGoToInfoDiseaseActivity(intent);
+            }
         }
 
-//        MedicalVisitsFragment medicalVisitsFragment = new MedicalVisitsFragment();
-//        medicalVisitsFragment.newActivityGoToInfoMedicalVisitActivity(intent);
-//        startActivity(intent);
-//        startActivityForResult(intent, REQUEST_CODE);
-    }
-
-    public void deleteMedicalVisit(View view) {
-        Intent intent = new Intent();
-        int idMedicalVisit = getImageButtonDeleteTag(view);
-        Bundle bundle = new Bundle();
-        bundle.putInt("idMedicalVisit", idMedicalVisit);
-        intent.putExtra("bundle", bundle);
-
-        MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag("myfragment");
-        if (myFragment != null && myFragment.isVisible()) {
-            myFragment.deleteMedicalVisit(intent);
-        }
+//        MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag(fragmentDecisionVisit);
+//        if (myFragment != null && myFragment.isVisible()) {
+//            myFragment.newActivityGoToInfoMedicalVisitActivity(intent);
+//        }
     }
 
     public void deleteRecordFromDB(View view) {

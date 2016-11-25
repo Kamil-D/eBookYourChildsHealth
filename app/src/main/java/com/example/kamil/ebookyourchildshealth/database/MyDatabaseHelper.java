@@ -296,6 +296,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor readDiseaseData(int id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor result = database.rawQuery("select * from " + DISEASES_TABLE_NAME + " WHERE id = ? ;" ,
+                new String[] { String.valueOf(id) });
+        return result;
+    }
+
     public boolean updateMedicalVisitData(Visit visit, int visitID) {
 
         SQLiteDatabase database = this.getWritableDatabase();
@@ -313,6 +320,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = new String[] { String.valueOf(visitID) };
 
         int numberOfRowsAffected = database.update(MEDICAL_VISITS_TABLE_NAME, contentValues, selection, selectionArgs);
+
+        if (numberOfRowsAffected==1)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean updateDiseaseData(Disease disease, int diseaseID) {
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DISEASE_COL_2, disease.getChildId());
+        contentValues.put(DISEASE_COL_3, disease.getName());
+        contentValues.put(DISEASE_COL_4, disease.getDate());
+
+        String selection = DISEASE_COL_1 + "= ?";
+        String[] selectionArgs = new String[] { String.valueOf(diseaseID) };
+
+        int numberOfRowsAffected = database.update(DISEASES_TABLE_NAME, contentValues, selection, selectionArgs);
 
         if (numberOfRowsAffected==1)
             return true;

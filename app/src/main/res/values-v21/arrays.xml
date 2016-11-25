@@ -86,7 +86,7 @@
 
     <array name="disease_table">
         <item>"Nazwa:"</item>
-        <item>"Data:"</item>
+        <item>"Data rozpoczęcia:"</item>
     </array>
 
     <array name="temporary_child_data">

@@ -35,6 +35,7 @@
     <string name="complete_all_fields">Uzupełnij wszystkie pola</string>
     <string name="visit_info">Informacje nt. wizyty</string>
     <string name="choose_or_add_child">Wybierz lub dodaj dziecko</string>
+    <string name="button_edit_disease">Edytuj chorobę</string>
 
 
     <string name="fragment_decision_visit">fragmentVisit</string>

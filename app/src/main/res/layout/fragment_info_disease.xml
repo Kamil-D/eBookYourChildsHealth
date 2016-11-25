@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/md_keylines"
+    android:layout_marginBottom="@dimen/md_keylines"
+    android:layout_marginLeft="@dimen/md_keylines"
+    android:layout_marginRight="@dimen/md_keylines"
+    android:clipToPadding="false"
+    android:foreground="?attr/selectableItemBackground"
+    tools:context="com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoDiseaseFragment">
+
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnDiseaseName"
+            style="@style/MyTextViewStyle" />
+
+        <TextView
+            android:id="@+id/columnDiseaseNameValue"
+            style="@style/MyTextViewStyle2" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnDate"
+            style="@style/MyTextViewStyle" />
+
+        <TextView
+            android:id="@+id/columnDateValue"
+            style="@style/MyTextViewStyle2"/>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/recycler_view_diseases"
+        layout="@layout/recycler_view2" />
+
+    <Button
+        android:id="@+id/buttonUpdateDisease"
+        android:text="@string/button_edit_disease"
+        android:textSize="25sp"
+        style="@style/MyButtonStyle"/>
+
+
+</LinearLayout>
+
+
