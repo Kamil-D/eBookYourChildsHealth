@@ -72,22 +72,22 @@
         </android.support.v4.widget.NestedScrollView>
 
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="15dp"
-            app:layout_anchor="@+id/collapsing_toolbar"
-            app:layout_anchorGravity="bottom|right">
+        <!--<FrameLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingRight="15dp"-->
+            <!--app:layout_anchor="@+id/collapsing_toolbar"-->
+            <!--app:layout_anchorGravity="bottom|right">-->
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/floatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/floatingactionbutton1"/>
+            <!--<android.support.design.widget.FloatingActionButton-->
+                <!--android:id="@+id/floatingActionButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:clickable="true"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--android:src="@drawable/floatingactionbutton1"/>-->
 
-        </FrameLayout>
+        <!--</FrameLayout>-->
 
     </android.support.design.widget.CoordinatorLayout>
 

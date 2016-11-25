@@ -14,8 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import
-android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +25,7 @@ import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplemented;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.ChildMainPanelFragment;
-import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment;
+import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.DiseasesFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.MedicalVisitsFragment;
 
 import java.io.FileNotFoundException;
@@ -180,7 +179,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         } else if (id == R.id.navigation_item_medical_visits) {
             fragment = new MedicalVisitsFragment();
         } else if (id == R.id.navigation_item_diseases_history) {
-
+            fragment = new DiseasesFragment();
         }
 
         if (fragment != null) {
@@ -216,8 +215,6 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putInt("idMedicalVisit", idMedicalVisit);
         bundle.putString("childNameFromIntent", childNameFromIntent);
         intent.putExtra("bundle", bundle);
-
-        myDebugger.someMethod("INFO VISIT ID: " + idMedicalVisit);
 
         MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag("myfragment");
         if (myFragment != null && myFragment.isVisible()) {

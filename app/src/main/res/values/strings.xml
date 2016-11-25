@@ -30,6 +30,8 @@
     <string name="button_add_child">Dodaj dziecko</string>
     <string name="button_save_visit">Dodaj nową wizytę</string>
     <string name="button_add_visit">Dodaj wizytę</string>
+    <string name="button_add_disease">Dodaj chorobę</string>
+    <string name="button_save_disease">Dodaj nową chorobę</string>
     <string name="complete_all_fields">Uzupełnij wszystkie pola</string>
     <string name="visit_info">Informacje nt. wizyty</string>
     <string name="choose_or_add_child">Wybierz lub dodaj dziecko</string>

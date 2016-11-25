@@ -12,9 +12,9 @@ public class Child {
     private String surname;
     private String pesel;
     private String sex;
-    private String blood_group;
-    private String birth_date;
-    private String birth_place;
+    private String bloodGroup;
+    private String birthDate;
+    private String birthPlace;
     private String mother;
     private String father;
 
@@ -60,28 +60,28 @@ public class Child {
         this.sex = sex;
     }
 
-    public String getBlood_group() {
-        return blood_group;
+    public String getBloodGroup() {
+        return bloodGroup;
     }
 
-    public void setBlood_group(String blood_group) {
-        this.blood_group = blood_group;
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
     }
 
-    public String getBirth_date() {
-        return birth_date;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirth_date(String birth_date) {
-        this.birth_date = birth_date;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public String getBirth_place() {
-        return birth_place;
+    public String getBirthPlace() {
+        return birthPlace;
     }
 
-    public void setBirth_place(String birth_place) {
-        this.birth_place = birth_place;
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
     public String getMother() {

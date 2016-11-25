@@ -6,7 +6,7 @@ package com.example.kamil.ebookyourchildshealth.model;
 
 public class Visit {
 
-    private int child_id;
+    private int childId;
     private String name;
     private String doctor;
     private String disease;
@@ -16,12 +16,12 @@ public class Visit {
     private String medicines;
 
 
-    public int getChild_id() {
-        return child_id;
+    public int getChildId() {
+        return childId;
     }
 
-    public void setChild_id(int child_id) {
-        this.child_id = child_id;
+    public void setChildId(int childId) {
+        this.childId = childId;
     }
 
     public String getName() {

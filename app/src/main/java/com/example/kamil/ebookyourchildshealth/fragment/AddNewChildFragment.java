@@ -254,9 +254,9 @@ public class AddNewChildFragment extends Fragment {
                 childObject.setSurname(editTextSurname.getText().toString());
                 childObject.setPesel(editTextPesel.getText().toString());
                 childObject.setSex(spinnerSex.getSelectedItem().toString());
-                childObject.setBlood_group(spinnerBlood.getSelectedItem().toString());
-                childObject.setBirth_date(buttonBirthDate.getText().toString());
-                childObject.setBirth_place(editTextBirthPlace.getText().toString());
+                childObject.setBloodGroup(spinnerBlood.getSelectedItem().toString());
+                childObject.setBirthDate(buttonBirthDate.getText().toString());
+                childObject.setBirthPlace(editTextBirthPlace.getText().toString());
                 childObject.setMother(editTextMother.getText().toString());
                 childObject.setFather(editTextFather.getText().toString());
                 childObject.setImageUri(uriChildPhoto);

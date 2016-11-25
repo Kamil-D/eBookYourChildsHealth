@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_diseases"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/md_keylines"
+    android:layout_marginBottom="@dimen/md_keylines"
+    android:layout_marginLeft="@dimen/md_keylines"
+    android:layout_marginRight="@dimen/md_keylines"
+    android:clipToPadding="false"
+    tools:context="com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.DiseasesFragment">
+
+    <LinearLayout
+        android:id="@+id/firstLinearLayoutInNestedScrollViewDiseases"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/buttonAddDisease"
+            android:text="@string/button_add_disease"
+            android:textSize="25sp"
+            style="@style/MyButtonStyle"/>
+
+        <include
+            android:id="@+id/recycler_view_diseases"
+            layout="@layout/recycler_view2" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

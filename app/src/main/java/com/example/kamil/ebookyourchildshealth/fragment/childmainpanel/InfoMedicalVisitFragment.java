@@ -153,7 +153,7 @@ public class InfoMedicalVisitFragment extends Fragment {
             visitObject.setMedicines(cursor.getString(8));
 
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_medical_visit_info);
-            toolbar.setTitle(visitObject.getDate());
+            toolbar.setTitle("Wizyta z dnia " + visitObject.getDate());
         }
     }
 
@@ -297,7 +297,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         visitObject = new Visit();
 
         if (checkIfAllFieldAreFilled()) {
-            visitObject.setChild_id(childIDFromIntent);
+            visitObject.setChildId(childIDFromIntent);
             visitObject.setName(textViewNameValue.getText().toString());
             visitObject.setDoctor(textViewDoctorValue.getText().toString());
             visitObject.setDisease(textViewDiseaseValue.getText().toString());

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
+import com.example.kamil.ebookyourchildshealth.model.Disease;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.Util;
 
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class AddMedicalVisitFragment extends Fragment {
+public class AddDiseaseFragment extends Fragment {
 
     MyDebugger myDebugger;
     private MyDatabaseHelper myDatabaseHelper;
@@ -38,59 +39,27 @@ public class AddMedicalVisitFragment extends Fragment {
     private int day, month, year;
     private Calendar calendar;
     private int childIDFromIntent;
-    private Visit visitObject;
-    private Bitmap croppedImage;
+    private Disease diseasetObject;
     private Bundle bundle;
     @BindString(R.string.pick_date)
     String pickDateString;
 
-    @BindView(R.id.columnVisitName)
+    @BindView(R.id.columnDiseaseName)
     TextView textViewName;
 
-    @BindView(R.id.columnDoctor)
-    TextView textViewDoctor;
-
-    @BindView(R.id.columnDisease)
-    TextView textViewDisease;
+    @BindView(R.id.columnDiseaseNameValue)
+    EditText editTextName;
 
     @BindView(R.id.columnDate)
     TextView textViewDate;
 
-    @BindView(R.id.columnDescription)
-    TextView textViewDescription;
-
-    @BindView(R.id.columnRecommendations)
-    TextView textViewRecommendations;
-
-    @BindView(R.id.columnMedicines)
-    TextView textViewMedicines;
-
-    @BindView(R.id.columnVisitNameValue)
-    EditText editTextName;
-
-    @BindView(R.id.columnDoctorValue)
-    EditText editTextDoctor;
-
-    @BindView(R.id.columnDiseaseValueSpinner)
-    Spinner spinnerDisease;
-
     @BindView(R.id.buttonDatePicker)
     Button buttonVisitDate;
-
-    @BindView(R.id.columnDescriptionValue)
-    EditText editTextDescription;
-
-    @BindView(R.id.columnRecommendationsValue)
-    EditText editTextRecommendations;
-
-    @BindView(R.id.columnMedicinesValue)
-    EditText editTextMedicines;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_medical_visit, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_disease, container, false);
 
         myDebugger = new MyDebugger();
         ButterKnife.bind(this, view);
@@ -99,7 +68,6 @@ public class AddMedicalVisitFragment extends Fragment {
         getBundleFromIntent();
         setArrayContainsTextViewNames();
         setTextOnLeftColumnTextView();
-        createAndSetSpinners();
 
         return view;
     }
@@ -119,49 +87,24 @@ public class AddMedicalVisitFragment extends Fragment {
 
     private void setArrayContainsTextViewNames() {
         Resources resources = getActivity().getResources();
-        textViewLeftColumnNamesArray = resources.getStringArray(R.array.visit_table);
+        textViewLeftColumnNamesArray = resources.getStringArray(R.array.disease_table);
     }
 
     private void setTextOnLeftColumnTextView() {
         textViewName.setText(textViewLeftColumnNamesArray[0]);
-        textViewDoctor.setText(textViewLeftColumnNamesArray[1]);
-        textViewDisease.setText(textViewLeftColumnNamesArray[2]);
-        textViewDate.setText(textViewLeftColumnNamesArray[3]);
-        textViewDescription.setText(textViewLeftColumnNamesArray[4]);
-        textViewRecommendations.setText(textViewLeftColumnNamesArray[5]);
-        textViewMedicines.setText(textViewLeftColumnNamesArray[6]);
+        textViewDate.setText(textViewLeftColumnNamesArray[1]);
     }
 
-    private void createAndSetSpinners() {
-        ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(getActivity(),
-                R.array.spinner_diseases_array, R.layout.spinner_item);
-        // z bazy danych
-        // http://www.androidhive.info/2012/06/android-populating-spinner-data-from-sqlite-database/
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerDisease.setAdapter(adapterSpinner);
-
-//        id aktualnie zaznaczonego obiektu
-//        spinnerDisease.getSelectedItemId();
-    }
-
-    @OnClick(R.id.buttonSaveVisit)
-    public void saveVisitToDatabaseButtonAction(View v) {
-        visitObject = new Visit();
-
-        spinnerDisease.getSelectedItemId();
+    @OnClick(R.id.buttonSaveDisease)
+    public void saveDiseaseToDatabaseButtonAction(View v) {
+        diseasetObject = new Disease();
 
         if (checkIfAllFieldAreFilled()) {
-            visitObject.setChildId(childIDFromIntent);
-            visitObject.setName(editTextName.getText().toString());
-            visitObject.setDoctor(editTextDoctor.getText().toString());
-            visitObject.setDisease(spinnerDisease.getSelectedItem().toString());
-            visitObject.setDate(buttonVisitDate.getText().toString());
-            visitObject.setDescription(editTextDescription.getText().toString());
-            visitObject.setRecommendations(editTextRecommendations.getText().toString());
-            visitObject.setMedicines(editTextMedicines.getText().toString());
+            diseasetObject.setChildId(childIDFromIntent);
+            diseasetObject.setName(editTextName.getText().toString());
+            diseasetObject.setDate(buttonVisitDate.getText().toString());
 
-            boolean isInserted = myDatabaseHelper.insertDataIntoVisitTable(visitObject);
+            boolean isInserted = myDatabaseHelper.insertDataIntoDiseaseTable(diseasetObject);
 
             if (isInserted == true)
                 Toast.makeText(getActivity(), "Dane zapisane", Toast.LENGTH_LONG).show();
@@ -175,14 +118,8 @@ public class AddMedicalVisitFragment extends Fragment {
     }
 
     private boolean checkIfAllFieldAreFilled() {
-        if (editTextName.getText().toString().matches("") ||
-                editTextName.getText().toString().matches("") ||
-                editTextDoctor.getText().toString().matches("") ||
-                spinnerDisease.getSelectedItem().toString().matches("") ||
-                buttonVisitDate.getText().toString().matches(pickDateString) ||
-                editTextDescription.getText().toString().matches("") ||
-                editTextRecommendations.getText().toString().matches("") ||
-                editTextMedicines.getText().toString().matches(""))
+        if ( editTextName.getText().toString().matches("") ||
+                buttonVisitDate.getText().toString().matches(pickDateString) )
             return false;
         return true;
     }

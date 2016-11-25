@@ -1,0 +1,36 @@
+package com.example.kamil.ebookyourchildshealth.model;
+
+/**
+ * Created by Kamil on 2016-11-24.
+ */
+
+public class Disease {
+
+    private int childId;
+    private String name;
+    private String date;
+
+    public int getChildId() {
+        return childId;
+    }
+
+    public void setChildId(int childId) {
+        this.childId = childId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+}

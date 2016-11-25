@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.model.Child;
+import com.example.kamil.ebookyourchildshealth.model.Disease;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 
 /**
@@ -45,6 +46,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String VISIT_COL_7 = "DESCRIPTION";
     public static final String VISIT_COL_8 = "RECOMMENDATIONS";
     public static final String VISIT_COL_9 = "MEDICINES";
+
+    public static final String DISEASE_COL_1 = "ID";
+    public static final String DISEASE_COL_2 = "CHILD_ID";
+    public static final String DISEASE_COL_3 = "NAME";
+    public static final String DISEASE_COL_4 = "DATE";
 
 
     public static final String DATABASE_SQL_QUERY_CREATE_CHILD_TABLE =
@@ -91,6 +97,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     " (" +
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "DISEASES_ID INTEGER REFERENCES " + DISEASES_TABLE_NAME + ", " +
+                    "NAME TEXT," +
                     "MESSAGE TEXT" +
                     ") ";
 
@@ -171,9 +178,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(CHILD_COL_3, child.getSurname());
             contentValues.put(CHILD_COL_4, child.getPesel());
             contentValues.put(CHILD_COL_5, child.getSex());
-            contentValues.put(CHILD_COL_6, child.getBlood_group());
-            contentValues.put(CHILD_COL_7, child.getBirth_date());
-            contentValues.put(CHILD_COL_8, child.getBirth_place());
+            contentValues.put(CHILD_COL_6, child.getBloodGroup());
+            contentValues.put(CHILD_COL_7, child.getBirthDate());
+            contentValues.put(CHILD_COL_8, child.getBirthPlace());
             contentValues.put(CHILD_COL_9, child.getMother());
             contentValues.put(CHILD_COL_10, child.getFather());
             contentValues.put(CHILD_COL_11, child.getImageUri().toString());
@@ -200,7 +207,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         try {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(VISIT_COL_2, visit.getChild_id());
+            contentValues.put(VISIT_COL_2, visit.getChildId());
             contentValues.put(VISIT_COL_3, visit.getName());
             contentValues.put(VISIT_COL_4, visit.getDoctor());
             contentValues.put(VISIT_COL_5, visit.getDisease());
@@ -221,7 +228,32 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             else
                 return true;
         }
+    }
 
+    public boolean insertDataIntoDiseaseTable(Disease disease) {
+        long result=0;
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.beginTransaction();
+
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DISEASE_COL_2, disease.getChildId());
+            contentValues.put(DISEASE_COL_3, disease.getName());
+            contentValues.put(DISEASE_COL_4, disease.getDate());
+
+            // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
+            result = database.insertOrThrow(DISEASES_TABLE_NAME, null, contentValues);
+            database.setTransactionSuccessful();
+        } catch (Exception e) {
+
+        } finally {
+            database.endTransaction();
+            if (result == -1)
+                return false;
+            else
+                return true;
+        }
     }
 
     /**
@@ -250,6 +282,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor readAllChildDiseasesData(int childId) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor result = database.rawQuery("select * from " + DISEASES_TABLE_NAME + " WHERE CHILD_ID = ? ;" ,
+                new String[] { String.valueOf(childId) });
+        return result;
+    }
+
     public Cursor readMedicalVisitData(int id) {
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor result = database.rawQuery("select * from " + MEDICAL_VISITS_TABLE_NAME + " WHERE id = ? ;" ,
@@ -261,7 +300,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(VISIT_COL_2, visit.getChild_id());
+        contentValues.put(VISIT_COL_2, visit.getChildId());
         contentValues.put(VISIT_COL_3, visit.getName());
         contentValues.put(VISIT_COL_4, visit.getDoctor());
         contentValues.put(VISIT_COL_5, visit.getDisease());
@@ -286,9 +325,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         String selection = VISIT_COL_1 + "= ?";
         String[] selectionArgs = new String[] { String.valueOf(visitID) };
-
-        MyDebugger myDebugger = new MyDebugger();
-        myDebugger.someMethod("ID WIZYTY DB:    " + visitID);
 
         int numberOfRowsAffected = database.delete(MEDICAL_VISITS_TABLE_NAME, selection, selectionArgs);
 

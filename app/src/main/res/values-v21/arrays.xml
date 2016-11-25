@@ -84,6 +84,10 @@
         <item>"Leki:"</item>
     </array>
 
+    <array name="disease_table">
+        <item>"Nazwa:"</item>
+        <item>"Data:"</item>
+    </array>
 
     <array name="temporary_child_data">
         <item>"Kamil"</item>

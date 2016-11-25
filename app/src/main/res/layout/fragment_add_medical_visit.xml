@@ -118,6 +118,6 @@
         android:textSize="25sp"
         style="@style/MyButtonStyle"/>
 
-        <!--saveChildToDatabaseButtonAction-->
+        <!--saveVisitToDatabaseButtonAction-->
 
 </LinearLayout>
