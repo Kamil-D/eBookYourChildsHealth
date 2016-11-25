@@ -36,6 +36,10 @@
     <string name="visit_info">Informacje nt. wizyty</string>
     <string name="choose_or_add_child">Wybierz lub dodaj dziecko</string>
 
+
+    <string name="fragment_decision_visit">fragmentVisit</string>
+    <string name="fragment_decision_disease">fragmentDisease</string>
+
     <!--<string-array name="spinner_sex_array">-->
         <!--<item>Male</item>-->
         <!--<item>Female</item>-->

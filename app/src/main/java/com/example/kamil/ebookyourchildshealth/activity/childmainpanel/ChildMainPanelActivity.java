@@ -2,7 +2,6 @@ package com.example.kamil.ebookyourchildshealth.activity.childmainpanel;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -31,9 +30,9 @@ import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.MedicalVi
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,6 +48,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     private FragmentTransaction fragmentTransaction;
     private Bundle bundle;
     private Fragment fragment;
+    private String fragmentType = "";
 
     @BindView(R.id.drawer_child_main_panel)
     DrawerLayout mDrawerLayout;
@@ -65,6 +65,11 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    @BindString(R.string.fragment_decision_disease)
+    String fragmentDecisionDisease;
+
+    @BindString(R.string.fragment_decision_visit)
+    String fragmentDecisionVisit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,19 +179,25 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
 
         if (id == R.id.navigation_item_home_page) {
             NavUtils.navigateUpFromSameTask(this);
+
         } else if (id == R.id.navigation_item_child_panel) {
             newActivityGoToChildPanelActivity();
+
         } else if (id == R.id.navigation_item_medical_visits) {
             fragment = new MedicalVisitsFragment();
+            fragmentType = fragmentDecisionVisit;
+
         } else if (id == R.id.navigation_item_diseases_history) {
             fragment = new DiseasesFragment();
+            fragmentType = fragmentDecisionDisease;
         }
+
 
         if (fragment != null) {
             fragmentManager = getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
-                    .replace(R.id.linearLayoutInNestedScrollViewChildPanel, fragment, "myfragment")
+                    .replace(R.id.linearLayoutInNestedScrollViewChildPanel, fragment, fragmentType)
                     .commit();
 
             navigationView.setCheckedItem(id);
@@ -216,7 +227,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putString("childNameFromIntent", childNameFromIntent);
         intent.putExtra("bundle", bundle);
 
-        MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag("myfragment");
+        MedicalVisitsFragment myFragment = (MedicalVisitsFragment)getSupportFragmentManager().findFragmentByTag(fragmentDecisionVisit);
         if (myFragment != null && myFragment.isVisible()) {
             myFragment.newActivityGoToInfoMedicalVisitActivity(intent);
         }
@@ -228,8 +239,8 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     }
 
     public void deleteMedicalVisit(View view) {
-        Intent intent = new Intent(this, InfoMedicalVisitActivity.class);
-        int idMedicalVisit = getImageButtonDeleteVisitTag(view);
+        Intent intent = new Intent();
+        int idMedicalVisit = getImageButtonDeleteTag(view);
         Bundle bundle = new Bundle();
         bundle.putInt("idMedicalVisit", idMedicalVisit);
         intent.putExtra("bundle", bundle);
@@ -240,13 +251,40 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         }
     }
 
+    public void deleteRecordFromDB(View view) {
+        int idObjectToDelete = getImageButtonDeleteTag(view);
+        MedicalVisitsFragment medicalVisitsFragment;
+        DiseasesFragment diseasesFragment;
+
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putInt("idObjectToDelete", idObjectToDelete);
+        intent.putExtra("bundle", bundle);
+
+        if (fragmentType==fragmentDecisionVisit) {
+            medicalVisitsFragment = (MedicalVisitsFragment) getSupportFragmentManager().findFragmentByTag(fragmentType);
+
+            if (medicalVisitsFragment != null && medicalVisitsFragment.isVisible()) {
+                medicalVisitsFragment.deleteMedicalVisit(intent);
+            }
+        }
+        else if (fragmentType==fragmentDecisionDisease) {
+            diseasesFragment = (DiseasesFragment) getSupportFragmentManager().findFragmentByTag(fragmentType);
+
+            if (diseasesFragment != null && diseasesFragment.isVisible()) {
+                diseasesFragment.deleteMedicalVisit(intent);
+            }
+        }
+
+    }
+
     private int getButtonVisitTag(View v) {
         Button button = (Button) v;
         int buttonTag = Integer.parseInt(button.getTag().toString());
         return buttonTag;
     }
 
-    private int getImageButtonDeleteVisitTag(View v) {
+    private int getImageButtonDeleteTag(View v) {
         ImageButton button = (ImageButton) v;
         int buttonTag = Integer.parseInt(button.getTag().toString());
         return buttonTag;

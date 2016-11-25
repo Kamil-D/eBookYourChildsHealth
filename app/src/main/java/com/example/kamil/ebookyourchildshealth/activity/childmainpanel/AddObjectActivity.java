@@ -1,8 +1,8 @@
 package com.example.kamil.ebookyourchildshealth.activity.childmainpanel;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.example.kamil.ebookyourchildshealth.R;
@@ -15,21 +15,27 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddDiseaseActivity extends MyActivityOnlyMenuImplemented {
+public class AddObjectActivity extends MyActivityOnlyMenuImplemented {
 
     private MyDatabaseHelper myDatabaseHelper;
 
-    @BindView(R.id.toolbar_add_disease)
+    @BindView(R.id.toolbar_add_medical_visit)
     Toolbar toolbar;
 
     @BindString(R.string.complete_all_fields)
     String toolbarTitle;
 
+    @BindString(R.string.fragment_decision_disease)
+    String fragmentDecisionDisease;
+
+    @BindString(R.string.fragment_decision_visit)
+    String fragmentDecisionVisit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_disease);
+        setContentView(R.layout.activity_add_object);
 
         ButterKnife.bind(this);
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(this);
@@ -46,11 +52,24 @@ public class AddDiseaseActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void startFragmentTransactionAddNewFragment() {
-        AddDiseaseFragment addDiseaseFragment = new AddDiseaseFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddDisease,addDiseaseFragment,"fragment");
-        fragmentTransaction.commit();
+
+        String fragmentDecision = getIntent().getBundleExtra("bundle").getString("fragmentDecision");
+
+        if (fragmentDecision.equals(fragmentDecisionVisit)) {
+            AddMedicalVisitFragment addMedicalVisitFragment = new AddMedicalVisitFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addMedicalVisitFragment,"fragment");
+            fragmentTransaction.commit();
+        }
+        else if (fragmentDecision.equals(fragmentDecisionDisease)) {
+            AddDiseaseFragment addDiseaseFragment = new AddDiseaseFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addDiseaseFragment,"fragment");
+            fragmentTransaction.commit();
+        }
+
     }
 
 }

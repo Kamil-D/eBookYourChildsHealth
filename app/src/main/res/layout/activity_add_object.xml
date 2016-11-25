@@ -6,7 +6,7 @@
     android:id="@+id/activity_add_medical_visit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddMedicalVisitActivity">
+    tools:context="com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -26,14 +26,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollViewAddMedicalVisit"
+        android:id="@+id/nestedScrollViewAddObject"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:contentScrim="#BDBDBD"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
         <LinearLayout
-            android:id="@+id/firstLinearLayoutInNestedScrollViewAddMedicalVisit"
+            android:id="@+id/firstLinearLayoutInNestedScrollViewAddObject"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >

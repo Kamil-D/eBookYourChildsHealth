@@ -195,51 +195,32 @@ public class AddNewChildFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Util.FILE_PICK_CODE && resultCode == RESULT_OK) {
+
             Uri imageUri;
             imageUri = data.getData();
+
             CropImage.activity(imageUri).setAspectRatio(15,9).setFixAspectRatio(true)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
                     .setGuidelines(CropImageView.Guidelines.OFF)
                     .start(getContext(), this);
-//            new  View(getContext()).setOnLongClickListener(); //////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-//                ImageLoader imageLoader = ImageLoader.getMyDatabaseHelperInstance();
-//                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
+
                 try {
                     setImageOnImageButton("file://" + resultUri.getPath(), resultUri);
-//                    croppedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
         }
-
         super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            Log.d("crop", " CROP_IMAGE_ACTIVITY_REQUEST_CODE//// ");
-//            if (resultCode == RESULT_OK) {
-//                Uri resultUri = result.getUri();
-//                Log.d("crop", resultUri + " //// " + resultUri.getPath());
-////                ImageLoader imageLoader = ImageLoader.getMyDatabaseHelperInstance();
-////                imageLoader.displayImage("file://" + resultUri.getPath(), imageButton);
-//                setImageOnImageButton("file://" + resultUri.getPath());
-//                try {
-//                    croppedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-//                Exception error = result.getError();
-//            }
-//        }
-        //super.onActivityResult(requestCode, resultCode, data);
     }
 
     @OnClick(R.id.buttonSaveChild)

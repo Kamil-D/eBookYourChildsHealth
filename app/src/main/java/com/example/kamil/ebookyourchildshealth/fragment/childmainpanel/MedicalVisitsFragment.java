@@ -18,13 +18,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.kamil.ebookyourchildshealth.R;
-import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddMedicalVisitActivity;
+import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.VisitListItem;
 import com.example.kamil.ebookyourchildshealth.util.Util;
 
 import java.util.ArrayList;
 
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -39,6 +40,9 @@ public class MedicalVisitsFragment extends Fragment {
     private String childNameFromIntent;
     private static Context context;
     private static ArrayList<VisitListItem> visitListItemObjectsArrayList;
+
+    @BindString(R.string.fragment_decision_visit)
+    String fragmentDecisionVisit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,8 +71,9 @@ public class MedicalVisitsFragment extends Fragment {
 
     @OnClick(R.id.buttonAddMedicalVisit)
     public void newActivityAddMedicalVisitActivity() {
-        intent = new Intent(this.getActivity(), AddMedicalVisitActivity.class);
+        intent = new Intent(this.getActivity(), AddObjectActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putString("fragmentDecision",fragmentDecisionVisit);
         bundle.putInt("childIDFromIntent", childIDFromIntent);
         bundle.putString("childNameFromIntent", childNameFromIntent);
         intent.putExtra("bundle", bundle);
@@ -89,7 +94,7 @@ public class MedicalVisitsFragment extends Fragment {
 
     public void deleteMedicalVisit(Intent intent) {
         Bundle bundle = intent.getBundleExtra("bundle");
-        int idMedicalVisit = bundle.getInt("idMedicalVisit");
+        int idMedicalVisit = bundle.getInt("idObjectToDelete");
         showDialogToConfirmDeleteOperation(idMedicalVisit);
     }
 
@@ -164,9 +169,9 @@ public class MedicalVisitsFragment extends Fragment {
 
             public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
 
-                super(inflater.inflate(R.layout.medical_visits_fragment_card_item, parent, false));
-                button = (Button) itemView.findViewById(R.id.buttonMedicalVisitsList);
-                deleteButton = (ImageButton) itemView.findViewById(R.id.buttonDeleteVisit);
+                super(inflater.inflate(R.layout.list_records_fragment_card_item, parent, false));
+                button = (Button) itemView.findViewById(R.id.buttonRecordOnList);
+                deleteButton = (ImageButton) itemView.findViewById(R.id.buttonDeleteRecord);
 
             }
         }

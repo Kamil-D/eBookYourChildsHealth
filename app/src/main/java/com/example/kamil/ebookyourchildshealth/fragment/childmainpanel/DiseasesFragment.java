@@ -3,7 +3,6 @@ package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,16 +17,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.kamil.ebookyourchildshealth.R;
-import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddDiseaseActivity;
-import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddMedicalVisitActivity;
+import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
-import com.example.kamil.ebookyourchildshealth.model.Disease;
 import com.example.kamil.ebookyourchildshealth.model.DiseaseListItem;
-import com.example.kamil.ebookyourchildshealth.model.VisitListItem;
 import com.example.kamil.ebookyourchildshealth.util.Util;
 
 import java.util.ArrayList;
 
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -43,7 +40,11 @@ public class DiseasesFragment extends Fragment {
     private Intent intent;
     private int childIDFromIntent;
     private String childNameFromIntent;
+    private static Context context;
     private static ArrayList<DiseaseListItem> diseaseListItemObjectsArrayList;
+
+    @BindString(R.string.fragment_decision_disease)
+    String fragmentDecisionDisease;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,9 +54,10 @@ public class DiseasesFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_diseases);
         ButterKnife.bind(this, view);
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity()); // activity czy context???
+        context = getActivity();
 
         getBundleFromIntent();
-        getVisitDataFromDatabase();
+        getDiseaseDataFromDatabase();
         createAndSetContentAdapter();
 
         return view;
@@ -71,8 +73,9 @@ public class DiseasesFragment extends Fragment {
 
     @OnClick(R.id.buttonAddDisease)
     public void newActivityAddDiseaseActivity() {
-        intent = new Intent(this.getActivity(), AddDiseaseActivity.class);
+        intent = new Intent(this.getActivity(), AddObjectActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putString("fragmentDecision", fragmentDecisionDisease);
         bundle.putInt("childIDFromIntent", childIDFromIntent);
         bundle.putString("childNameFromIntent", childNameFromIntent);
         intent.putExtra("bundle", bundle);
@@ -82,7 +85,7 @@ public class DiseasesFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode== Util.RESULT_CODE) {
-            getVisitDataFromDatabase();
+            getDiseaseDataFromDatabase();
             createAndSetContentAdapter();
         }
     }
@@ -91,13 +94,46 @@ public class DiseasesFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE);
     }
 
+    public void deleteMedicalVisit(Intent intent) {
+        Bundle bundle = intent.getBundleExtra("bundle");
+        int idDisease = bundle.getInt("idObjectToDelete");
+        showDialogToConfirmDeleteOperation(idDisease);
+    }
+
+    public void showDialogToConfirmDeleteOperation(int idDisease) {
+        final int diseaseID = idDisease;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
+        builder.setTitle("Czy chcesz usunąć chorobę?");
+        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
+        final EditText editTextDialog = (EditText) myView.findViewById(R.id.text_view_dialog);
+        editTextDialog.setFocusable(false);
+        editTextDialog.setClickable(false);
+        builder.setView(myView);
+        builder.setNegativeButton("NIE",null);
+        builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                myDatabaseHelper.deleteDiseaseData(diseaseID);
+                // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
+                getDiseaseDataFromDatabase();
+                createAndSetContentAdapter();
+            }
+        });
+        builder.show();
+    }
+
+    public static Context getAppContext(){
+        return context;
+    }
+
     private void getBundleFromIntent() {
         Bundle bundle = getActivity().getIntent().getBundleExtra("bundle");
         childIDFromIntent = bundle.getInt("childIDFromIntent");
         childNameFromIntent = bundle.getString("childNameFromIntent");
     }
 
-    public void getVisitDataFromDatabase() {
+    public void getDiseaseDataFromDatabase() {
         diseaseListItemObjectsArrayList = new ArrayList<>();
         DiseaseListItem disease;
 
@@ -134,9 +170,9 @@ public class DiseasesFragment extends Fragment {
 
             public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
 
-                super(inflater.inflate(R.layout.medical_visits_fragment_card_item, parent, false));
-                button = (Button) itemView.findViewById(R.id.buttonMedicalVisitsList);
-                deleteButton = (ImageButton) itemView.findViewById(R.id.buttonDeleteVisit);
+                super(inflater.inflate(R.layout.list_records_fragment_card_item, parent, false));
+                button = (Button) itemView.findViewById(R.id.buttonRecordOnList);
+                deleteButton = (ImageButton) itemView.findViewById(R.id.buttonDeleteRecord);
 
             }
         }

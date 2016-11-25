@@ -334,4 +334,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
+    public boolean deleteDiseaseData(int diseaseID) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        String selection = DISEASE_COL_1 + "= ?";
+        String[] selectionArgs = new String[] { String.valueOf(diseaseID) };
+
+        int numberOfRowsAffected = database.delete(DISEASES_TABLE_NAME, selection, selectionArgs);
+
+        if (numberOfRowsAffected==1)
+            return true;
+        else
+            return false;
+    }
 }
