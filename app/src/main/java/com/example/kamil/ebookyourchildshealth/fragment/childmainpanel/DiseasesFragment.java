@@ -115,6 +115,7 @@ public class DiseasesFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 myDatabaseHelper.deleteDiseaseData(diseaseID);
+                myDatabaseHelper.deleteDiseaseNoteData(diseaseID);
                 // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
                 getDiseaseDataFromDatabase();
                 createAndSetContentAdapter();

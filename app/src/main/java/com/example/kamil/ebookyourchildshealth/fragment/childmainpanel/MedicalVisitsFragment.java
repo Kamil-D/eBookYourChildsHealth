@@ -26,6 +26,7 @@ import com.example.kamil.ebookyourchildshealth.util.Util;
 import java.util.ArrayList;
 
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -33,7 +34,6 @@ import butterknife.OnClick;
 public class MedicalVisitsFragment extends Fragment {
 
     private final int REQUEST_CODE = 1;
-    private RecyclerView recyclerView;
     private MyDatabaseHelper myDatabaseHelper;
     private Intent intent;
     private int childIDFromIntent;
@@ -44,12 +44,14 @@ public class MedicalVisitsFragment extends Fragment {
     @BindString(R.string.fragment_decision_visit)
     String fragmentDecisionVisit;
 
+    @BindView(R.id.recycler_view_medical_visits)
+    RecyclerView recyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_medical_visits, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_medical_visits);
         ButterKnife.bind(this, view);
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity()); // activity czy context???
         context = getActivity();

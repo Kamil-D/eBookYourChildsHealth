@@ -48,6 +48,18 @@
         <item name="android:background">@color/colorLightPrimary</item>
     </style>
 
+    <style name="MyTextViewNoteStyle" parent="android:Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:paddingLeft">@dimen/card_margin</item>
+        <item name="android:paddingRight">@dimen/card_margin</item>
+        <item name="android:background">@color/colorLightPrimaryLighter</item>
+    </style>
 
     <style name="MyTextViewStyle2" parent="android:Widget.TextView">
         <item name="android:layout_width">match_parent</item>

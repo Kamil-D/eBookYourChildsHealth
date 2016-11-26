@@ -23,6 +23,8 @@
     <integer name="tagImageButtonOne">1</integer>
     <integer name="tagImageButtonTwo">2</integer>
     <integer name="tagImageButtonThree">3</integer>
+    <integer name="tagNoteId">1</integer>
+
 
     <!--<string name="button_edit_visit">Edit visit</string>-->
     <string name="button_edit_visit">Edytuj wizytę</string>
@@ -36,6 +38,8 @@
     <string name="visit_info">Informacje nt. wizyty</string>
     <string name="choose_or_add_child">Wybierz lub dodaj dziecko</string>
     <string name="button_edit_disease">Edytuj chorobę</string>
+    <string name="button_add_note">Dodaj notatkę</string>
+    <string name="text_view_add_note">Dodaj notatkę</string>
 
 
     <string name="fragment_decision_visit">fragmentVisit</string>

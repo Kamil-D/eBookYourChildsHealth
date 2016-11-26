@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,7 +23,11 @@ import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Disease;
+import com.example.kamil.ebookyourchildshealth.model.Note;
+import com.example.kamil.ebookyourchildshealth.model.NoteItemList;
 import com.example.kamil.ebookyourchildshealth.util.Util;
+
+import java.util.ArrayList;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -31,17 +37,22 @@ import butterknife.OnClick;
 
 public class InfoDiseaseFragment extends Fragment {
 
-    MyDebugger myDebugger;
+    static MyDebugger myDebugger = new MyDebugger();
     private MyDatabaseHelper myDatabaseHelper;
     private String[] textViewLeftColumnNamesArray;
     private int idDisease;
     private int childIDFromIntent;
     private Disease diseaseObject;
     private Disease diseaseUpdatedObject;
+    private Note noteObject;
+    private static ArrayList<NoteItemList> noteListItemObjectsArrayList;
     private static Context context;
 
     @BindString(R.string.pick_date)
     String pickDateString;
+
+    @BindView(R.id.recycler_view_diseases)
+    RecyclerView recyclerView;
 
     @BindView(R.id.columnDiseaseName)
     TextView textViewName;
@@ -54,6 +65,15 @@ public class InfoDiseaseFragment extends Fragment {
 
     @BindView(R.id.columnDateValue)
     TextView textViewDateValue;
+
+    @BindView(R.id.columnNoteMessage)
+    TextView textViewNoteMessage;
+
+    @BindView(R.id.columnNoteMessageValue)
+    EditText editTextNoteMessage;
+
+    @BindView(R.id.buttonAddNote)
+    Button buttonAddNote;
 
     @BindView(R.id.buttonUpdateDisease)
     Button buttonUpdateDisease;
@@ -77,6 +97,8 @@ public class InfoDiseaseFragment extends Fragment {
         setTextOnLeftColumnTextView();
         setDataFromDBOnLeftColumnTextView();
         createListeners();
+        getDiseaseNoteDataFromDatabase();
+        createAndSetContentAdapter();
 
         return view;
     }
@@ -114,6 +136,7 @@ public class InfoDiseaseFragment extends Fragment {
             return;
         }
         while(cursor.moveToNext()) {
+            diseaseObject.setId(cursor.getInt(0));
             diseaseObject.setName(cursor.getString(2));
             diseaseObject.setDate(cursor.getString(3));
 
@@ -128,6 +151,7 @@ public class InfoDiseaseFragment extends Fragment {
 
         textViewName.setText(textViewLeftColumnNamesArray[0]);
         textViewDate.setText(textViewLeftColumnNamesArray[1]);
+        textViewNoteMessage.setText(R.string.text_view_add_note);
     }
 
     private void setDataFromDBOnLeftColumnTextView() {
@@ -144,6 +168,31 @@ public class InfoDiseaseFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    public void getDiseaseNoteDataFromDatabase() {
+        noteListItemObjectsArrayList = new ArrayList<>();
+        NoteItemList noteItemList;
+
+        Cursor cursor = myDatabaseHelper.readDiseaseNoteData(idDisease);
+
+        if(cursor.getCount() == 0) {
+            return;
+        }
+
+        while(cursor.moveToNext()) {
+            noteItemList = new NoteItemList(cursor.getInt(0), cursor.getInt(1), cursor.getString(3));
+            myDebugger.someMethod("GET NOTE FROM DB: " + cursor.getInt(0) + " " + cursor.getInt(1) + " " + cursor.getString(3));
+            noteListItemObjectsArrayList.add(noteItemList);
+        }
+
+    }
+
+    private void createAndSetContentAdapter() {
+        ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     public void showDialogToChangeValue(String str, View view) {
@@ -224,6 +273,78 @@ public class InfoDiseaseFragment extends Fragment {
         if ( textViewNameValue.getText().toString().matches("") )
             return false;
         return true;
+    }
+
+    @OnClick(R.id.buttonAddNote)
+    public void saveDiseaseNoteToDatabaseButtonAction(View v) {
+
+        noteObject = new Note();
+
+        if (!editTextNoteMessage.getText().toString().matches("")) {
+            noteObject.setDiseaseId(idDisease);
+            noteObject.setNoteText(editTextNoteMessage.getText().toString());
+
+            boolean isInserted = myDatabaseHelper.insertDataIntoNotesTable(noteObject);
+
+            if (isInserted == true)
+                Toast.makeText(getActivity(), "Dane zapisane", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
+
+            getActivity().setResult(Util.RESULT_CODE, null);
+            getActivity().finish();
+        } else
+            Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();
+    }
+
+    public static class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHolder> {
+
+        // Set numbers of List in RecyclerView.
+        private int LENGTH = 0;
+
+        private ArrayList<NoteItemList> noteListItemObjectsCardViewItem = new ArrayList<>();
+
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+
+            public TextView textViewNoteText;
+
+            public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
+
+                super(inflater.inflate(R.layout.list_notes_fragment_card_item, parent, false));
+                textViewNoteText = (TextView) itemView.findViewById(R.id.noteText);
+            }
+        }
+
+        public ContentAdapter(Context context) {
+
+            noteListItemObjectsCardViewItem = noteListItemObjectsArrayList;
+
+            this.LENGTH = noteListItemObjectsCardViewItem.size();
+        }
+
+        @Override
+        public ContentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ContentAdapter.ViewHolder(LayoutInflater.from(parent.getContext()), parent);
+        }
+
+
+        /**
+         * Specify the contents of each item of the RecyclerView.
+         */
+        @Override
+        public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
+            String tempString =  noteListItemObjectsCardViewItem.get(position % noteListItemObjectsCardViewItem.size()).getNoteText();
+            myDebugger.someMethod("RECYCLER VIEW NOTE OBVH: " + tempString);
+            holder.textViewNoteText.setText(tempString);
+            // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
+            int id = noteListItemObjectsCardViewItem.get(position % noteListItemObjectsCardViewItem.size()).getId();
+            holder.textViewNoteText.setTag(R.integer.tagNoteId, id);
+        }
+
+        @Override
+        public int getItemCount() {
+            return LENGTH;
+        }
     }
 
 }

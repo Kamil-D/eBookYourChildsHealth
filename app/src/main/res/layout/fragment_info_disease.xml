@@ -44,6 +44,28 @@
         android:id="@+id/recycler_view_diseases"
         layout="@layout/recycler_view2" />
 
+    <LinearLayout
+        style="@style/MyLinearLayoutStyle1" >
+
+        <TextView
+            android:id="@+id/columnNoteMessage"
+            style="@style/MyTextViewStyle" />
+
+        <EditText
+            android:id="@+id/columnNoteMessageValue"
+            android:inputType="textPersonName"
+            android:maxLength="255"
+            style="@style/MyEditTextStyle" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonAddNote"
+        android:text="@string/button_add_note"
+        android:textSize="25sp"
+        android:layout_marginTop="@dimen/md_keylines"
+        style="@style/MyButtonStyle" />
+
     <Button
         android:id="@+id/buttonUpdateDisease"
         android:text="@string/button_edit_disease"

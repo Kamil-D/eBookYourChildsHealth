@@ -6,9 +6,18 @@ package com.example.kamil.ebookyourchildshealth.model;
 
 public class Disease {
 
+    private int id;
     private int childId;
     private String name;
     private String date;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getChildId() {
         return childId;

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.example.kamil.ebookyourchildshealth.model.Disease;
+import com.example.kamil.ebookyourchildshealth.model.Note;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 
 /**
@@ -17,6 +18,7 @@ import com.example.kamil.ebookyourchildshealth.model.Visit;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
+    MyDebugger myDebugger = new MyDebugger();
     private static MyDatabaseHelper myDatabaseHelperInstance;
 
     public static final String DATABASE_NAME = "child.db";
@@ -52,6 +54,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String DISEASE_COL_3 = "NAME";
     public static final String DISEASE_COL_4 = "DATE";
 
+    public static final String NOTES_COL_1 = "ID";
+    public static final String NOTES_COL_2 = "DISEASES_ID";
+    public static final String NOTES_COL_3 = "NAME";
+    public static final String NOTES_COL_4 = "MESSAGE";
 
     public static final String DATABASE_SQL_QUERY_CREATE_CHILD_TABLE =
             "CREATE TABLE " + CHILD_TABLE_NAME +
@@ -256,6 +262,33 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean insertDataIntoNotesTable(Note note) {
+        long result=0;
+
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.beginTransaction();
+
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(NOTES_COL_2, note.getDiseaseId());
+            contentValues.put(NOTES_COL_4, note.getNoteText());
+
+            myDebugger.someMethod("DB DURING SAVE NOTE: " + note.getNoteText());
+
+            // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
+            result = database.insertOrThrow(DISEASES_NOTES_TABLE_NAME, null, contentValues);
+            database.setTransactionSuccessful();
+        } catch (Exception e) {
+
+        } finally {
+            database.endTransaction();
+            if (result == -1)
+                return false;
+            else
+                return true;
+        }
+    }
+
     /**
      *     A query returns a Cursor object. A Cursor represents the result of a query
      *     and basically points to one row of the query result.
@@ -279,6 +312,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor result = database.rawQuery("select * from " + MEDICAL_VISITS_TABLE_NAME + " WHERE CHILD_ID = ? ;" ,
                 new String[] { String.valueOf(childId) });
+        return result;
+    }
+
+    public Cursor readDiseaseNoteData(int diseaseId) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor result = database.rawQuery("select * from " + DISEASES_NOTES_TABLE_NAME + " WHERE DISEASES_ID = ? ;" ,
+                new String[] { String.valueOf(diseaseId) });
         return result;
     }
 
@@ -367,6 +407,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = new String[] { String.valueOf(diseaseID) };
 
         int numberOfRowsAffected = database.delete(DISEASES_TABLE_NAME, selection, selectionArgs);
+
+        if (numberOfRowsAffected==1)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean deleteDiseaseNoteData(int diseaseID) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        String selection = NOTES_COL_2 + "= ?";
+        String[] selectionArgs = new String[] { String.valueOf(diseaseID) };
+
+        int numberOfRowsAffected = database.delete(DISEASES_NOTES_TABLE_NAME, selection, selectionArgs);
 
         if (numberOfRowsAffected==1)
             return true;
