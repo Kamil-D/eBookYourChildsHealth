@@ -40,6 +40,7 @@ public class DiseasesFragment extends Fragment {
     private Intent intent;
     private int childIDFromIntent;
     private String childNameFromIntent;
+    private int idDiseaseToDelete;
     private static Context context;
     private static ArrayList<DiseaseListItem> diseaseListItemObjectsArrayList;
 
@@ -96,12 +97,12 @@ public class DiseasesFragment extends Fragment {
 
     public void deleteMedicalVisit(Intent intent) {
         Bundle bundle = intent.getBundleExtra("bundle");
-        int idDisease = bundle.getInt("idObjectToDelete");
-        showDialogToConfirmDeleteOperation(idDisease);
+        idDiseaseToDelete = bundle.getInt("idObjectToDelete");
+        showDialogToConfirmDeleteOperation();
     }
 
-    public void showDialogToConfirmDeleteOperation(int idDisease) {
-        final int diseaseID = idDisease;
+    public void showDialogToConfirmDeleteOperation() {
+        //final int diseaseID = idDiseaseToDelete;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
         builder.setTitle("Czy chcesz usunąć chorobę?");
@@ -114,8 +115,8 @@ public class DiseasesFragment extends Fragment {
         builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                myDatabaseHelper.deleteDiseaseData(diseaseID);
-                myDatabaseHelper.deleteDiseaseNoteData(diseaseID);
+                myDatabaseHelper.deleteDiseaseNoteData(idDiseaseToDelete);
+                myDatabaseHelper.deleteDiseaseData(idDiseaseToDelete);
                 // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
                 getDiseaseDataFromDatabase();
                 createAndSetContentAdapter();

@@ -1,10 +1,13 @@
 package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +25,8 @@ import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
+
+import java.util.Calendar;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -340,4 +345,42 @@ public class InfoMedicalVisitFragment extends Fragment {
         return true;
     }
 
+
+//    public void Reminder {
+//        ContentValues values = new ContentValues();
+//        Calendar cal = Calendar.getInstance();
+//
+//
+//
+//        // Add to Android db; duration is null for nonrecurring events.
+//        values.put(CalendarContract.Events.CALENDAR_ID, 1);
+//        values.put(CalendarContract.Events.DTSTART, cal.getTimeInMillis() + 1000 *60*15);
+//        values.put(CalendarContract.Events.DTEND, cal.getTimeInMillis()+ 1000 *60*30);
+//        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+//        values.put(CalendarContract.Events.TITLE, "SZCZEPIENIE KURWA");
+//        values.put(CalendarContract.Events.DESCRIPTION, "IDZ ZASZCZEP PSA GNOJU");
+//
+//        Uri baseUri;
+//        if (Build.VERSION.SDK_INT >= 8) {
+//            baseUri = Uri.parse("content://com.android.calendar/events");
+//        } else {
+//            baseUri = Uri.parse("content://calendar/events");
+//        }
+//
+//        Uri event = getContext().getContentResolver().insert(baseUri, values);
+//
+//        values = new ContentValues();
+//        values.put(CalendarContract.Reminders.EVENT_ID, Long.parseLong(event.getLastPathSegment()));
+//        values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+//        values.put(CalendarContract.Reminders.MINUTES, 14);
+//
+//        Uri baseUri2;
+//        if (Build.VERSION.SDK_INT >= 8) {
+//            baseUri2 = Uri.parse("content://com.android.calendar/reminders");
+//        } else {
+//            baseUri2 = Uri.parse("content://calendar/reminders");
+//        }
+//
+//        getContext().getContentResolver().insert(baseUri2, values);
+//    }
 }

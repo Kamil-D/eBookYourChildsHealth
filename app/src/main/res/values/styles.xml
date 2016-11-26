@@ -32,6 +32,7 @@
         <item name="android:background">@color/white</item>
         <item name="android:radius">2dp</item>
         <item name="android:elevation">4dp</item>
+        <item name="android:clipToPadding">false</item>
     </style>
 
     <style name="MyTextViewStyle" parent="android:Widget.TextView">
@@ -53,11 +54,9 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:padding">@dimen/md_keylines</item>
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
-        <item name="android:gravity">center_vertical|left</item>
-        <item name="android:paddingLeft">@dimen/card_margin</item>
-        <item name="android:paddingRight">@dimen/card_margin</item>
         <item name="android:background">@color/colorLightPrimaryLighter</item>
     </style>
 
@@ -89,7 +88,7 @@
         <item name="android:layout_height">@dimen/my_button_height</item>
         <item name="android:layout_weight">3</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:background">@drawable/buttonaddchildstyle</item>
+        <item name="android:background">@drawable/buttonstyle1</item>
         <item name="android:shadowColor">#A8A8A8</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">0</item>
@@ -130,5 +129,8 @@
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:fitsSystemWindows">true</item>
     </style>
+
+    <!--<item name="android:radius">6dp</item>-->
+    <!--<item name="android:elevation">8dp</item>-->
 
 </resources>

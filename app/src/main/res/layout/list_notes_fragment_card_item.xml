@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list_notes_fragment_card_item"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/notes_card_item_height"
+    android:layout_height="wrap_content"
+    android:minHeight="50dp"
     android:layout_gravity="center"
     android:radius="6dp"
     android:elevation="8dp"
     android:layout_marginBottom="@dimen/md_keylines"
-    android:layout_marginLeft="@dimen/md_keylines"
-    android:layout_marginRight="@dimen/md_keylines"
     android:foreground="?attr/selectableItemBackground">
+    <!--android:layout_height="@dimen/notes_card_item_height"-->
 
     <LinearLayout
         android:layout_width="match_parent"
