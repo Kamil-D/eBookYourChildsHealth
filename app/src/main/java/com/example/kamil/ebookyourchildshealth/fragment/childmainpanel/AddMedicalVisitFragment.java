@@ -21,7 +21,7 @@ import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
-import com.example.kamil.ebookyourchildshealth.util.Util;
+import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -177,7 +177,7 @@ public class AddMedicalVisitFragment extends Fragment {
             else
                 Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
 
-            getActivity().setResult(Util.RESULT_CODE, null);
+            getActivity().setResult(UtilCode.RESULT_CODE, null);
             getActivity().finish();
         } else
             Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();

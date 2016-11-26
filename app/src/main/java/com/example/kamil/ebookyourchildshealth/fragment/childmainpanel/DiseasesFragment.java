@@ -20,7 +20,7 @@ import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.DiseaseListItem;
-import com.example.kamil.ebookyourchildshealth.util.Util;
+import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.ArrayList;
 
@@ -84,7 +84,7 @@ public class DiseasesFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode== Util.RESULT_CODE) {
+        if (resultCode== UtilCode.RESULT_CODE) {
             getDiseaseDataFromDatabase();
             createAndSetContentAdapter();
         }

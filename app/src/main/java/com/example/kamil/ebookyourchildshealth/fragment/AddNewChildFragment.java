@@ -30,7 +30,7 @@ import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.ChooseChildMainActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Child;
-import com.example.kamil.ebookyourchildshealth.util.Util;
+import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -189,12 +189,12 @@ public class AddNewChildFragment extends Fragment {
 //        IntentHelper.chooseFileIntent(this);
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);  // nowy intent i ustawia typ na pobranie plików
         intent.setType("image/*");  // typ pliku
-        this.startActivityForResult(intent, Util.FILE_PICK_CODE);
+        this.startActivityForResult(intent, UtilCode.FILE_PICK_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Util.FILE_PICK_CODE && resultCode == RESULT_OK) {
+        if (requestCode == UtilCode.FILE_PICK_CODE && resultCode == RESULT_OK) {
 
             Uri imageUri;
             imageUri = data.getData();
