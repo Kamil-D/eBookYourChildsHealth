@@ -111,6 +111,11 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/buttonVisitReminder"
+        android:text="@string/button_add_visit_reminder"
+        android:textSize="25sp"
+        style="@style/MyButtonStyle"/>
 
     <Button
         android:id="@+id/buttonUpdateVisit"

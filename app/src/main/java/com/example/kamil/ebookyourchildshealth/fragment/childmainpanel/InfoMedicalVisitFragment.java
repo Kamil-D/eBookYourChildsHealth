@@ -1,11 +1,14 @@
 package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
@@ -16,8 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
@@ -27,6 +32,7 @@ import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -43,6 +49,8 @@ public class InfoMedicalVisitFragment extends Fragment {
     private int childIDFromIntent;
     private Visit visitObject;
     private Visit visitUpdatedObject;
+    private int day, month, year, hour, minute;
+    private Calendar calendar;
     private static Context context;
 
     @BindString(R.string.pick_date)
@@ -89,6 +97,9 @@ public class InfoMedicalVisitFragment extends Fragment {
 
     @BindView(R.id.columnMedicinesValue)
     TextView textViewMedicinesValue;
+
+    @BindView(R.id.buttonVisitReminder)
+    Button buttonAddVisitReminder;
 
     @BindView(R.id.buttonUpdateVisit)
     Button buttonUpdateVisit;
@@ -346,41 +357,115 @@ public class InfoMedicalVisitFragment extends Fragment {
     }
 
 
-//    public void Reminder {
-//        ContentValues values = new ContentValues();
-//        Calendar cal = Calendar.getInstance();
-//
-//
-//
-//        // Add to Android db; duration is null for nonrecurring events.
-//        values.put(CalendarContract.Events.CALENDAR_ID, 1);
-//        values.put(CalendarContract.Events.DTSTART, cal.getTimeInMillis() + 1000 *60*15);
-//        values.put(CalendarContract.Events.DTEND, cal.getTimeInMillis()+ 1000 *60*30);
-//        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
-//        values.put(CalendarContract.Events.TITLE, "SZCZEPIENIE KURWA");
-//        values.put(CalendarContract.Events.DESCRIPTION, "IDZ ZASZCZEP PSA GNOJU");
-//
-//        Uri baseUri;
+    @OnClick(R.id.buttonVisitReminder)
+    public void showDateAndTimePickerDialog(View v) {
+        showDatePickerDialog();
+    }
+
+    private void showDatePickerDialog() {
+        setCurrentDateAndTime();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                android.R.style.Theme_Holo_Light_Dialog_NoActionBar,datePickerListener,
+                year, month, day);
+        datePickerDialog.show();
+    }
+
+    private void showTimePickerDialog() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                android.R.style.Theme_Holo_Light_Dialog_NoActionBar, timePickerListener,
+                hour, minute, true);
+        timePickerDialog.show();
+    }
+
+    private void setCurrentDateAndTime() {
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        hour = calendar.get(Calendar.HOUR);
+        minute = calendar.get(Calendar.MINUTE);
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener =
+            new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    setDateOnVariables(year, monthOfYear, dayOfMonth);
+                    showTimePickerDialog();
+                }
+            };
+
+    private TimePickerDialog.OnTimeSetListener timePickerListener =
+            new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                    setTimeOnVariables(selectedHour, selectedMinute);
+                    setReminder();
+                }
+            };
+
+    private void setDateOnVariables(int year, int monthOfYear, int dayOfMonth) {
+        this.year = year;
+        this.month = monthOfYear;
+        this.day = dayOfMonth;
+    }
+
+    private void setTimeOnVariables(int selectedHour, int selectedMinute) {
+        this.hour = selectedHour;
+        this.minute = selectedMinute;
+    }
+
+    private void setReminder() {
+        ContentValues values = new ContentValues();
+
+        long startMillis;
+        long endMillis;
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(year, month, day, hour, minute);
+        startMillis = beginTime.getTimeInMillis();
+        endMillis = startMillis;
+
+        // Add to Android db; duration is null for nonrecurring events.
+        values.put(CalendarContract.Events.CALENDAR_ID, 1);
+        values.put(CalendarContract.Events.DTSTART, startMillis );
+        values.put(CalendarContract.Events.DTEND, endMillis );
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+        values.put(CalendarContract.Events.TITLE, visitObject.getName() + " - " + getDiseaseDataFromDatabase());
+        values.put(CalendarContract.Events.DESCRIPTION, visitObject.getName() + " - " + getDiseaseDataFromDatabase());
+
+        Uri baseUri = Uri.parse("content://com.android.calendar/events");
 //        if (Build.VERSION.SDK_INT >= 8) {
 //            baseUri = Uri.parse("content://com.android.calendar/events");
 //        } else {
 //            baseUri = Uri.parse("content://calendar/events");
 //        }
-//
-//        Uri event = getContext().getContentResolver().insert(baseUri, values);
-//
-//        values = new ContentValues();
-//        values.put(CalendarContract.Reminders.EVENT_ID, Long.parseLong(event.getLastPathSegment()));
-//        values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
-//        values.put(CalendarContract.Reminders.MINUTES, 14);
-//
-//        Uri baseUri2;
+
+        Uri event = getContext().getContentResolver().insert(baseUri, values);
+
+        values = new ContentValues();
+        values.put(CalendarContract.Reminders.EVENT_ID, Long.parseLong(event.getLastPathSegment()));
+        values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+        values.put(CalendarContract.Reminders.MINUTES, 0);
+
+        Uri baseUri2 = Uri.parse("content://com.android.calendar/reminders");
 //        if (Build.VERSION.SDK_INT >= 8) {
 //            baseUri2 = Uri.parse("content://com.android.calendar/reminders");
 //        } else {
 //            baseUri2 = Uri.parse("content://calendar/reminders");
 //        }
-//
-//        getContext().getContentResolver().insert(baseUri2, values);
-//    }
+
+        getContext().getContentResolver().insert(baseUri2, values);
+
+        showToastInfo();
+    }
+
+    private void showToastInfo() {
+        Toast toast = Toast.makeText(getActivity(), "PRZYPOMNIENIE ZOSTAŁO USTAWIONE!", Toast.LENGTH_LONG);
+        ViewGroup group = (ViewGroup) toast.getView();
+        TextView messageTextView = (TextView) group.getChildAt(0);
+        messageTextView.setTextSize(30);
+        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
 }

@@ -40,6 +40,7 @@
     <string name="button_edit_disease">Edytuj chorobę</string>
     <string name="button_add_note">Dodaj notatkę</string>
     <string name="text_view_add_note">Dodaj notatkę</string>
+    <string name="button_add_visit_reminder">Ustaw przypomnienie</string>
 
 
     <string name="fragment_decision_visit">fragmentVisit</string>
