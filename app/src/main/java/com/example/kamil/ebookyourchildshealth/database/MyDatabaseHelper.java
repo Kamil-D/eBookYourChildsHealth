@@ -56,7 +56,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String NOTES_COL_1 = "ID";
     public static final String NOTES_COL_2 = "DISEASES_ID";
-    public static final String NOTES_COL_3 = "NAME";
+    public static final String NOTES_COL_3 = "DATE";
     public static final String NOTES_COL_4 = "MESSAGE";
 
     public static final String DATABASE_SQL_QUERY_CREATE_CHILD_TABLE =
@@ -103,7 +103,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     " (" +
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "DISEASES_ID INTEGER REFERENCES " + DISEASES_TABLE_NAME + ", " +
-                    "NAME TEXT," +
+                    "DATE TEXT," +
                     "MESSAGE TEXT" +
                     ") ";
 

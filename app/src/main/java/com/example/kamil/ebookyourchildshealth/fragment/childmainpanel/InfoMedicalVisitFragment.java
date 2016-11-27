@@ -418,17 +418,17 @@ public class InfoMedicalVisitFragment extends Fragment {
     private void setReminder() {
         ContentValues values = new ContentValues();
 
-        long startMillis;
-        long endMillis;
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(year, month, day, hour, minute);
-        startMillis = beginTime.getTimeInMillis();
-        endMillis = startMillis;
+        long startTime;
+        long endTime;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hour, minute);
+        startTime = calendar.getTimeInMillis();
+        endTime = startTime;
 
         // Add to Android db; duration is null for nonrecurring events.
         values.put(CalendarContract.Events.CALENDAR_ID, 1);
-        values.put(CalendarContract.Events.DTSTART, startMillis );
-        values.put(CalendarContract.Events.DTEND, endMillis );
+        values.put(CalendarContract.Events.DTSTART, startTime );
+        values.put(CalendarContract.Events.DTEND, endTime );
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
         values.put(CalendarContract.Events.TITLE, visitObject.getName() + " - " + getDiseaseDataFromDatabase());
         values.put(CalendarContract.Events.DESCRIPTION, visitObject.getName() + " - " + getDiseaseDataFromDatabase());
