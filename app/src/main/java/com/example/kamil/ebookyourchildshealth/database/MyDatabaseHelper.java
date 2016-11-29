@@ -343,6 +343,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor readDiseaseNameData(int id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor result = database.rawQuery("select name from " + DISEASES_TABLE_NAME + " WHERE id = ? ;" ,
+                new String[] { String.valueOf(id) });
+        return result;
+    }
+
     public boolean updateMedicalVisitData(Visit visit, int visitID) {
 
         SQLiteDatabase database = this.getWritableDatabase();

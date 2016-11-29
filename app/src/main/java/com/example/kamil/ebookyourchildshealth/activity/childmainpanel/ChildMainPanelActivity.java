@@ -277,7 +277,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
             diseasesFragment = (DiseasesFragment) getSupportFragmentManager().findFragmentByTag(fragmentTypeName);
 
             if (diseasesFragment != null && diseasesFragment.isVisible()) {
-                diseasesFragment.deleteMedicalVisit(intent);
+                diseasesFragment.deleteDisease(intent);
             }
         }
 

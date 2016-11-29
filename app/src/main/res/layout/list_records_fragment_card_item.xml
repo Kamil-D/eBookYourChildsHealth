@@ -26,9 +26,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="newActivityGoToInfoPanelActivity"
-            android:radius="6dp"
-            android:elevation="8dp" />
+            android:onClick="newActivityGoToInfoPanelActivity" />
 
         <ImageButton
             android:id="@+id/buttonDeleteRecord"
@@ -38,9 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:scaleType="centerCrop"
-            android:onClick="deleteRecordFromDB"
-            android:radius="6dp"
-            android:elevation="8dp" />
+            android:onClick="deleteRecordFromDB" />
 
     </LinearLayout>
 

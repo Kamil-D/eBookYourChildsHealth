@@ -16,6 +16,11 @@ public class DiseaseListItem {
         this.date = date;
     }
 
+    public DiseaseListItem(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

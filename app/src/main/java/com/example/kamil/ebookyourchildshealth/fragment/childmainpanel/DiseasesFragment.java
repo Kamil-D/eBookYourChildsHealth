@@ -95,7 +95,7 @@ public class DiseasesFragment extends Fragment {
         startActivityForResult(intent, REQUEST_CODE);
     }
 
-    public void deleteMedicalVisit(Intent intent) {
+    public void deleteDisease(Intent intent) {
         Bundle bundle = intent.getBundleExtra("bundle");
         idDiseaseToDelete = bundle.getInt("idObjectToDelete");
         showDialogToConfirmDeleteOperation();

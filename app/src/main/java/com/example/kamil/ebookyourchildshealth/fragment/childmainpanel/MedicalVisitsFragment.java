@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
+import com.example.kamil.ebookyourchildshealth.model.DiseaseListItem;
 import com.example.kamil.ebookyourchildshealth.model.VisitListItem;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
@@ -130,7 +131,7 @@ public class MedicalVisitsFragment extends Fragment {
         childNameFromIntent = bundle.getString("childNameFromIntent");
     }
 
-    public void getVisitDataFromDatabase() {
+    private void getVisitDataFromDatabase() {
         visitListItemObjectsArrayList = new ArrayList<>();
         VisitListItem visitListItem;
 
@@ -141,10 +142,27 @@ public class MedicalVisitsFragment extends Fragment {
         }
 
         while(cursor.moveToNext()) {
-            visitListItem = new VisitListItem(cursor.getInt(0), cursor.getString(2), cursor.getString(5));
+            visitListItem = new VisitListItem(cursor.getInt(0), cursor.getString(2),
+                    getConnectedDiseaseNameFromDatabase(cursor.getInt(4)), cursor.getString(5));
             visitListItemObjectsArrayList.add(visitListItem);
         }
 
+    }
+
+    private String getConnectedDiseaseNameFromDatabase(int diseaseId) {
+        String diseaseName = "";
+
+        Cursor cursor = myDatabaseHelper.readDiseaseNameData(diseaseId);
+
+        if(cursor.getCount() == 0) {
+            return diseaseName;
+        }
+
+        while(cursor.moveToNext()) {
+            diseaseName = cursor.getString(0);
+        }
+
+        return diseaseName;
     }
 
     private void createAndSetContentAdapter() {
@@ -196,7 +214,8 @@ public class MedicalVisitsFragment extends Fragment {
         public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
             String tempString = "";
             tempString += visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getName()
-                    + "  -  " + visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getDate();
+                    + "  -  " + visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getDate()
+                    + "\nChoroba: " + visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getDisease();
             holder.button.setText(tempString);
             // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
             int id = visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getId();

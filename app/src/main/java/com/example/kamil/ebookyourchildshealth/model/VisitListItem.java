@@ -8,11 +8,13 @@ public class VisitListItem {
 
     private int id;
     private String name;
+    private String disease;
     private String date;
 
-    public VisitListItem (int id, String name, String date) {
+    public VisitListItem (int id, String name, String disease, String date) {
         this.id = id;
         this.name = name;
+        this.disease = disease;
         this.date = date;
     }
 
@@ -30,6 +32,14 @@ public class VisitListItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDisease() {
+        return disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
     }
 
     public String getDate() {
