@@ -105,10 +105,7 @@ public class MedicalVisitsFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
         builder.setTitle("Czy chcesz usunąć wizytę?");
-        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
-        final EditText editTextDialog = (EditText) myView.findViewById(R.id.text_view_dialog);
-        editTextDialog.setFocusable(false);
-        editTextDialog.setClickable(false);
+        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_delete_view, null);
         builder.setView(myView);
         builder.setNegativeButton("NIE",null);
         builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {

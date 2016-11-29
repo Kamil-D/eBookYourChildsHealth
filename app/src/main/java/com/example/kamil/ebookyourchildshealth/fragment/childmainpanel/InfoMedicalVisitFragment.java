@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
@@ -259,7 +258,7 @@ public class InfoMedicalVisitFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
         builder.setTitle("Edytuj dane:");
-        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
+        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_edit_view, null);
         final EditText editTextDialog = (EditText) myView.findViewById(R.id.text_view_dialog);
         editTextDialog.setText(str);
         builder.setView(myView);

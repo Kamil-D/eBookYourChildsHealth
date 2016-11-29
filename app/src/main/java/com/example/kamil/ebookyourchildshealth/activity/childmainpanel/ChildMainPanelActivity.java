@@ -48,7 +48,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     private FragmentTransaction fragmentTransaction;
     private Bundle bundle;
     private Fragment fragment;
-    private String fragmentType = "";
+    private String fragmentTypeName = "";
 
     @BindView(R.id.drawer_child_main_panel)
     DrawerLayout mDrawerLayout;
@@ -185,11 +185,11 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
 
         } else if (id == R.id.navigation_item_medical_visits) {
             fragment = new MedicalVisitsFragment();
-            fragmentType = fragmentDecisionVisit;
+            fragmentTypeName = fragmentDecisionVisit;
 
         } else if (id == R.id.navigation_item_diseases_history) {
             fragment = new DiseasesFragment();
-            fragmentType = fragmentDecisionDisease;
+            fragmentTypeName = fragmentDecisionDisease;
         }
 
 
@@ -197,7 +197,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
             fragmentManager = getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
-                    .replace(R.id.linearLayoutInNestedScrollViewChildPanel, fragment, fragmentType)
+                    .replace(R.id.linearLayoutInNestedScrollViewChildPanel, fragment, fragmentTypeName)
                     .commit();
 
             navigationView.setCheckedItem(id);
@@ -229,8 +229,8 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putInt("idObjectToShow", idObjectToShow);
         bundle.putString("childNameFromIntent", childNameFromIntent);
 
-        if (fragmentType==fragmentDecisionVisit) {
-            medicalVisitsFragment = (MedicalVisitsFragment) getSupportFragmentManager().findFragmentByTag(fragmentType);
+        if (fragmentTypeName ==fragmentDecisionVisit) {
+            medicalVisitsFragment = (MedicalVisitsFragment) getSupportFragmentManager().findFragmentByTag(fragmentTypeName);
 
             bundle.putString("fragmentDecision",fragmentDecisionVisit);
             intent.putExtra("bundle", bundle);
@@ -239,8 +239,8 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
                 medicalVisitsFragment.newActivityGoToInfoMedicalVisitActivity(intent);
             }
         }
-        else if (fragmentType==fragmentDecisionDisease) {
-            diseasesFragment = (DiseasesFragment) getSupportFragmentManager().findFragmentByTag(fragmentType);
+        else if (fragmentTypeName ==fragmentDecisionDisease) {
+            diseasesFragment = (DiseasesFragment) getSupportFragmentManager().findFragmentByTag(fragmentTypeName);
 
             bundle.putString("fragmentDecision",fragmentDecisionDisease);
             intent.putExtra("bundle", bundle);
@@ -266,15 +266,15 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         bundle.putInt("idObjectToDelete", idObjectToDelete);
         intent.putExtra("bundle", bundle);
 
-        if (fragmentType==fragmentDecisionVisit) {
-            medicalVisitsFragment = (MedicalVisitsFragment) getSupportFragmentManager().findFragmentByTag(fragmentType);
+        if (fragmentTypeName ==fragmentDecisionVisit) {
+            medicalVisitsFragment = (MedicalVisitsFragment) getSupportFragmentManager().findFragmentByTag(fragmentTypeName);
 
             if (medicalVisitsFragment != null && medicalVisitsFragment.isVisible()) {
                 medicalVisitsFragment.deleteMedicalVisit(intent);
             }
         }
-        else if (fragmentType==fragmentDecisionDisease) {
-            diseasesFragment = (DiseasesFragment) getSupportFragmentManager().findFragmentByTag(fragmentType);
+        else if (fragmentTypeName ==fragmentDecisionDisease) {
+            diseasesFragment = (DiseasesFragment) getSupportFragmentManager().findFragmentByTag(fragmentTypeName);
 
             if (diseasesFragment != null && diseasesFragment.isVisible()) {
                 diseasesFragment.deleteMedicalVisit(intent);

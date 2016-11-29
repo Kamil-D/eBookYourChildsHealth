@@ -200,7 +200,7 @@ public class InfoDiseaseFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
         builder.setTitle("Edytuj dane:");
-        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_view, null);
+        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_edit_view, null);
         final EditText editTextDialog = (EditText) myView.findViewById(R.id.text_view_dialog);
         editTextDialog.setText(str);
         builder.setView(myView);
