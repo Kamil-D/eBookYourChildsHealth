@@ -57,7 +57,7 @@
         <item name="android:padding">@dimen/md_keylines</item>
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
-        <item name="android:background">@color/colorLightPrimaryLighter</item>
+        <item name="android:background">@color/colorLightPrimary</item>
     </style>
 
     <style name="MyTextViewStyle2" parent="android:Widget.TextView">

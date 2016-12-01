@@ -3,7 +3,6 @@ package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 import android.app.DatePickerDialog;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
+import com.example.kamil.ebookyourchildshealth.model.DiseaseListItem;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
@@ -41,7 +41,8 @@ public class AddMedicalVisitFragment extends Fragment {
     private Calendar calendar;
     private int childIDFromIntent;
     private Visit visitObject;
-    private static ArrayList<String> diseasesArrayList;
+    private static ArrayList<DiseaseListItem> diseaseListItemObjectsArrayList;
+    private static ArrayList<String> diseasesNameDateArrayList;
     private Bundle bundle;
     @BindString(R.string.pick_date)
     String pickDateString;
@@ -97,7 +98,6 @@ public class AddMedicalVisitFragment extends Fragment {
         myDebugger = new MyDebugger();
         ButterKnife.bind(this, view);
         myDatabaseHelper = new MyDatabaseHelper(getActivity());
-        diseasesArrayList = new ArrayList<>();
 
         getBundleFromIntent();
         setArrayContainsTextViewNames();
@@ -137,10 +137,10 @@ public class AddMedicalVisitFragment extends Fragment {
 
     private void createAndSetSpinners() {
 
-        getVisitDataFromDatabase();
+        getDiseaseDataFromDatabase();
 
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getActivity(),
-                R.layout.spinner_item, diseasesArrayList);
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(getActivity(),
+                R.layout.spinner_item, diseasesNameDateArrayList);
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDisease.setAdapter(adapterSpinner);
 
@@ -148,11 +148,21 @@ public class AddMedicalVisitFragment extends Fragment {
 //        spinnerDisease.getSelectedItemPosition();
     }
 
-    private void getVisitDataFromDatabase() {
+    private void getDiseaseDataFromDatabase() {
+        diseaseListItemObjectsArrayList = new ArrayList<>();
+        diseasesNameDateArrayList = new ArrayList<>();
+        DiseaseListItem disease;
+
         Cursor cursor = myDatabaseHelper.readAllChildDiseasesData(childIDFromIntent);
 
+        if(cursor.getCount() == 0) {
+            return;
+        }
+
         while(cursor.moveToNext()) {
-            diseasesArrayList.add( cursor.getString(2) + " - " + cursor.getString(3) );
+            disease = new DiseaseListItem(cursor.getInt(0), cursor.getString(2), cursor.getString(3));
+            diseaseListItemObjectsArrayList.add(disease);
+            diseasesNameDateArrayList.add(cursor.getString(2) + " - " + cursor.getString(3));
         }
     }
 
@@ -164,7 +174,9 @@ public class AddMedicalVisitFragment extends Fragment {
             visitObject.setChildId(childIDFromIntent);
             visitObject.setName(editTextName.getText().toString());
             visitObject.setDoctor(editTextDoctor.getText().toString());
-            visitObject.setDiseaseId(spinnerDisease.getSelectedItemPosition()+1);
+
+            visitObject.setDiseaseId(diseaseListItemObjectsArrayList.get(spinnerDisease.getSelectedItemPosition()).getId());
+
             visitObject.setDate(buttonVisitDate.getText().toString());
             visitObject.setDescription(editTextDescription.getText().toString());
             visitObject.setRecommendations(editTextRecommendations.getText().toString());

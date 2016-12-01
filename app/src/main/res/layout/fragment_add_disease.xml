@@ -11,7 +11,6 @@
     android:layout_marginBottom="@dimen/md_keylines"
     android:layout_marginLeft="@dimen/md_keylines"
     android:layout_marginRight="@dimen/md_keylines"
-    android:clipToPadding="false"
     tools:context="com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.AddDiseaseFragment">
 
     <LinearLayout
