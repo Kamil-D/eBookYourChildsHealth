@@ -1,4 +1,4 @@
-package com.example.kamil.ebookyourchildshealth.activity.childmainpanel;
+package com.example.kamil.ebookyourchildshealth.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;

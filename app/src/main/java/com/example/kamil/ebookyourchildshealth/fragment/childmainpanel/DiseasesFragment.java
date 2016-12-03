@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.kamil.ebookyourchildshealth.R;
-import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
+import com.example.kamil.ebookyourchildshealth.activity.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Disease;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;

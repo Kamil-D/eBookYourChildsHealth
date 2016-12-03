@@ -6,7 +6,7 @@
     android:id="@+id/activity_add_medical_visit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity">
+    tools:context="com.example.kamil.ebookyourchildshealth.activity.AddObjectActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

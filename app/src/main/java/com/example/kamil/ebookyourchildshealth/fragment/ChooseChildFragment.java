@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
-import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
+import com.example.kamil.ebookyourchildshealth.activity.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.nostra13.universalimageloader.core.ImageLoader;

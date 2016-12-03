@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
-import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.ChildMainPanelActivity;
 import com.example.kamil.ebookyourchildshealth.fragment.ChooseChildFragment;
 import com.example.kamil.ebookyourchildshealth.util.ImageLoaderConfigurationHelper;
 

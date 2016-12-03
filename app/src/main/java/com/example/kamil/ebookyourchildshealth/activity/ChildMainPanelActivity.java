@@ -1,4 +1,4 @@
-package com.example.kamil.ebookyourchildshealth.activity.childmainpanel;
+package com.example.kamil.ebookyourchildshealth.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -22,7 +22,6 @@ import android.widget.ImageView;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
-import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplemented;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.ChildMainPanelFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.DiseasesFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.MedicalVisitsFragment;

@@ -23,14 +23,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.childmainpanel.ChildMainPanelActivity"
+            android:name=".activity.ChildMainPanelActivity"
             android:parentActivityName=".activity.ChooseChildMainActivity" />
         <activity
-            android:name=".activity.childmainpanel.InfoObjectActivity"
-            android:parentActivityName=".activity.childmainpanel.ChildMainPanelActivity" />
+            android:name=".activity.InfoObjectActivity"
+            android:parentActivityName=".activity.ChildMainPanelActivity" />
         <activity
-            android:name=".activity.childmainpanel.AddObjectActivity"
-            android:parentActivityName=".activity.childmainpanel.ChildMainPanelActivity" />
+            android:name=".activity.AddObjectActivity"
+            android:parentActivityName=".activity.ChildMainPanelActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
