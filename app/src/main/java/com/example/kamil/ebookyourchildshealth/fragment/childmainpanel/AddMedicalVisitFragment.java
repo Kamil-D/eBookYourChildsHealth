@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
-import com.example.kamil.ebookyourchildshealth.model.DiseaseListItem;
+import com.example.kamil.ebookyourchildshealth.model.Disease;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
@@ -41,7 +41,7 @@ public class AddMedicalVisitFragment extends Fragment {
     private Calendar calendar;
     private int childIDFromIntent;
     private Visit visitObject;
-    private static ArrayList<DiseaseListItem> diseaseListItemObjectsArrayList;
+    private static ArrayList<Disease> diseaseRecyclerViewItemArrayList;
     private static ArrayList<String> diseasesNameDateArrayList;
     private Bundle bundle;
     @BindString(R.string.pick_date)
@@ -149,9 +149,9 @@ public class AddMedicalVisitFragment extends Fragment {
     }
 
     private void getDiseaseDataFromDatabase() {
-        diseaseListItemObjectsArrayList = new ArrayList<>();
+        diseaseRecyclerViewItemArrayList = new ArrayList<>();
         diseasesNameDateArrayList = new ArrayList<>();
-        DiseaseListItem disease;
+        Disease disease;
 
         Cursor cursor = myDatabaseHelper.readAllChildDiseasesData(childIDFromIntent);
 
@@ -160,8 +160,8 @@ public class AddMedicalVisitFragment extends Fragment {
         }
 
         while(cursor.moveToNext()) {
-            disease = new DiseaseListItem(cursor.getInt(0), cursor.getString(2), cursor.getString(3));
-            diseaseListItemObjectsArrayList.add(disease);
+            disease = new Disease(cursor.getInt(0), cursor.getString(2), cursor.getString(3));
+            diseaseRecyclerViewItemArrayList.add(disease);
             diseasesNameDateArrayList.add(cursor.getString(2) + " - " + cursor.getString(3));
         }
     }
@@ -175,7 +175,7 @@ public class AddMedicalVisitFragment extends Fragment {
             visitObject.setName(editTextName.getText().toString());
             visitObject.setDoctor(editTextDoctor.getText().toString());
 
-            visitObject.setDiseaseId(diseaseListItemObjectsArrayList.get(spinnerDisease.getSelectedItemPosition()).getId());
+            visitObject.setDiseaseId(diseaseRecyclerViewItemArrayList.get(spinnerDisease.getSelectedItemPosition()).getId());
 
             visitObject.setDate(buttonVisitDate.getText().toString());
             visitObject.setDescription(editTextDescription.getText().toString());

@@ -6,8 +6,28 @@ package com.example.kamil.ebookyourchildshealth.model;
 
 public class Note {
 
+    private int id;
     private int diseaseId;
     private String noteText;
+
+    public Note() {
+
+    }
+
+    public Note(int id, int diseaseId, String noteText) {
+        this.id = id;
+        this.diseaseId = diseaseId;
+        this.noteText = noteText;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getDiseaseId() {
         return diseaseId;

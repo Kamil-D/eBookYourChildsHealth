@@ -14,14 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
-import com.example.kamil.ebookyourchildshealth.model.DiseaseListItem;
-import com.example.kamil.ebookyourchildshealth.model.VisitListItem;
+import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class MedicalVisitsFragment extends Fragment {
     private int childIDFromIntent;
     private String childNameFromIntent;
     private static Context context;
-    private static ArrayList<VisitListItem> visitListItemObjectsArrayList;
+    private static ArrayList<Visit> visitRecyclerViewItemArrayList;
 
     @BindString(R.string.fragment_decision_visit)
     String fragmentDecisionVisit;
@@ -132,8 +130,8 @@ public class MedicalVisitsFragment extends Fragment {
     }
 
     private void getVisitDataFromDatabase() {
-        visitListItemObjectsArrayList = new ArrayList<>();
-        VisitListItem visitListItem;
+        visitRecyclerViewItemArrayList = new ArrayList<>();
+        Visit visit;
 
         Cursor cursor = myDatabaseHelper.readAllChildMedicalVisitsData(childIDFromIntent);
 
@@ -142,9 +140,9 @@ public class MedicalVisitsFragment extends Fragment {
         }
 
         while(cursor.moveToNext()) {
-            visitListItem = new VisitListItem(cursor.getInt(0), cursor.getString(2),
+            visit = new Visit(cursor.getInt(0), cursor.getString(2),
                     getConnectedDiseaseNameFromDatabase(cursor.getInt(4)), cursor.getString(5));
-            visitListItemObjectsArrayList.add(visitListItem);
+            visitRecyclerViewItemArrayList.add(visit);
         }
 
     }
@@ -177,7 +175,7 @@ public class MedicalVisitsFragment extends Fragment {
         // Set numbers of List in RecyclerView.
         private int LENGTH = 0;
 
-        private ArrayList<VisitListItem> visitListItemObjectsCardViewItem = new ArrayList<>();
+        private ArrayList<Visit> visitCardViewItem = new ArrayList<>();
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -196,9 +194,9 @@ public class MedicalVisitsFragment extends Fragment {
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
 
-            visitListItemObjectsCardViewItem = visitListItemObjectsArrayList;
+            visitCardViewItem = visitRecyclerViewItemArrayList;
 
-            this.LENGTH = visitListItemObjectsCardViewItem.size();
+            this.LENGTH = visitCardViewItem.size();
         }
 
         @Override
@@ -213,12 +211,12 @@ public class MedicalVisitsFragment extends Fragment {
         @Override
         public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
             String tempString = "";
-            tempString += visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getName()
-                    + "  -  " + visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getDate()
-                    + "\nChoroba: " + visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getDisease();
+            tempString += visitCardViewItem.get(position % visitCardViewItem.size()).getName()
+                    + "  -  " + visitCardViewItem.get(position % visitCardViewItem.size()).getDate()
+                    + "\nChoroba: " + visitCardViewItem.get(position % visitCardViewItem.size()).getDisease();
             holder.button.setText(tempString);
             // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
-            int id = visitListItemObjectsCardViewItem.get(position % visitListItemObjectsCardViewItem.size()).getId();
+            int id = visitCardViewItem.get(position % visitCardViewItem.size()).getId();
             holder.button.setTag(id);
             holder.deleteButton.setTag(id);
         }

@@ -19,7 +19,7 @@ import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.addnewchild.AddNewChildActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
-import com.example.kamil.ebookyourchildshealth.model.ChildListItem;
+import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.FileNotFoundException;
@@ -33,7 +33,7 @@ import butterknife.OnClick;
 public class ChooseChildFragment extends Fragment {
 
     private MyDatabaseHelper myDatabaseHelper;
-    private static ArrayList<ChildListItem> childListItemObjectsArrayList;
+    private static ArrayList<Child> childRecyclerViewItemArrayList;
     private static Drawable[] drawableArrayFromUriImagesArrayList;
     private Intent intent;
     static MyDebugger myDebugger;
@@ -47,7 +47,7 @@ public class ChooseChildFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_choose_child);
         ButterKnife.bind(this, view);
 
-        childListItemObjectsArrayList = new ArrayList<>();
+        childRecyclerViewItemArrayList = new ArrayList<>();
         myDebugger = new MyDebugger();
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity());
 
@@ -60,24 +60,25 @@ public class ChooseChildFragment extends Fragment {
 
     public void getChildNamesAndImagesFromDatabase() {
         Cursor cursor = myDatabaseHelper.readAllChildIdNamesImages();
-        ChildListItem childListItem;
+        Child child;
 
         if(cursor.getCount() == 0) {
             return;
         }
 
         while(cursor.moveToNext()) {
-            childListItem = new ChildListItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
-            childListItemObjectsArrayList.add(childListItem);
+            child = new Child(cursor.getInt(0), cursor.getString(1), Uri.parse(cursor.getString(2)));
+            childRecyclerViewItemArrayList.add(child);
         }
         // dopiero tutaj tworzymy tablicę Drawable bo wiemy już ile elementów ma tablica uri (lub id, name)
-        drawableArrayFromUriImagesArrayList = new Drawable[childListItemObjectsArrayList.size()];
+        drawableArrayFromUriImagesArrayList = new Drawable[childRecyclerViewItemArrayList.size()];
     }
 
     private void uriToDrawableArray() {
-        for (int i = 0; i< childListItemObjectsArrayList.size() ; i++) {
+        for (int i = 0; i< childRecyclerViewItemArrayList.size() ; i++) {
 
-            Uri imageUri = Uri.parse(childListItemObjectsArrayList.get(i).getImageUri());
+//            Uri imageUri = Uri.parse(childRecyclerViewItemArrayList.get(i).getImageUri());
+            Uri imageUri = childRecyclerViewItemArrayList.get(i).getImageUri();
             try {
                 InputStream inputStream = getActivity().getContentResolver().openInputStream(imageUri);
                 drawableArrayFromUriImagesArrayList[i] = Drawable.createFromStream(inputStream, imageUri.toString() );
@@ -116,7 +117,7 @@ public class ChooseChildFragment extends Fragment {
         // Set numbers of List in RecyclerView.
         private int LENGTH = 0;
 
-        private ArrayList<ChildListItem> childListItemObjectsCardViewItem = new ArrayList<>();
+        private ArrayList<Child> childCardViewItem = new ArrayList<>();
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -133,9 +134,9 @@ public class ChooseChildFragment extends Fragment {
 
         public ContentAdapter(Context context) {
 
-            childListItemObjectsCardViewItem = childListItemObjectsArrayList;
+            childCardViewItem = childRecyclerViewItemArrayList;
 
-            LENGTH = childListItemObjectsCardViewItem.size();
+            LENGTH = childCardViewItem.size();
         }
 
         @Override
@@ -149,9 +150,9 @@ public class ChooseChildFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             ImageLoader imageLoader = ImageLoader.getInstance();
-            imageLoader.displayImage(childListItemObjectsCardViewItem.get(position).getImageUri(), holder.pictureImageButton);
+            imageLoader.displayImage(childCardViewItem.get(position).getImageUri().toString(), holder.pictureImageButton);
 
-            holder.childNameTextViewBottomImageButton.setText(childListItemObjectsCardViewItem.get(position).getName());
+            holder.childNameTextViewBottomImageButton.setText(childCardViewItem.get(position).getName());
             /**
              * ImageButton ma ustawiony tag o nazwie imienia dziecka, aby można było później
              * po kliknięciu na niego, wysłać imię do aktywności odpowiadającej za główny panel dziecka.
@@ -160,8 +161,8 @@ public class ChooseChildFragment extends Fragment {
              */
             String tagString = String.valueOf(holder.childNameTextViewBottomImageButton.getText());
             holder.pictureImageButton.setTag(R.integer.tagImageButtonOne, tagString);
-            holder.pictureImageButton.setTag(R.integer.tagImageButtonTwo, childListItemObjectsCardViewItem.get(position).getId());
-            holder.pictureImageButton.setTag(R.integer.tagImageButtonThree, childListItemObjectsCardViewItem.get(position).getImageUri());
+            holder.pictureImageButton.setTag(R.integer.tagImageButtonTwo, childCardViewItem.get(position).getId());
+            holder.pictureImageButton.setTag(R.integer.tagImageButtonThree, childCardViewItem.get(position).getImageUri().toString());
 
         }
 

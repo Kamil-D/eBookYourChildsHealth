@@ -8,6 +8,7 @@ import android.net.Uri;
 
 public class Child {
 
+    private int id;
     private String name;
     private String surname;
     private String pesel;
@@ -17,6 +18,25 @@ public class Child {
     private String birthPlace;
     private String mother;
     private String father;
+    private Uri imageUri;
+
+    public Child() {
+
+    }
+
+    public Child(int id, String name, Uri imageUri) {
+        this.id = id;
+        this.name = name;
+        this.imageUri = imageUri;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Uri getImageUri() {
         return imageUri;
@@ -25,8 +45,6 @@ public class Child {
     public void setImageUri(Uri imageUri) {
         this.imageUri = imageUri;
     }
-
-    private Uri imageUri;
 
     public String getName() {
         return name;

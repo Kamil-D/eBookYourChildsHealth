@@ -13,13 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
-import com.example.kamil.ebookyourchildshealth.model.DiseaseListItem;
+import com.example.kamil.ebookyourchildshealth.model.Disease;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class DiseasesFragment extends Fragment {
     private String childNameFromIntent;
     private int idDiseaseToDelete;
     private static Context context;
-    private static ArrayList<DiseaseListItem> diseaseListItemObjectsArrayList;
+    private static ArrayList<Disease> diseaseRecyclerViewItemArrayList;
 
     @BindString(R.string.fragment_decision_disease)
     String fragmentDecisionDisease;
@@ -133,8 +132,8 @@ public class DiseasesFragment extends Fragment {
     }
 
     public void getDiseaseDataFromDatabase() {
-        diseaseListItemObjectsArrayList = new ArrayList<>();
-        DiseaseListItem disease;
+        diseaseRecyclerViewItemArrayList = new ArrayList<>();
+        Disease disease;
 
         Cursor cursor = myDatabaseHelper.readAllChildDiseasesData(childIDFromIntent);
 
@@ -143,8 +142,8 @@ public class DiseasesFragment extends Fragment {
         }
 
         while(cursor.moveToNext()) {
-            disease = new DiseaseListItem(cursor.getInt(0), cursor.getString(2), cursor.getString(3));
-            diseaseListItemObjectsArrayList.add(disease);
+            disease = new Disease(cursor.getInt(0), cursor.getString(2), cursor.getString(3));
+            diseaseRecyclerViewItemArrayList.add(disease);
         }
 
     }
@@ -160,7 +159,7 @@ public class DiseasesFragment extends Fragment {
 
         // Set numbers of List in RecyclerView.
         private int LENGTH = 0;
-        private ArrayList<DiseaseListItem> diseaseListItemObjectsCardViewItem = new ArrayList<>();
+        private ArrayList<Disease> diseaseCardViewItem = new ArrayList<>();
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -178,9 +177,9 @@ public class DiseasesFragment extends Fragment {
 
         public ContentAdapter(Context context) {
 
-            diseaseListItemObjectsCardViewItem = diseaseListItemObjectsArrayList;
+            diseaseCardViewItem = diseaseRecyclerViewItemArrayList;
 
-            this.LENGTH = diseaseListItemObjectsCardViewItem.size();
+            this.LENGTH = diseaseCardViewItem.size();
         }
 
         @Override
@@ -195,11 +194,11 @@ public class DiseasesFragment extends Fragment {
         @Override
         public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
             String tempString = "";
-            tempString += diseaseListItemObjectsCardViewItem.get(position % diseaseListItemObjectsCardViewItem.size()).getName()
-                    + "  -  " + diseaseListItemObjectsCardViewItem.get(position % diseaseListItemObjectsCardViewItem.size()).getDate();
+            tempString += diseaseCardViewItem.get(position % diseaseCardViewItem.size()).getName()
+                    + "  -  " + diseaseCardViewItem.get(position % diseaseCardViewItem.size()).getDate();
             holder.button.setText(tempString);
             // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
-            int id = diseaseListItemObjectsCardViewItem.get(position % diseaseListItemObjectsCardViewItem.size()).getId();
+            int id = diseaseCardViewItem.get(position % diseaseCardViewItem.size()).getId();
             holder.button.setTag(id);
             holder.deleteButton.setTag(id);
         }

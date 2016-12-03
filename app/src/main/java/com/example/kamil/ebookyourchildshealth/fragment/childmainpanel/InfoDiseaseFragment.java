@@ -24,7 +24,6 @@ import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Disease;
 import com.example.kamil.ebookyourchildshealth.model.Note;
-import com.example.kamil.ebookyourchildshealth.model.NoteItemList;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class InfoDiseaseFragment extends Fragment {
     private Disease diseaseObject;
     private Disease diseaseUpdatedObject;
     private Note noteObject;
-    private static ArrayList<NoteItemList> noteListItemObjectsArrayList;
+    private static ArrayList<Note> noteRecyclerViewItemArrayList;
     private static Context context;
 
     @BindString(R.string.pick_date)
@@ -171,8 +170,8 @@ public class InfoDiseaseFragment extends Fragment {
     }
 
     public void getDiseaseNoteDataFromDatabase() {
-        noteListItemObjectsArrayList = new ArrayList<>();
-        NoteItemList noteItemList;
+        noteRecyclerViewItemArrayList = new ArrayList<>();
+        Note note;
 
         Cursor cursor = myDatabaseHelper.readDiseaseNoteData(idDisease);
 
@@ -181,9 +180,9 @@ public class InfoDiseaseFragment extends Fragment {
         }
 
         while(cursor.moveToNext()) {
-            noteItemList = new NoteItemList(cursor.getInt(0), cursor.getInt(1), cursor.getString(3));
+            note = new Note(cursor.getInt(0), cursor.getInt(1), cursor.getString(3));
             myDebugger.someMethod("GET NOTE FROM DB: " + cursor.getInt(0) + " " + cursor.getInt(1) + " " + cursor.getString(3));
-            noteListItemObjectsArrayList.add(noteItemList);
+            noteRecyclerViewItemArrayList.add(note);
         }
 
     }
@@ -302,7 +301,7 @@ public class InfoDiseaseFragment extends Fragment {
         // Set numbers of List in RecyclerView.
         private int LENGTH = 0;
 
-        private ArrayList<NoteItemList> noteListItemObjectsCardViewItem = new ArrayList<>();
+        private ArrayList<Note> noteCardViewItem = new ArrayList<>();
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -317,9 +316,9 @@ public class InfoDiseaseFragment extends Fragment {
 
         public ContentAdapter(Context context) {
 
-            noteListItemObjectsCardViewItem = noteListItemObjectsArrayList;
+            noteCardViewItem = noteRecyclerViewItemArrayList;
 
-            this.LENGTH = noteListItemObjectsCardViewItem.size();
+            this.LENGTH = noteCardViewItem.size();
         }
 
         @Override
@@ -333,11 +332,11 @@ public class InfoDiseaseFragment extends Fragment {
          */
         @Override
         public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
-            String tempString =  noteListItemObjectsCardViewItem.get(position % noteListItemObjectsCardViewItem.size()).getNoteText();
+            String tempString =  noteCardViewItem.get(position % noteCardViewItem.size()).getNoteText();
             myDebugger.someMethod("RECYCLER VIEW NOTE OBVH: " + tempString);
             holder.textViewNoteText.setText(tempString);
             // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
-            int id = noteListItemObjectsCardViewItem.get(position % noteListItemObjectsCardViewItem.size()).getId();
+            int id = noteCardViewItem.get(position % noteCardViewItem.size()).getId();
             holder.textViewNoteText.setTag(R.integer.tagNoteId, id);
         }
 

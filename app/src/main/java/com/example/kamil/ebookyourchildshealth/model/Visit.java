@@ -6,15 +6,44 @@ package com.example.kamil.ebookyourchildshealth.model;
 
 public class Visit {
 
+    private int id;
     private int childId;
     private String name;
     private String doctor;
     private int diseaseId;
+    private String disease;
     private String date;
     private String description;
     private String recommendations;
     private String medicines;
 
+    public Visit () {
+
+    }
+
+    public Visit (int id, String name, String disease, String date) {
+        this.id = id;
+        this.name = name;
+        this.disease = disease;
+        this.date = date;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDisease() {
+        return disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
+    }
 
     public int getChildId() {
         return childId;

@@ -11,6 +11,16 @@ public class Disease {
     private String name;
     private String date;
 
+    public Disease() {
+
+    }
+
+    public Disease(int id, String name, String date) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }
