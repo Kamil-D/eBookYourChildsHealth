@@ -271,9 +271,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put(NOTES_COL_2, note.getDiseaseId());
+            contentValues.put(NOTES_COL_3, note.getDate());
             contentValues.put(NOTES_COL_4, note.getNoteText());
-
-            myDebugger.someMethod("DB DURING SAVE NOTE: " + note.getNoteText());
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
             result = database.insertOrThrow(DISEASES_NOTES_TABLE_NAME, null, contentValues);
@@ -421,7 +420,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    public boolean deleteDiseaseNoteData(int diseaseID) {
+    public boolean deleteAllDiseaseNoteData(int diseaseID) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         String selection = NOTES_COL_2 + "= ?";
@@ -434,4 +433,19 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         else
             return false;
     }
+
+    public boolean deleteDiseaseNoteData(int noteID) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        String selection = NOTES_COL_1 + "= ?";
+        String[] selectionArgs = new String[] { String.valueOf(noteID) };
+
+        int numberOfRowsAffected = database.delete(DISEASES_NOTES_TABLE_NAME, selection, selectionArgs);
+
+        if (numberOfRowsAffected==1)
+            return true;
+        else
+            return false;
+    }
+
 }

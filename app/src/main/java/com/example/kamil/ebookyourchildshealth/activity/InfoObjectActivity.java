@@ -1,10 +1,14 @@
 package com.example.kamil.ebookyourchildshealth.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
 
+import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplemented;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.AddDiseaseFragment;
@@ -17,6 +21,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
+
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    MyDebugger myDebugger;
 
     @BindView(R.id.toolbar_object_info)
     Toolbar toolbar;
@@ -35,7 +43,7 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_object_info);
-
+        myDebugger = new MyDebugger();
         ButterKnife.bind(this);
 
         setToolbars();
@@ -55,23 +63,42 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
 
         if (fragmentDecision.equals(fragmentDecisionVisit)) {
             InfoMedicalVisitFragment infoMedicalVisitFragment = new InfoMedicalVisitFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewObjectInfo,infoMedicalVisitFragment,"fragment");
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewObjectInfo,
+                    infoMedicalVisitFragment, fragmentDecisionVisit);
+
             fragmentTransaction.commit();
         }
         else if (fragmentDecision.equals(fragmentDecisionDisease)) {
             InfoDiseaseFragment infoDiseaseFragment = new InfoDiseaseFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewObjectInfo,infoDiseaseFragment,"fragment");
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewObjectInfo,
+                    infoDiseaseFragment, fragmentDecisionDisease);
+
             fragmentTransaction.commit();
         }
+    }
 
-//        InfoMedicalVisitFragment infoMedicalVisitFragment = new InfoMedicalVisitFragment();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewInfoMedicalVisit, infoMedicalVisitFragment,"fragment");
-//        fragmentTransaction.commit();
+
+    public void deleteNoteFromDB(View view) {
+        int idObjectToDelete = getImageButtonDeleteTag(view);
+        InfoDiseaseFragment infoDiseaseFragment;
+
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putInt("idObjectToDelete", idObjectToDelete);
+        intent.putExtra("bundle", bundle);
+
+        infoDiseaseFragment = (InfoDiseaseFragment) getSupportFragmentManager().findFragmentByTag(fragmentDecisionDisease);
+        myDebugger.someMethod("InfoObjectActivity " + infoDiseaseFragment);
+        infoDiseaseFragment.deleteNote(intent);
+    }
+
+    private int getImageButtonDeleteTag(View v) {
+        ImageButton button = (ImageButton) v;
+        int buttonTag = Integer.parseInt(button.getTag().toString());
+        return buttonTag;
     }
 }

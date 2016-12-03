@@ -8,15 +8,17 @@ public class Note {
 
     private int id;
     private int diseaseId;
+    private String date;
     private String noteText;
 
     public Note() {
 
     }
 
-    public Note(int id, int diseaseId, String noteText) {
+    public Note(int id, int diseaseId, String date, String noteText) {
         this.id = id;
         this.diseaseId = diseaseId;
+        this.date = date;
         this.noteText = noteText;
     }
 
@@ -35,6 +37,14 @@ public class Note {
 
     public void setDiseaseId(int diseaseId) {
         this.diseaseId = diseaseId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getNoteText() {

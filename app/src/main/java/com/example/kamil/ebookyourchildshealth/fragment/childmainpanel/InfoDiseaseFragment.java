@@ -2,6 +2,7 @@ package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.example.kamil.ebookyourchildshealth.model.Note;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -41,6 +44,7 @@ public class InfoDiseaseFragment extends Fragment {
     private String[] textViewLeftColumnNamesArray;
     private int idDisease;
     private int childIDFromIntent;
+    private int idNote;
     private Disease diseaseObject;
     private Disease diseaseUpdatedObject;
     private Note noteObject;
@@ -180,11 +184,24 @@ public class InfoDiseaseFragment extends Fragment {
         }
 
         while(cursor.moveToNext()) {
-            note = new Note(cursor.getInt(0), cursor.getInt(1), cursor.getString(3));
-            myDebugger.someMethod("GET NOTE FROM DB: " + cursor.getInt(0) + " " + cursor.getInt(1) + " " + cursor.getString(3));
+            note = new Note(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3));
             noteRecyclerViewItemArrayList.add(note);
         }
 
+    }
+
+    private String getCurrentDate() {
+        String dateString;
+        int day, month, year;
+        Calendar calendar = Calendar.getInstance();
+
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        dateString = String.valueOf(day) + "/" + String.valueOf(month) + "/" +String.valueOf(year);
+
+        return dateString;
     }
 
     private void createAndSetContentAdapter() {
@@ -282,6 +299,7 @@ public class InfoDiseaseFragment extends Fragment {
         if (!editTextNoteMessage.getText().toString().matches("")) {
             noteObject.setDiseaseId(idDisease);
             noteObject.setNoteText(editTextNoteMessage.getText().toString());
+            noteObject.setDate(getCurrentDate());
 
             boolean isInserted = myDatabaseHelper.insertDataIntoNotesTable(noteObject);
 
@@ -299,6 +317,31 @@ public class InfoDiseaseFragment extends Fragment {
             Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();
     }
 
+    public void deleteNote(Intent intent) {
+        Bundle bundle = intent.getBundleExtra("bundle");
+        idNote = bundle.getInt("idObjectToDelete");
+        myDebugger.someMethod("Fragment deleteNote " + idNote);
+        showDialogToConfirmDeleteOperation();
+    }
+
+    public void showDialogToConfirmDeleteOperation() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
+        builder.setTitle("Czy chcesz usunąć notatkę?");
+        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_delete_view, null);
+        builder.setView(myView);
+        builder.setNegativeButton("NIE",null);
+        builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                myDatabaseHelper.deleteDiseaseNoteData(idNote);
+                // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
+                getDiseaseNoteDataFromDatabase();
+                createAndSetContentAdapter();
+            }
+        });
+        builder.show();
+    }
+
     public static class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHolder> {
 
         // Set numbers of List in RecyclerView.
@@ -308,12 +351,16 @@ public class InfoDiseaseFragment extends Fragment {
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
+            public TextView textViewNoteDate;
+            public ImageButton buttonDelete;
             public TextView textViewNoteText;
 
             public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
 
                 super(inflater.inflate(R.layout.list_notes_fragment_card_item, parent, false));
                 textViewNoteText = (TextView) itemView.findViewById(R.id.noteText);
+                textViewNoteDate = (TextView) itemView.findViewById(R.id.noteDate);
+                buttonDelete = (ImageButton) itemView.findViewById(R.id.buttonDeleteNote);
             }
         }
 
@@ -336,11 +383,12 @@ public class InfoDiseaseFragment extends Fragment {
         @Override
         public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
             String tempString =  noteCardViewItem.get(position % noteCardViewItem.size()).getNoteText();
-            myDebugger.someMethod("RECYCLER VIEW NOTE OBVH: " + tempString);
+            holder.textViewNoteDate.setText(noteCardViewItem.get(position % noteCardViewItem.size()).getDate());
             holder.textViewNoteText.setText(tempString);
             // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
             int id = noteCardViewItem.get(position % noteCardViewItem.size()).getId();
             holder.textViewNoteText.setTag(R.integer.tagNoteId, id);
+            holder.buttonDelete.setTag(id);
         }
 
         @Override

@@ -111,7 +111,7 @@ public class DiseasesFragment extends Fragment {
         builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                myDatabaseHelper.deleteDiseaseNoteData(idDiseaseToDelete);
+                myDatabaseHelper.deleteAllDiseaseNoteData(idDiseaseToDelete);
                 myDatabaseHelper.deleteDiseaseData(idDiseaseToDelete);
                 // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
                 getDiseaseDataFromDatabase();

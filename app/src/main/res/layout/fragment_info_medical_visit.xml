@@ -90,7 +90,6 @@
 
         <TextView
             android:id="@+id/columnRecommendationsValue"
-            android:text="xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult xtMult"
             android:inputType="textMultiLine"
             style="@style/MyTextViewStyle2" />
 
@@ -106,7 +105,6 @@
         <TextView
             android:id="@+id/columnMedicinesValue"
             android:inputType="textMultiLine"
-            android:text="Brak"
             style="@style/MyTextViewStyle2" />
 
     </LinearLayout>
