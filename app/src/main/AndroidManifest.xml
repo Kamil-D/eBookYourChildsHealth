@@ -26,9 +26,6 @@
             android:name=".activity.childmainpanel.ChildMainPanelActivity"
             android:parentActivityName=".activity.ChooseChildMainActivity" />
         <activity
-            android:name=".activity.addnewchild.AddNewChildActivity"
-            android:parentActivityName=".activity.ChooseChildMainActivity" />
-        <activity
             android:name=".activity.childmainpanel.InfoObjectActivity"
             android:parentActivityName=".activity.childmainpanel.ChildMainPanelActivity" />
         <activity

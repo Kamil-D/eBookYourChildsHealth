@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
-import com.example.kamil.ebookyourchildshealth.activity.addnewchild.AddNewChildActivity;
+import com.example.kamil.ebookyourchildshealth.activity.childmainpanel.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -38,6 +39,9 @@ public class ChooseChildFragment extends Fragment {
     private Intent intent;
     static MyDebugger myDebugger;
     private RecyclerView recyclerView;
+
+    @BindString(R.string.fragment_decision_child)
+    String fragmentDecisionChild;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,7 +102,10 @@ public class ChooseChildFragment extends Fragment {
 
     @OnClick(R.id.buttonAddChild)
     public void newActivityAddNewChildActivity() {
-        intent = new Intent(this.getActivity(),AddNewChildActivity.class);
+        intent = new Intent(this.getActivity(),AddObjectActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("fragmentDecision", fragmentDecisionChild);
+        intent.putExtra("bundle", bundle);
         startActivity(intent);
     }
 

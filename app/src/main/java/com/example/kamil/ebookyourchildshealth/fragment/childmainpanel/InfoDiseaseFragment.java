@@ -290,8 +290,11 @@ public class InfoDiseaseFragment extends Fragment {
             else
                 Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
 
-            getActivity().setResult(UtilCode.RESULT_CODE, null);
-            getActivity().finish();
+            getDiseaseNoteDataFromDatabase();
+            createAndSetContentAdapter();
+            editTextNoteMessage.setText("");
+//            getActivity().setResult(UtilCode.RESULT_CODE, null);
+//            getActivity().finish();
         } else
             Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();
     }

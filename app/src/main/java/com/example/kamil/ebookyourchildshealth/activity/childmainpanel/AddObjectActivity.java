@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplemented;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
+import com.example.kamil.ebookyourchildshealth.fragment.AddNewChildFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.AddDiseaseFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.AddMedicalVisitFragment;
 
@@ -30,6 +31,9 @@ public class AddObjectActivity extends MyActivityOnlyMenuImplemented {
 
     @BindString(R.string.fragment_decision_visit)
     String fragmentDecisionVisit;
+
+    @BindString(R.string.fragment_decision_child)
+    String fragmentDecisionChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,13 @@ public class AddObjectActivity extends MyActivityOnlyMenuImplemented {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addDiseaseFragment,"fragment");
+            fragmentTransaction.commit();
+        }
+        else if (fragmentDecision.equals(fragmentDecisionChild)) {
+            AddNewChildFragment addNewChildFragment = new AddNewChildFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addNewChildFragment,"fragment");
             fragmentTransaction.commit();
         }
 

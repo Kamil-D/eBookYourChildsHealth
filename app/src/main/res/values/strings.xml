@@ -45,6 +45,7 @@
 
     <string name="fragment_decision_visit">fragmentVisit</string>
     <string name="fragment_decision_disease">fragmentDisease</string>
+    <string name="fragment_decision_child">fragmentChild</string>
 
     <!--<string-array name="spinner_sex_array">-->
         <!--<item>Male</item>-->
