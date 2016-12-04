@@ -135,7 +135,7 @@ public class DiseasesFragment extends Fragment {
         diseaseRecyclerViewItemArrayList = new ArrayList<>();
         Disease disease;
 
-        Cursor cursor = myDatabaseHelper.readAllChildDiseasesData(childIDFromIntent);
+        Cursor cursor = myDatabaseHelper.readChildAllDiseasesData(childIDFromIntent);
 
         if(cursor.getCount() == 0) {
             return;

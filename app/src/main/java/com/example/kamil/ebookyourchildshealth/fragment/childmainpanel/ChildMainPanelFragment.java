@@ -24,7 +24,7 @@ public class ChildMainPanelFragment extends Fragment {
 
     private MyDatabaseHelper myDatabaseHelper;
     private static ArrayList<String> queryResultArrayList;
-    private String childNameFromIntent;
+    private int childIDFromIntent;
     private ImageView imageView;
     private RecyclerView recyclerView;
     MyDebugger myDebugger;
@@ -60,11 +60,11 @@ public class ChildMainPanelFragment extends Fragment {
 
     private void getBundleFromIntent() {
         Bundle bundle = getActivity().getIntent().getBundleExtra("bundle");
-        childNameFromIntent = bundle.getString("childNameFromIntent");
+        childIDFromIntent = bundle.getInt("childIDFromIntent");
     }
 
     public void getChildDataFromDatabase() {
-        Cursor cursor = myDatabaseHelper.readChildData(childNameFromIntent);
+        Cursor cursor = myDatabaseHelper.readChildData(childIDFromIntent);
         if(cursor.getCount() == 0) {
             return;
         }

@@ -2,15 +2,19 @@ package com.example.kamil.ebookyourchildshealth.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
+import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.model.Child;
 import com.example.kamil.ebookyourchildshealth.model.Disease;
 import com.example.kamil.ebookyourchildshealth.model.Note;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by kamil on 2016-10-31.
@@ -19,13 +23,15 @@ import com.example.kamil.ebookyourchildshealth.model.Visit;
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     MyDebugger myDebugger = new MyDebugger();
+
+    private static Context context;
     private static MyDatabaseHelper myDatabaseHelperInstance;
 
-    public static final String DATABASE_NAME = "child.db";
-    public static final String CHILD_TABLE_NAME = "child";
-    public static final String MEDICAL_VISITS_TABLE_NAME = "medicalVisits";
-    public static final String DISEASES_TABLE_NAME = "diseases";
-    public static final String DISEASES_NOTES_TABLE_NAME = "diseasesNotes";
+    public static String DATABASE_NAME = "child.db";
+    public static String CHILD_TABLE_NAME = "";
+    public static String MEDICAL_VISITS_TABLE_NAME = "";
+    public static String DISEASES_TABLE_NAME = "";
+    public static String DISEASES_NOTES_TABLE_NAME = "";
 
     public static final String CHILD_COL_1 = "ID";
     public static final String CHILD_COL_2 = "NAME";
@@ -59,68 +65,27 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String NOTES_COL_3 = "DATE";
     public static final String NOTES_COL_4 = "MESSAGE";
 
-    public static final String DATABASE_SQL_QUERY_CREATE_CHILD_TABLE =
-            "CREATE TABLE " + CHILD_TABLE_NAME +
-                    " (" +
-                        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "NAME TEXT," +
-                        "SURNAME TEXT," +
-                        "PESEL TEXT," +
-                        "SEX TEXT," +
-                        "BLOOD_GROUP TEXT," +
-                        "BIRTH_DATE TEXT," +
-                        "BIRTH_PLACE TEXT," +
-                        "MOTHER TEXT," +
-                        "FATHER TEXT," +
-                        "IMAGE_URI TEXT" +
-                    ")";
 
-    public static final String DATABASE_SQL_QUERY_CREATE_VISIT_TABLE =
-            "CREATE TABLE " + MEDICAL_VISITS_TABLE_NAME +
-                    " (" +
-                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "CHILD_ID INTEGER REFERENCES " + CHILD_TABLE_NAME + ", " +
-                    "NAME TEXT," +
-                    "DOCTOR TEXT," +
-                    "DISEASE_ID INTEGER REFERENCES " + DISEASES_TABLE_NAME + ", " +
-                    "DATE TEXT," +
-                    "DESCRIPTION TEXT," +
-                    "RECOMMENDATIONS TEXT," +
-                    "MEDICINES TEXT" +
-                    ") ";
+    public static String DATABASE_SQL_QUERY_CREATE_CHILD_TABLE = "";
+    public static String DATABASE_SQL_QUERY_CREATE_VISIT_TABLE = "";
+    public static String DATABASE_SQL_QUERY_CREATE_DISEASES_TABLE = "";
+    public static String DATABASE_SQL_QUERY_CREATE_DISEASES_NOTES_TABLE = "";
 
-    public static final String DATABASE_SQL_QUERY_CREATE_DISEASES_TABLE =
-            "CREATE TABLE " + DISEASES_TABLE_NAME +
-                    " (" +
-                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "CHILD_ID INTEGER REFERENCES " + CHILD_TABLE_NAME + ", " +
-                    "NAME TEXT," +
-                    "DATE TEXT" +
-                    ") ";
+    public static String DATABASE_SQL_QUERY_DROP_CHILD_TABLE= "";
+    public static String DATABASE_SQL_QUERY_DROP_VISIT_TABLE= "";
+    public static String DATABASE_SQL_QUERY_DROP_DISEASES = "";
+    public static String DATABASE_SQL_QUERY_DROP_DISEASES_NOTES = "";
 
-    public static final String DATABASE_SQL_QUERY_CREATE_DISEASES_NOTES_TABLE =
-            "CREATE TABLE " + DISEASES_NOTES_TABLE_NAME +
-                    " (" +
-                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "DISEASES_ID INTEGER REFERENCES " + DISEASES_TABLE_NAME + ", " +
-                    "DATE TEXT," +
-                    "MESSAGE TEXT" +
-                    ") ";
-
-    public static final String DATABASE_SQL_QUERY_DROP_CHILD_TABLE =
-            "DROP TABLE IF EXISTS " + CHILD_TABLE_NAME;
-
-    public static final String DATABASE_SQL_QUERY_DROP_VISIT_TABLE =
-            "DROP TABLE IF EXISTS " + MEDICAL_VISITS_TABLE_NAME;
-
-    public static final String DATABASE_SQL_QUERY_DROP_DISEASES =
-            "DROP TABLE IF EXISTS " + DISEASES_TABLE_NAME;
-
-    public static final String DATABASE_SQL_QUERY_DROP_DISEASES_NOTES =
-            "DROP TABLE IF EXISTS " + DISEASES_NOTES_TABLE_NAME;
+    public static String tableName = "tableName";
+    public static String DATABASE_SQL_QUERY_CHOOSE_CHILD = "";
+    public static String DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID = "";
+    public static String DATABASE_SQL_QUERY_SELECT_NOTES_WHERE_DISEASES_ID = "";
 
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
+
+        setContext(context);
+        setVariablesFromStaticResources();
 //        SQLiteDatabase db = this.getWritableDatabase();
     }
 
@@ -161,6 +126,45 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DATABASE_SQL_QUERY_DROP_DISEASES);
         db.execSQL(DATABASE_SQL_QUERY_DROP_DISEASES_NOTES);
         onCreate(db);
+    }
+
+    private void setVariablesFromStaticResources() {
+        CHILD_TABLE_NAME = getStringFromResources(R.string.child_table_name);
+        MEDICAL_VISITS_TABLE_NAME = getStringFromResources(R.string.medical_visit_table_name);
+        DISEASES_TABLE_NAME = getStringFromResources(R.string.diseases_table_name);
+        DISEASES_NOTES_TABLE_NAME = getStringFromResources(R.string.diseases_notes_table_name);
+
+        DATABASE_SQL_QUERY_CREATE_CHILD_TABLE =
+                getStringFromResources(R.string.database_sql_query_create_child_table);
+        DATABASE_SQL_QUERY_CREATE_VISIT_TABLE =
+                getStringFromResources(R.string.database_sql_query_create_visit_table);
+        DATABASE_SQL_QUERY_CREATE_DISEASES_TABLE =
+                getStringFromResources(R.string.database_sql_query_create_diseases_table);
+        DATABASE_SQL_QUERY_CREATE_DISEASES_NOTES_TABLE =
+                getStringFromResources(R.string.database_sql_query_create_diseases_notes_table);
+
+        DATABASE_SQL_QUERY_DROP_CHILD_TABLE =
+                getStringFromResources(R.string.database_sql_query_drop_table) + CHILD_TABLE_NAME;
+        DATABASE_SQL_QUERY_DROP_VISIT_TABLE =
+                getStringFromResources(R.string.database_sql_query_drop_table)+ MEDICAL_VISITS_TABLE_NAME;
+        DATABASE_SQL_QUERY_DROP_DISEASES =
+                getStringFromResources(R.string.database_sql_query_drop_table)+ DISEASES_TABLE_NAME;
+        DATABASE_SQL_QUERY_DROP_DISEASES_NOTES =
+                getStringFromResources(R.string.database_sql_query_drop_table)+ DISEASES_NOTES_TABLE_NAME;
+
+//        DATABASE_SQL_QUERY_CREATE_VISIT_TABLE = getStringFromResources(context,R.string.database_sql_query_create_visit_table);
+    }
+
+    private String getStringFromResources(int path) {
+        return getContext().getResources().getString(path);
+    }
+
+    public static Context getContext() {
+        return context;
+    }
+
+    public static void setContext(Context context) {
+        MyDatabaseHelper.context = context;
     }
 
     /**
@@ -294,57 +298,113 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      *     This way Android can buffer the query results efficiently;
      *     as it does not have to load all data into memory.
      */
-    public Cursor readChildData(String name) {
+    public Cursor readChildData(int childId) {
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor result = database.rawQuery("select * from " + CHILD_TABLE_NAME + " WHERE name = ? ;" ,
-                new String[] { name });
-        return result;
-    }
 
-    public Cursor readAllChildIdNamesImages() {
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor result = database.rawQuery("select id, name, IMAGE_URI from " + CHILD_TABLE_NAME, null);
-        return result;
-    }
+        String DATABASE_SQL_QUERY_SELECT_WHERE_ID =
+                getStringFromResources(R.string.database_sql_query_select_where_id);
 
-    public Cursor readAllChildMedicalVisitsData(int childId) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        Cursor result = database.rawQuery("select * from " + MEDICAL_VISITS_TABLE_NAME + " WHERE CHILD_ID = ? ;" ,
+        DATABASE_SQL_QUERY_SELECT_WHERE_ID =
+                DATABASE_SQL_QUERY_SELECT_WHERE_ID.replace(tableName, CHILD_TABLE_NAME);
+
+        Cursor result = database.rawQuery(DATABASE_SQL_QUERY_SELECT_WHERE_ID ,
                 new String[] { String.valueOf(childId) });
         return result;
     }
 
-    public Cursor readDiseaseNoteData(int diseaseId) {
+    public Cursor readAllChildsIdNamesImages() {
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        DATABASE_SQL_QUERY_CHOOSE_CHILD =
+                getStringFromResources(R.string.database_sql_query_select_id_name_uri_from_child);
+        DATABASE_SQL_QUERY_CHOOSE_CHILD =
+                DATABASE_SQL_QUERY_CHOOSE_CHILD.replace(tableName, CHILD_TABLE_NAME);
+
+
+        Cursor result = database.rawQuery(DATABASE_SQL_QUERY_CHOOSE_CHILD, null);
+        return result;
+    }
+
+    public Cursor readChildAllMedicalVisitsData(int childId) {
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor result = database.rawQuery("select * from " + DISEASES_NOTES_TABLE_NAME + " WHERE DISEASES_ID = ? ;" ,
+
+        DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID =
+                getStringFromResources(R.string.database_sql_query_select_where_child_id);
+
+        DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID =
+                DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID.replace(tableName, MEDICAL_VISITS_TABLE_NAME);
+
+        Cursor result = database.rawQuery(DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID ,
+                new String[] { String.valueOf(childId) });
+        return result;
+    }
+
+    public Cursor readSingleDiseaseNotesData(int diseaseId) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        DATABASE_SQL_QUERY_SELECT_NOTES_WHERE_DISEASES_ID =
+                getStringFromResources(R.string.database_sql_query_select_notes_where_diseases_id);
+
+        DATABASE_SQL_QUERY_SELECT_NOTES_WHERE_DISEASES_ID =
+                DATABASE_SQL_QUERY_SELECT_NOTES_WHERE_DISEASES_ID.replace(tableName, DISEASES_NOTES_TABLE_NAME);
+
+        Cursor result = database.rawQuery(DATABASE_SQL_QUERY_SELECT_NOTES_WHERE_DISEASES_ID ,
                 new String[] { String.valueOf(diseaseId) });
         return result;
     }
 
-    public Cursor readAllChildDiseasesData(int childId) {
+    public Cursor readChildAllDiseasesData(int childId) {
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor result = database.rawQuery("select * from " + DISEASES_TABLE_NAME + " WHERE CHILD_ID = ? ;" ,
+
+        DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID =
+                getStringFromResources(R.string.database_sql_query_select_where_child_id);
+
+        DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID =
+                DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID.replace(tableName, DISEASES_TABLE_NAME);
+
+        Cursor result = database.rawQuery(DATABASE_SQL_QUERY_SELECT_WHERE_CHILD_ID ,
                 new String[] { String.valueOf(childId) });
         return result;
     }
 
     public Cursor readMedicalVisitData(int id) {
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor result = database.rawQuery("select * from " + MEDICAL_VISITS_TABLE_NAME + " WHERE id = ? ;" ,
+
+        String DATABASE_SQL_QUERY_SELECT_WHERE_ID =
+                getStringFromResources(R.string.database_sql_query_select_where_id);
+
+        DATABASE_SQL_QUERY_SELECT_WHERE_ID =
+                DATABASE_SQL_QUERY_SELECT_WHERE_ID.replace(tableName, MEDICAL_VISITS_TABLE_NAME);
+
+        Cursor result = database.rawQuery(DATABASE_SQL_QUERY_SELECT_WHERE_ID ,
                 new String[] { String.valueOf(id) });
         return result;
     }
 
     public Cursor readDiseaseData(int id) {
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor result = database.rawQuery("select * from " + DISEASES_TABLE_NAME + " WHERE id = ? ;" ,
+
+        String DATABASE_SQL_QUERY_SELECT_WHERE_ID =
+                getStringFromResources(R.string.database_sql_query_select_where_id);
+
+        DATABASE_SQL_QUERY_SELECT_WHERE_ID =
+                DATABASE_SQL_QUERY_SELECT_WHERE_ID.replace(tableName, DISEASES_TABLE_NAME);
+
+        Cursor result = database.rawQuery(DATABASE_SQL_QUERY_SELECT_WHERE_ID ,
                 new String[] { String.valueOf(id) });
         return result;
     }
 
     public Cursor readDiseaseNameData(int id) {
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor result = database.rawQuery("select name from " + DISEASES_TABLE_NAME + " WHERE id = ? ;" ,
+
+        String DATABASE_SQL_QUERY_SELECT_WHERE_ID =
+                getStringFromResources(R.string.database_sql_query_select_where_id);
+
+        DATABASE_SQL_QUERY_SELECT_WHERE_ID =
+                DATABASE_SQL_QUERY_SELECT_WHERE_ID.replace(tableName, DISEASES_NOTES_TABLE_NAME);
+
+        Cursor result = database.rawQuery(DATABASE_SQL_QUERY_SELECT_WHERE_ID ,
                 new String[] { String.valueOf(id) });
         return result;
     }

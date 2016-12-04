@@ -153,7 +153,7 @@ public class AddMedicalVisitFragment extends Fragment {
         diseasesNameDateArrayList = new ArrayList<>();
         Disease disease;
 
-        Cursor cursor = myDatabaseHelper.readAllChildDiseasesData(childIDFromIntent);
+        Cursor cursor = myDatabaseHelper.readChildAllDiseasesData(childIDFromIntent);
 
         if(cursor.getCount() == 0) {
             return;

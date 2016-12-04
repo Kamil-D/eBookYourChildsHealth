@@ -35,7 +35,7 @@ public class ChooseChildFragment extends Fragment {
 
     private MyDatabaseHelper myDatabaseHelper;
     private static ArrayList<Child> childRecyclerViewItemArrayList;
-    private static Drawable[] drawableArrayFromUriImagesArrayList;
+    private static Drawable[] drawableArrayFromUri;
     private Intent intent;
     static MyDebugger myDebugger;
     private RecyclerView recyclerView;
@@ -63,7 +63,7 @@ public class ChooseChildFragment extends Fragment {
     }
 
     public void getChildNamesAndImagesFromDatabase() {
-        Cursor cursor = myDatabaseHelper.readAllChildIdNamesImages();
+        Cursor cursor = myDatabaseHelper.readAllChildsIdNamesImages();
         Child child;
 
         if(cursor.getCount() == 0) {
@@ -75,7 +75,7 @@ public class ChooseChildFragment extends Fragment {
             childRecyclerViewItemArrayList.add(child);
         }
         // dopiero tutaj tworzymy tablicę Drawable bo wiemy już ile elementów ma tablica uri (lub id, name)
-        drawableArrayFromUriImagesArrayList = new Drawable[childRecyclerViewItemArrayList.size()];
+        drawableArrayFromUri = new Drawable[childRecyclerViewItemArrayList.size()];
     }
 
     private void uriToDrawableArray() {
@@ -85,9 +85,9 @@ public class ChooseChildFragment extends Fragment {
             Uri imageUri = childRecyclerViewItemArrayList.get(i).getImageUri();
             try {
                 InputStream inputStream = getActivity().getContentResolver().openInputStream(imageUri);
-                drawableArrayFromUriImagesArrayList[i] = Drawable.createFromStream(inputStream, imageUri.toString() );
+                drawableArrayFromUri[i] = Drawable.createFromStream(inputStream, imageUri.toString() );
             } catch (FileNotFoundException e) {
-                drawableArrayFromUriImagesArrayList[i] = getResources().getDrawable(R.drawable.elvispresley);
+                drawableArrayFromUri[i] = getResources().getDrawable(R.drawable.elvispresley);
             }
         }
     }
@@ -129,13 +129,13 @@ public class ChooseChildFragment extends Fragment {
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
             public ImageButton pictureImageButton;
-            public TextView childNameTextViewBottomImageButton;
+            public TextView childNameTextViewBelowImageButton;
 
             public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
 
                 super(inflater.inflate(R.layout.choose_child_fragment_card_item, parent, false));
                 pictureImageButton = (ImageButton) itemView.findViewById(R.id.imageButton);
-                childNameTextViewBottomImageButton = (TextView) itemView.findViewById(R.id.childName);
+                childNameTextViewBelowImageButton = (TextView) itemView.findViewById(R.id.childName);
             }
         }
 
@@ -159,14 +159,14 @@ public class ChooseChildFragment extends Fragment {
             ImageLoader imageLoader = ImageLoader.getInstance();
             imageLoader.displayImage(childCardViewItem.get(position).getImageUri().toString(), holder.pictureImageButton);
 
-            holder.childNameTextViewBottomImageButton.setText(childCardViewItem.get(position).getName());
+            holder.childNameTextViewBelowImageButton.setText(childCardViewItem.get(position).getName());
             /**
              * ImageButton ma ustawiony tag o nazwie imienia dziecka, aby można było później
              * po kliknięciu na niego, wysłać imię do aktywności odpowiadającej za główny panel dziecka.
              * Na podstawie wysłanego imienia szukany jest odpowiedni obrazek.
              * Gdy zostanie podpięta baza danych będzie się to odbywać prawdopodobnie po jakimś ID
              */
-            String tagString = String.valueOf(holder.childNameTextViewBottomImageButton.getText());
+            String tagString = String.valueOf(holder.childNameTextViewBelowImageButton.getText());
             holder.pictureImageButton.setTag(R.integer.tagImageButtonOne, tagString);
             holder.pictureImageButton.setTag(R.integer.tagImageButtonTwo, childCardViewItem.get(position).getId());
             holder.pictureImageButton.setTag(R.integer.tagImageButtonThree, childCardViewItem.get(position).getImageUri().toString());

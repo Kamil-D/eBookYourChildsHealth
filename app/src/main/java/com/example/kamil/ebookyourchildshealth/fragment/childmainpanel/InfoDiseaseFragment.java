@@ -177,7 +177,7 @@ public class InfoDiseaseFragment extends Fragment {
         noteRecyclerViewItemArrayList = new ArrayList<>();
         Note note;
 
-        Cursor cursor = myDatabaseHelper.readDiseaseNoteData(idDisease);
+        Cursor cursor = myDatabaseHelper.readSingleDiseaseNotesData(idDisease);
 
         if(cursor.getCount() == 0) {
             return;

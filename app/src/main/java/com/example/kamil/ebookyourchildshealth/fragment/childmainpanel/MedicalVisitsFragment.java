@@ -133,7 +133,7 @@ public class MedicalVisitsFragment extends Fragment {
         visitRecyclerViewItemArrayList = new ArrayList<>();
         Visit visit;
 
-        Cursor cursor = myDatabaseHelper.readAllChildMedicalVisitsData(childIDFromIntent);
+        Cursor cursor = myDatabaseHelper.readChildAllMedicalVisitsData(childIDFromIntent);
 
         if(cursor.getCount() == 0) {
             return;

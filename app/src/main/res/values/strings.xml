@@ -92,5 +92,79 @@
         <item>Zapalenie płuc 17-01-2015</item>
     </string-array>
 
+    <string name="child_table_name">child</string>
+    <string name="medical_visit_table_name">medicalVisits</string>
+    <string name="diseases_table_name">diseases</string>
+    <string name="diseases_notes_table_name">diseasesNotes</string>
+
+    <string name="database_sql_query_create_child_table"> CREATE TABLE child
+        (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            NAME TEXT,
+            SURNAME TEXT,
+            PESEL TEXT,
+            SEX TEXT,
+            BLOOD_GROUP TEXT,
+            BIRTH_DATE TEXT,
+            BIRTH_PLACE TEXT,
+            MOTHER TEXT,
+            FATHER TEXT,
+            IMAGE_URI TEXT
+        )
+    </string>
+
+    <string name="database_sql_query_create_visit_table"> CREATE TABLE medicalVisits
+        (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            CHILD_ID INTEGER REFERENCES child,
+            NAME TEXT,
+            DOCTOR TEXT,
+            DISEASE_ID INTEGER REFERENCES diseases,
+            DATE TEXT,
+            DESCRIPTION TEXT,
+            RECOMMENDATIONS TEXT,
+            MEDICINES TEXT
+        )
+    </string>
+
+    <string name="database_sql_query_create_diseases_table"> CREATE TABLE diseases
+        (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            CHILD_ID INTEGER REFERENCES child,
+            NAME TEXT,
+            DATE TEXT
+        )
+    </string>
+
+    <string name="database_sql_query_create_diseases_notes_table"> CREATE TABLE diseasesNotes
+        (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            DISEASES_ID INTEGER REFERENCES diseases,
+            DATE TEXT,
+            MESSAGE TEXT
+        )
+    </string>
+
+    <string name="database_sql_query_drop_table"> DROP TABLE IF EXISTS </string>
+
+    <string name="database_sql_query_select_where_id"> select * from
+            tableName
+            WHERE id = ? ;
+    </string>
+
+    <string name="database_sql_query_select_id_name_uri_from_child">
+        select id, name, IMAGE_URI from tableName
+    </string>
+
+    <string name="database_sql_query_select_where_child_id"> select * from
+            tableName
+            WHERE CHILD_ID = ? ;
+    </string>
+
+    <string name="database_sql_query_select_notes_where_diseases_id"> select * from
+            tableName
+             WHERE DISEASES_ID = ? ;
+    </string>
+
 </resources>
 
