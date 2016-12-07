@@ -381,10 +381,20 @@ public class InfoDiseaseFragment extends Fragment {
          * Specify the contents of each item of the RecyclerView.
          */
         @Override
-        public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final ContentAdapter.ViewHolder holder, int position) {
             String tempString =  noteCardViewItem.get(position % noteCardViewItem.size()).getNoteText();
             holder.textViewNoteDate.setText(noteCardViewItem.get(position % noteCardViewItem.size()).getDate());
             holder.textViewNoteText.setText(tempString);
+            holder.textViewNoteText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (holder.textViewNoteText.getMaxLines() == 1)
+                        holder.textViewNoteText.setMaxLines(10);
+                    else
+                        holder.textViewNoteText.setMaxLines(1);
+                }
+            });
             // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
             int id = noteCardViewItem.get(position % noteCardViewItem.size()).getId();
             holder.textViewNoteText.setTag(R.integer.tagNoteId, id);

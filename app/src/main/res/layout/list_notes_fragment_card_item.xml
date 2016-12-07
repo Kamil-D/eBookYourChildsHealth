@@ -58,7 +58,7 @@
         <TextView
             android:id="@+id/noteText"
             style="@style/MyTextViewNoteStyle"
-            android:inputType="textMultiLine" />
+             />
 
     </LinearLayout>
 

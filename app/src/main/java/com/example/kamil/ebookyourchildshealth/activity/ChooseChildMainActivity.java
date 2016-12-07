@@ -60,6 +60,7 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
         fragmentTransaction.commit();
     }
 
+
     public void newActivityGoToChildMainPanelActivity(View view) {
         intent = new Intent(this,ChildMainPanelActivity.class);
         Bundle bundle = new Bundle();
