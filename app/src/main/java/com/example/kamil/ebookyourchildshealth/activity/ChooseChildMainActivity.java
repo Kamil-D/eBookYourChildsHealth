@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
 
     private Intent intent;
+    private ChooseChildFragment chooseChildFragment;
     private MyDebugger myDebugger;
 
     @BindView(R.id.collapsing_toolbar)
@@ -43,7 +44,13 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
         myDebugger = new MyDebugger();
 
         setToolbars();
-        startFragmentTransactionAddNewFragment();
+
+        if (savedInstanceState == null) {
+            startFragmentTransactionAddNewFragment();
+        } else {
+            chooseChildFragment = (ChooseChildFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_choose_child);
+        }
+
     }
 
     private void setToolbars() {
@@ -53,7 +60,7 @@ public class ChooseChildMainActivity extends MyActivityOnlyMenuImplemented {
     }
 
     private void startFragmentTransactionAddNewFragment() {
-        ChooseChildFragment chooseChildFragment = new ChooseChildFragment();
+        chooseChildFragment = new ChooseChildFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.linearLayoutInNestedScrollViewChooseChild,chooseChildFragment,"myFragment");

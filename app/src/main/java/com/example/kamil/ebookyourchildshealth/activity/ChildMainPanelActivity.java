@@ -47,6 +47,7 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     private FragmentTransaction fragmentTransaction;
     private Bundle bundle;
     private Fragment fragment;
+    private ChildMainPanelFragment childMainPanelFragment;
     private String fragmentTypeName = "";
 
     @BindView(R.id.drawer_child_main_panel)
@@ -70,6 +71,9 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     @BindString(R.string.fragment_decision_visit)
     String fragmentDecisionVisit;
 
+    @BindString(R.string.fragment_decision_child)
+    String fragmentDecisionChild;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -86,7 +90,13 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
         setToolbars();
         setToolbarImageView();
         setDrawerLayoutAndNavigationView();
-        startFragmentTransactionAddNewFragment();
+
+        if (savedInstanceState == null) {
+            startFragmentTransactionAddNewFragment();
+        } else {
+            childMainPanelFragment = (ChildMainPanelFragment) getSupportFragmentManager().findFragmentByTag(fragmentDecisionChild);
+        }
+
     }
 
 
@@ -145,10 +155,10 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     }
 
     private void startFragmentTransactionAddNewFragment() {
-        ChildMainPanelFragment fragment = new ChildMainPanelFragment();
+        childMainPanelFragment = new ChildMainPanelFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.linearLayoutInNestedScrollViewChildPanel, fragment, "fragment");
+        fragmentTransaction.add(R.id.linearLayoutInNestedScrollViewChildPanel, childMainPanelFragment, fragmentDecisionChild);
         fragmentTransaction.commit();
 
     }

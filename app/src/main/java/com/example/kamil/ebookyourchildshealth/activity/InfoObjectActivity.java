@@ -24,6 +24,8 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    private InfoMedicalVisitFragment infoMedicalVisitFragment;
+    private InfoDiseaseFragment infoDiseaseFragment;
     MyDebugger myDebugger;
 
     @BindView(R.id.toolbar_object_info)
@@ -47,7 +49,18 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
         ButterKnife.bind(this);
 
         setToolbars();
-        startFragmentTransactionAddNewFragment();
+
+        if (savedInstanceState == null) {
+            startFragmentTransactionAddNewFragment();
+        } else if (fragmentDecisionVisit == getFragmentDecisionFromIntent()){
+            infoMedicalVisitFragment = (InfoMedicalVisitFragment) getSupportFragmentManager()
+                    .findFragmentByTag(fragmentDecisionVisit);
+
+        } else if (fragmentDecisionDisease == getFragmentDecisionFromIntent()) {
+            infoDiseaseFragment = (InfoDiseaseFragment) getSupportFragmentManager()
+                    .findFragmentByTag(fragmentDecisionDisease);
+        }
+
     }
 
     private void setToolbars() {
@@ -59,10 +72,10 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
 
     private void startFragmentTransactionAddNewFragment() {
 
-        String fragmentDecision = getIntent().getBundleExtra("bundle").getString("fragmentDecision");
+        String fragmentDecision = getFragmentDecisionFromIntent();
 
         if (fragmentDecision.equals(fragmentDecisionVisit)) {
-            InfoMedicalVisitFragment infoMedicalVisitFragment = new InfoMedicalVisitFragment();
+            infoMedicalVisitFragment = new InfoMedicalVisitFragment();
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewObjectInfo,
@@ -71,7 +84,7 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
             fragmentTransaction.commit();
         }
         else if (fragmentDecision.equals(fragmentDecisionDisease)) {
-            InfoDiseaseFragment infoDiseaseFragment = new InfoDiseaseFragment();
+            infoDiseaseFragment = new InfoDiseaseFragment();
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewObjectInfo,
@@ -81,6 +94,10 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
         }
     }
 
+    private String getFragmentDecisionFromIntent() {
+        String fragmentDecision = getIntent().getBundleExtra("bundle").getString("fragmentDecision");
+        return fragmentDecision;
+    }
 
     public void deleteNoteFromDB(View view) {
         int idObjectToDelete = getImageButtonDeleteTag(view);

@@ -19,6 +19,9 @@ import butterknife.ButterKnife;
 public class AddObjectActivity extends MyActivityOnlyMenuImplemented {
 
     private MyDatabaseHelper myDatabaseHelper;
+    private AddMedicalVisitFragment addMedicalVisitFragment;
+    private AddDiseaseFragment addDiseaseFragment;
+    private AddNewChildFragment addNewChildFragment;
 
     @BindView(R.id.toolbar_add_medical_visit)
     Toolbar toolbar;
@@ -45,7 +48,22 @@ public class AddObjectActivity extends MyActivityOnlyMenuImplemented {
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(this);
 
         setToolbars();
-        startFragmentTransactionAddNewFragment();
+
+        if (savedInstanceState == null) {
+            startFragmentTransactionAddNewFragment();
+        } else if (fragmentDecisionVisit == getFragmentDecisionFromIntent()){
+            addMedicalVisitFragment = (AddMedicalVisitFragment) getSupportFragmentManager()
+                    .findFragmentByTag(fragmentDecisionVisit);
+
+        } else if (fragmentDecisionDisease == getFragmentDecisionFromIntent()) {
+            addDiseaseFragment = (AddDiseaseFragment) getSupportFragmentManager()
+                    .findFragmentByTag(fragmentDecisionDisease);
+
+        } else if (fragmentDecisionChild == getFragmentDecisionFromIntent()) {
+            addNewChildFragment = (AddNewChildFragment) getSupportFragmentManager()
+                    .findFragmentByTag(fragmentDecisionDisease);
+        }
+
     }
 
     private void setToolbars() {
@@ -57,30 +75,35 @@ public class AddObjectActivity extends MyActivityOnlyMenuImplemented {
 
     private void startFragmentTransactionAddNewFragment() {
 
-        String fragmentDecision = getIntent().getBundleExtra("bundle").getString("fragmentDecision");
+        String fragmentDecision = getFragmentDecisionFromIntent();
 
         if (fragmentDecision.equals(fragmentDecisionVisit)) {
-            AddMedicalVisitFragment addMedicalVisitFragment = new AddMedicalVisitFragment();
+            addMedicalVisitFragment = new AddMedicalVisitFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addMedicalVisitFragment,"fragment");
+            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addMedicalVisitFragment,fragmentDecisionVisit);
             fragmentTransaction.commit();
         }
         else if (fragmentDecision.equals(fragmentDecisionDisease)) {
-            AddDiseaseFragment addDiseaseFragment = new AddDiseaseFragment();
+            addDiseaseFragment = new AddDiseaseFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addDiseaseFragment,"fragment");
+            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addDiseaseFragment,fragmentDecisionDisease);
             fragmentTransaction.commit();
         }
         else if (fragmentDecision.equals(fragmentDecisionChild)) {
-            AddNewChildFragment addNewChildFragment = new AddNewChildFragment();
+            addNewChildFragment = new AddNewChildFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addNewChildFragment,"fragment");
+            fragmentTransaction.add(R.id.firstLinearLayoutInNestedScrollViewAddObject,addNewChildFragment,fragmentDecisionChild);
             fragmentTransaction.commit();
         }
 
+    }
+
+    private String getFragmentDecisionFromIntent() {
+        String fragmentDecision = getIntent().getBundleExtra("bundle").getString("fragmentDecision");
+        return fragmentDecision;
     }
 
 }

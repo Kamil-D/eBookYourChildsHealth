@@ -41,6 +41,7 @@ public class AddDiseaseFragment extends Fragment {
     private int childIDFromIntent;
     private Disease diseasetObject;
     private Bundle bundle;
+
     @BindString(R.string.pick_date)
     String pickDateString;
 
@@ -126,6 +127,7 @@ public class AddDiseaseFragment extends Fragment {
 
     @OnClick(R.id.buttonDatePicker)
     public void showDatePickerDialog(View v) {
+        // http://stackoverflow.com/questions/4216082/how-to-use-datepickerdialog-as-a-preference/14290970
         setCurrentDate();
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                 android.R.style.Theme_Holo_Light_Dialog_NoActionBar,datePickerListener,
