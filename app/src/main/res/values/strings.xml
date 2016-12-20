@@ -48,8 +48,8 @@
     <string name="fragment_decision_child">fragmentChild</string>
 
     <!--<string-array name="spinner_sex_array">-->
-        <!--<item>Male</item>-->
-        <!--<item>Female</item>-->
+    <!--<item>Male</item>-->
+    <!--<item>Female</item>-->
     <!--</string-array>-->
     <string-array name="spinner_sex_array">
         <item>Mężczyzna</item>

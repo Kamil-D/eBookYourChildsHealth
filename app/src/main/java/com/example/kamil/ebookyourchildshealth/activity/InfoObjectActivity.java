@@ -14,6 +14,7 @@ import com.example.kamil.ebookyourchildshealth.activity.MyActivityOnlyMenuImplem
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.AddDiseaseFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.AddMedicalVisitFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoDiseaseFragment;
+import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoDiseaseTabTwoFragment;
 import com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment;
 
 import butterknife.BindString;
@@ -102,6 +103,7 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
     public void deleteNoteFromDB(View view) {
         int idObjectToDelete = getImageButtonDeleteTag(view);
         InfoDiseaseFragment infoDiseaseFragment;
+        InfoDiseaseTabTwoFragment infoDiseaseTabTwoFragment;
 
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -110,7 +112,7 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
 
         infoDiseaseFragment = (InfoDiseaseFragment) getSupportFragmentManager().findFragmentByTag(fragmentDecisionDisease);
         myDebugger.someMethod("InfoObjectActivity " + infoDiseaseFragment);
-        infoDiseaseFragment.deleteNote(intent);
+        //infoDiseaseFragment.deleteNote(intent);
     }
 
     private int getImageButtonDeleteTag(View v) {

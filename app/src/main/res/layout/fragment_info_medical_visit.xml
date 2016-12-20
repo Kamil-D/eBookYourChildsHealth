@@ -1,5 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nestedScrollViewObjectInfo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -8,118 +11,147 @@
     android:layout_marginBottom="@dimen/md_keylines"
     android:layout_marginLeft="@dimen/md_keylines"
     android:layout_marginRight="@dimen/md_keylines"
+    android:paddingTop="115dp"
     android:clipToPadding="false"
     android:foreground="?attr/selectableItemBackground"
-    tools:context="com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment">
-
+    tools:context="com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment"
+    app:contentScrim="#BDBDBD"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
     <LinearLayout
-        style="@style/MyLinearLayoutStyle1" >
+        android:id="@+id/firstLinearLayoutInNestedScrollViewMedicalVisitInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/columnVisitName"
-            style="@style/MyTextViewStyle" />
+        <LinearLayout
+            style="@style/MyLinearLayoutStyle1" >
 
-        <TextView
-            android:id="@+id/columnVisitNameValue"
-            style="@style/MyTextViewStyle2" />
+            <TextView
+                android:id="@+id/columnVisitName"
+                style="@style/MyTextViewStyle" />
+
+            <TextView
+                android:id="@+id/columnVisitNameValue"
+                style="@style/MyTextViewStyle2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MyLinearLayoutStyle1" >
+
+            <TextView
+                android:id="@+id/columnDoctor"
+                style="@style/MyTextViewStyle" />
+
+            <TextView
+                android:id="@+id/columnDoctorValue"
+                style="@style/MyTextViewStyle2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MyLinearLayoutStyle1" >
+
+            <TextView
+                android:id="@+id/columnDisease"
+                style="@style/MyTextViewStyle" />
+
+            <TextView
+                android:id="@+id/columnDiseaseValue"
+                style="@style/MyTextViewStyle2" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/MyLinearLayoutStyle1" >
+
+            <TextView
+                android:id="@+id/columnDate"
+                style="@style/MyTextViewStyle" />
+
+            <TextView
+                android:id="@+id/columnDateValue"
+                style="@style/MyTextViewStyle2"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/MyLinearLayoutStyle1" >
+
+            <TextView
+                android:id="@+id/columnDescription"
+                style="@style/MyTextViewStyle" />
+
+            <TextView
+                android:id="@+id/columnDescriptionValue"
+                android:inputType="textMultiLine"
+                style="@style/MyTextViewStyle2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MyLinearLayoutStyle1" >
+
+            <TextView
+                android:id="@+id/columnRecommendations"
+                style="@style/MyTextViewStyle" />
+
+            <TextView
+                android:id="@+id/columnRecommendationsValue"
+                android:inputType="textMultiLine"
+                style="@style/MyTextViewStyle2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MyLinearLayoutStyle1" >
+
+            <TextView
+                android:id="@+id/columnMedicines"
+                style="@style/MyTextViewStyle" />
+
+            <TextView
+                android:id="@+id/columnMedicinesValue"
+                android:inputType="textMultiLine"
+                style="@style/MyTextViewStyle2" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonVisitReminder"
+            android:text="@string/button_add_visit_reminder"
+            android:textSize="25sp"
+            style="@style/MyButtonStyle"/>
+
+        <Button
+            android:id="@+id/buttonUpdateVisit"
+            android:text="@string/button_edit_visit"
+            android:textSize="25sp"
+            style="@style/MyButtonStyle"/>
 
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/MyLinearLayoutStyle1" >
+</android.support.v4.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/columnDoctor"
-            style="@style/MyTextViewStyle" />
-
-        <TextView
-            android:id="@+id/columnDoctorValue"
-            style="@style/MyTextViewStyle2" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/MyLinearLayoutStyle1" >
-
-        <TextView
-            android:id="@+id/columnDisease"
-            style="@style/MyTextViewStyle" />
-
-        <TextView
-            android:id="@+id/columnDiseaseValue"
-            style="@style/MyTextViewStyle2" />
-
-    </LinearLayout>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_marginTop="@dimen/md_keylines"-->
+    <!--android:layout_marginBottom="@dimen/md_keylines"-->
+    <!--android:layout_marginLeft="@dimen/md_keylines"-->
+    <!--android:layout_marginRight="@dimen/md_keylines"-->
+    <!--android:clipToPadding="false"-->
+    <!--android:foreground="?attr/selectableItemBackground"-->
+    <!--tools:context="com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment">-->
 
 
-    <LinearLayout
-        style="@style/MyLinearLayoutStyle1" >
-
-        <TextView
-            android:id="@+id/columnDate"
-            style="@style/MyTextViewStyle" />
-
-        <TextView
-            android:id="@+id/columnDateValue"
-            style="@style/MyTextViewStyle2"/>
-
-    </LinearLayout>
+   <!---->
 
 
-    <LinearLayout
-        style="@style/MyLinearLayoutStyle1" >
-
-        <TextView
-            android:id="@+id/columnDescription"
-            style="@style/MyTextViewStyle" />
-
-        <TextView
-            android:id="@+id/columnDescriptionValue"
-            android:inputType="textMultiLine"
-            style="@style/MyTextViewStyle2" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/MyLinearLayoutStyle1" >
-
-        <TextView
-            android:id="@+id/columnRecommendations"
-            style="@style/MyTextViewStyle" />
-
-        <TextView
-            android:id="@+id/columnRecommendationsValue"
-            android:inputType="textMultiLine"
-            style="@style/MyTextViewStyle2" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/MyLinearLayoutStyle1" >
-
-        <TextView
-            android:id="@+id/columnMedicines"
-            style="@style/MyTextViewStyle" />
-
-        <TextView
-            android:id="@+id/columnMedicinesValue"
-            android:inputType="textMultiLine"
-            style="@style/MyTextViewStyle2" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonVisitReminder"
-        android:text="@string/button_add_visit_reminder"
-        android:textSize="25sp"
-        style="@style/MyButtonStyle"/>
-
-    <Button
-        android:id="@+id/buttonUpdateVisit"
-        android:text="@string/button_edit_visit"
-        android:textSize="25sp"
-        style="@style/MyButtonStyle"/>
-
-
-</LinearLayout>
+<!--</LinearLayout>-->

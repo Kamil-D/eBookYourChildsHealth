@@ -186,7 +186,6 @@ public class AddNewChildFragment extends Fragment {
 
     @OnClick(R.id.imageButtonAddPhoto)
     public void pickPhoto() {
-//        IntentHelper.chooseFileIntent(this);
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);  // nowy intent i ustawia typ na pobranie plików
         intent.setType("image/*");  // typ pliku
         this.startActivityForResult(intent, UtilCode.FILE_PICK_CODE);
@@ -227,10 +226,10 @@ public class AddNewChildFragment extends Fragment {
     public void saveChildToDatabaseButtonAction(View v) {
         childObject = new Child();
 
-        if (checkIfAllFieldAreFilled()) {
-//        if (true) {
-            if (checkIfPeselCorrect()) {
-//                if (true) {
+        //if (checkIfAllFieldAreFilled()) {
+        if (true) {
+            //if (checkIfPeselCorrect()) {
+                if (true) {
                 childObject.setName(editTextName.getText().toString());
                 childObject.setSurname(editTextSurname.getText().toString());
                 childObject.setPesel(editTextPesel.getText().toString());

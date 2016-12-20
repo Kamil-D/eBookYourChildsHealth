@@ -24,25 +24,41 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:tabMode="fixed"
+            app:layout_collapseMode="pin"
+            android:visibility="gone"/>
+
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollViewObjectInfo"
+
+    <LinearLayout
+        android:id="@+id/firstLinearLayoutInNestedScrollViewObjectInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:contentScrim="#BDBDBD"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/firstLinearLayoutInNestedScrollViewObjectInfo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+    </LinearLayout>
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:id="@+id/nestedScrollViewObjectInfo"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:contentScrim="#BDBDBD"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" >-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/firstLinearLayoutInNestedScrollViewObjectInfo"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="vertical" >-->
 
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-    </android.support.v4.widget.NestedScrollView>
+    <!--</android.support.v4.widget.NestedScrollView>-->
 
 </android.support.design.widget.CoordinatorLayout>
-
