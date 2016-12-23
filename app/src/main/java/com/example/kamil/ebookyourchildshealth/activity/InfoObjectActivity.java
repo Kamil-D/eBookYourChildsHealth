@@ -112,7 +112,7 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
 
         infoDiseaseFragment = (InfoDiseaseFragment) getSupportFragmentManager().findFragmentByTag(fragmentDecisionDisease);
         myDebugger.someMethod("InfoObjectActivity " + infoDiseaseFragment);
-        //infoDiseaseFragment.deleteNote(intent);
+        infoDiseaseFragment.deleteNote(intent);
     }
 
     private int getImageButtonDeleteTag(View v) {

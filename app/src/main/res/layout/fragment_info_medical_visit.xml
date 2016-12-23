@@ -11,7 +11,7 @@
     android:layout_marginBottom="@dimen/md_keylines"
     android:layout_marginLeft="@dimen/md_keylines"
     android:layout_marginRight="@dimen/md_keylines"
-    android:paddingTop="115dp"
+    android:paddingTop="68dp"
     android:clipToPadding="false"
     android:foreground="?attr/selectableItemBackground"
     tools:context="com.example.kamil.ebookyourchildshealth.fragment.childmainpanel.InfoMedicalVisitFragment"

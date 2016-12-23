@@ -80,6 +80,10 @@ public class InfoDiseaseFragment extends Fragment {
         toast.show();
     }
 
+    public void deleteNote(Intent intent) {
+       // mTabLayout.get
+    }
+
     public static class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 
         private InfoDiseaseTabOneFragment infoDiseaseTabOneFragment;

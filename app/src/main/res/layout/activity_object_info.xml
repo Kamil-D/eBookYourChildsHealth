@@ -29,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:tabMode="fixed"
-            app:layout_collapseMode="pin"
             android:visibility="gone"/>
 
     </android.support.design.widget.AppBarLayout>
@@ -39,7 +38,8 @@
         android:id="@+id/firstLinearLayoutInNestedScrollViewObjectInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:foreground="?attr/selectableItemBackground" >
 
     </LinearLayout>
 
