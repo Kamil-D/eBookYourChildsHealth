@@ -103,7 +103,6 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
     public void deleteNoteFromDB(View view) {
         int idObjectToDelete = getImageButtonDeleteTag(view);
         InfoDiseaseFragment infoDiseaseFragment;
-        InfoDiseaseTabTwoFragment infoDiseaseTabTwoFragment;
 
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
@@ -111,7 +110,7 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
         intent.putExtra("bundle", bundle);
 
         infoDiseaseFragment = (InfoDiseaseFragment) getSupportFragmentManager().findFragmentByTag(fragmentDecisionDisease);
-        myDebugger.someMethod("InfoObjectActivity " + infoDiseaseFragment);
+        myDebugger.someMethod("InfoObjectActivity = " + infoDiseaseFragment);
         infoDiseaseFragment.deleteNote(intent);
     }
 

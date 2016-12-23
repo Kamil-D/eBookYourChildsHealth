@@ -29,8 +29,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:tabMode="fixed"
-            android:visibility="gone"/>
+            app:tabMode="fixed" />
 
     </android.support.design.widget.AppBarLayout>
 

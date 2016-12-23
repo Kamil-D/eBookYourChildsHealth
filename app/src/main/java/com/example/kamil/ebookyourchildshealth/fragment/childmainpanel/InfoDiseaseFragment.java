@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,8 @@ import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -45,8 +49,9 @@ public class InfoDiseaseFragment extends Fragment {
 
     static MyDebugger myDebugger = new MyDebugger();
     private static final int NUM_ITEMS = 2;
-    private ViewPager mViewPager;
-    private FragmentPagerAdapter mAdapterViewPager;
+    private static ViewPager mViewPager;
+//    private FragmentPagerAdapter mAdapterViewPager;
+    private CustomFragmentPagerAdapter mAdapterViewPager;
     private TabLayout mTabLayout;
 
     @Override
@@ -81,8 +86,11 @@ public class InfoDiseaseFragment extends Fragment {
     }
 
     public void deleteNote(Intent intent) {
-       // mTabLayout.get
+        int index = 1;
+
+        ((InfoDiseaseTabTwoFragment) mAdapterViewPager.getFragment(index)).deleteNote(intent);
     }
+
 
     public static class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -102,9 +110,13 @@ public class InfoDiseaseFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new InfoDiseaseTabOneFragment();
+                    infoDiseaseTabOneFragment = new InfoDiseaseTabOneFragment();
+                    return infoDiseaseTabOneFragment;
+//                    return new InfoDiseaseTabOneFragment();
                 case 1:
-                    return new InfoDiseaseTabTwoFragment();
+                    infoDiseaseTabTwoFragment = new InfoDiseaseTabTwoFragment();
+                    return infoDiseaseTabTwoFragment;
+//                    return new InfoDiseaseTabTwoFragment();
                 default:
                     return null;
             }
@@ -120,8 +132,22 @@ public class InfoDiseaseFragment extends Fragment {
             }
             return null;
         }
+
+        public Fragment getFragment(int index) {
+            switch (index) {
+                case 0:
+                    return infoDiseaseTabOneFragment;
+                case 1:
+                    return infoDiseaseTabTwoFragment;
+            }
+            return null;
+        }
     }
 
-
-
 }
+
+
+
+
+
+
