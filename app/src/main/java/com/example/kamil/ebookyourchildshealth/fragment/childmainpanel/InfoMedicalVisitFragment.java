@@ -149,6 +149,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         Bundle bundle = getActivity().getIntent().getBundleExtra("bundle");
         idMedicalVisit = bundle.getInt("idObjectToShow");
         childIDFromIntent = bundle.getInt("childIDFromIntent");
+
     }
 
     public void getMedicalVisitDataFromDatabase() {
@@ -322,7 +323,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         visitObject = new Visit();
 
         if (checkIfAllFieldAreFilled()) {
-            visitObject.setChildId(childIDFromIntent);
+//            visitObject.setChildId(childIDFromIntent);
             visitObject.setName(textViewNameValue.getText().toString());
             visitObject.setDoctor(textViewDoctorValue.getText().toString());
             visitObject.setDate(textViewDateValue.getText().toString());
@@ -417,6 +418,9 @@ public class InfoMedicalVisitFragment extends Fragment {
     private void setReminder() {
         ContentValues values = new ContentValues();
 
+        String dateString = String.valueOf(day) + "." + String.valueOf(month) + "."
+                + String.valueOf(year) + " " + String.valueOf(hour) + ":" + String.valueOf(minute);
+
         long startTime;
         long endTime;
         Calendar calendar = Calendar.getInstance();
@@ -455,11 +459,11 @@ public class InfoMedicalVisitFragment extends Fragment {
 
         getContext().getContentResolver().insert(baseUri2, values);
 
-        showToastInfo();
+        showToastInfo(dateString);
     }
 
-    private void showToastInfo() {
-        Toast toast = Toast.makeText(getActivity(), "PRZYPOMNIENIE ZOSTAŁO USTAWIONE!", Toast.LENGTH_LONG);
+    private void showToastInfo(String dateString) {
+        Toast toast = Toast.makeText(getActivity(), "PRZYPOMNIENIE ZOSTAŁO USTAWIONE NA " + dateString, Toast.LENGTH_LONG);
         ViewGroup group = (ViewGroup) toast.getView();
         TextView messageTextView = (TextView) group.getChildAt(0);
         messageTextView.setTextSize(30);

@@ -116,7 +116,6 @@ public class InfoDiseaseTabTwoFragment extends Fragment {
     private void setTextOnLeftColumnTextView() {
         Resources resources = getContext().getResources();
         textViewLeftColumnNamesArray = resources.getStringArray(R.array.disease_table);
-
         textViewNoteMessage.setText(R.string.text_view_add_note);
     }
 
@@ -153,6 +152,7 @@ public class InfoDiseaseTabTwoFragment extends Fragment {
 
     private void createAndSetContentAdapter() {
         ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
+        recyclerView.setPadding(0, 0, 0, (int) getActivity().getResources().getDimension(R.dimen.md_keylines));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

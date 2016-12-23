@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.activity.AddObjectActivity;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
@@ -33,6 +34,7 @@ import butterknife.OnClick;
 
 public class DiseasesFragment extends Fragment {
 
+    static MyDebugger myDebugger = new MyDebugger();
     private final int REQUEST_CODE = 1;
     private RecyclerView recyclerView;
     private MyDatabaseHelper myDatabaseHelper;
@@ -194,11 +196,14 @@ public class DiseasesFragment extends Fragment {
         @Override
         public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
             String tempString = "";
+
             tempString += diseaseCardViewItem.get(position % diseaseCardViewItem.size()).getName()
                     + "  -  " + diseaseCardViewItem.get(position % diseaseCardViewItem.size()).getDate();
             holder.button.setText(tempString);
+
             // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
             int id = diseaseCardViewItem.get(position % diseaseCardViewItem.size()).getId();
+
             holder.button.setTag(id);
             holder.deleteButton.setTag(id);
         }

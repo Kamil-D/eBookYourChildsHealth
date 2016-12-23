@@ -413,10 +413,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(VISIT_COL_2, visit.getChildId());
+//        contentValues.put(VISIT_COL_2, visit.getChildId());
         contentValues.put(VISIT_COL_3, visit.getName());
         contentValues.put(VISIT_COL_4, visit.getDoctor());
-        contentValues.put(VISIT_COL_5, visit.getDiseaseId());
+        //contentValues.put(VISIT_COL_5, visit.getDiseaseId());
         contentValues.put(VISIT_COL_6, visit.getDate());
         contentValues.put(VISIT_COL_7, visit.getDescription());
         contentValues.put(VISIT_COL_8, visit.getRecommendations());

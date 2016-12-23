@@ -228,9 +228,10 @@ public class ChildMainPanelActivity extends MyActivityOnlyMenuImplemented
     }
 
     public void newActivityGoToInfoPanelActivity(View view) {
-        int idObjectToShow = getButtonVisitTag(view);
         MedicalVisitsFragment medicalVisitsFragment;
         DiseasesFragment diseasesFragment;
+
+        int idObjectToShow = getButtonVisitTag(view);
 
         Intent intent = new Intent(this, InfoObjectActivity.class);
         Bundle bundle = new Bundle();
