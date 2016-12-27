@@ -128,6 +128,12 @@
             style="@style/MyButtonStyle"/>
 
         <Button
+            android:id="@+id/buttonDeleteVisitReminder"
+            android:text="@string/button_delete_visit_reminder"
+            android:textSize="25sp"
+            style="@style/MyButtonStyle"/>
+
+        <Button
             android:id="@+id/buttonUpdateVisit"
             android:text="@string/button_edit_visit"
             android:textSize="25sp"

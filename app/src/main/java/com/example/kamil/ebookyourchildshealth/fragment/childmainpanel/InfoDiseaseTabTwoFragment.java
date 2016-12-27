@@ -88,16 +88,16 @@ public class InfoDiseaseTabTwoFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-//        Toast.makeText(getActivity(), "Przytrzymaj wybrane pole, aby edytować", Toast.LENGTH_LONG).show();
-        Toast toast = Toast.makeText(getActivity(), "Przytrzymaj wybrane pole, aby edytować", Toast.LENGTH_LONG);
-        ViewGroup group = (ViewGroup) toast.getView();
-        TextView messageTextView = (TextView) group.getChildAt(0);
-        messageTextView.setTextSize(25);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 70);
-        toast.show();
-    }
+//    @Override
+//    public void onViewCreated(View view, Bundle savedInstanceState) {
+////        Toast.makeText(getActivity(), "Przytrzymaj wybrane pole, aby edytować", Toast.LENGTH_LONG).show();
+//        Toast toast = Toast.makeText(getActivity(), "Przytrzymaj wybrane pole, aby edytować", Toast.LENGTH_LONG);
+//        ViewGroup group = (ViewGroup) toast.getView();
+//        TextView messageTextView = (TextView) group.getChildAt(0);
+//        messageTextView.setTextSize(25);
+//        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 70);
+//        toast.show();
+//    }
 
     @Override
     public void onDestroy() {

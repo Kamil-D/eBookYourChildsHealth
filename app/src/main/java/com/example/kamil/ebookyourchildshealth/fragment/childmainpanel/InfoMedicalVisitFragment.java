@@ -2,6 +2,8 @@ package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,6 +44,7 @@ import butterknife.OnClick;
 public class InfoMedicalVisitFragment extends Fragment {
 
     MyDebugger myDebugger;
+    private long eventID;
     private MyDatabaseHelper myDatabaseHelper;
     private String[] textViewLeftColumnNamesArray;
     private int idMedicalVisit;
@@ -114,6 +117,8 @@ public class InfoMedicalVisitFragment extends Fragment {
         myDatabaseHelper = MyDatabaseHelper.getMyDatabaseHelperInstance(getActivity());
         context = getActivity();
         buttonUpdateVisit.setVisibility(View.GONE);
+
+        eventID = 666;
 
         // najpierw odczytujemy ImageButtonTag, czyli imie dziecka
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
@@ -357,6 +362,31 @@ public class InfoMedicalVisitFragment extends Fragment {
     }
 
 
+    @OnClick(R.id.buttonDeleteVisitReminder)
+    public void deleteReminder(View v) {
+//        ContentResolver cr = getActivity().getContentResolver();
+//        ContentValues values = new ContentValues();
+//        Uri deleteUri = null;
+//        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
+//        int rows = getActivity().getContentResolver().delete(deleteUri, null, null);
+
+        Toast.makeText(getActivity(), "KASOWANIE WIZYTY", Toast.LENGTH_LONG).show();
+
+        int iNumRowsDeleted = 0;
+
+        Uri baseUri = Uri.parse("content://com.android.calendar/events");
+
+        Uri deleteUri;
+
+        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, Long.parseLong(String.valueOf(eventID)));
+
+        int rows = getActivity().getContentResolver().delete(deleteUri, null, null);
+
+        if (rows>0)
+            Toast.makeText(getActivity(), "WIZYTA SKASOWANA!", Toast.LENGTH_LONG).show();
+    }
+
+
     @OnClick(R.id.buttonVisitReminder)
     public void showDateAndTimePickerDialog(View v) {
         showDatePickerDialog();
@@ -445,6 +475,8 @@ public class InfoMedicalVisitFragment extends Fragment {
 
         Uri event = getContext().getContentResolver().insert(baseUri, values);
 
+        eventID = Long.parseLong(event.getLastPathSegment());
+
         values = new ContentValues();
         values.put(CalendarContract.Reminders.EVENT_ID, Long.parseLong(event.getLastPathSegment()));
         values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
@@ -457,7 +489,7 @@ public class InfoMedicalVisitFragment extends Fragment {
 //            baseUri2 = Uri.parse("content://calendar/reminders");
 //        }
 
-        getContext().getContentResolver().insert(baseUri2, values);
+        Uri uri = getContext().getContentResolver().insert(baseUri2, values);
 
         showToastInfo(dateString);
     }

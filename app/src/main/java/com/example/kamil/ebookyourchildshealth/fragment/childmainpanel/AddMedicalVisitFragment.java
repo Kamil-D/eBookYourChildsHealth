@@ -170,7 +170,8 @@ public class AddMedicalVisitFragment extends Fragment {
     public void saveVisitToDatabaseButtonAction(View v) {
         visitObject = new Visit();
 
-        if (checkIfAllFieldAreFilled()) {
+        //if (checkIfAllFieldAreFilled()) {
+        if (true) {
             visitObject.setChildId(childIDFromIntent);
             visitObject.setName(editTextName.getText().toString());
             visitObject.setDoctor(editTextDoctor.getText().toString());
