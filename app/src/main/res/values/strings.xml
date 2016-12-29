@@ -96,6 +96,7 @@
     <string name="medical_visit_table_name">medicalVisits</string>
     <string name="diseases_table_name">diseases</string>
     <string name="diseases_notes_table_name">diseasesNotes</string>
+    <string name="reminder_table_name">reminder</string>
 
     <string name="database_sql_query_create_child_table"> CREATE TABLE child
         (
@@ -145,6 +146,14 @@
         )
     </string>
 
+    <string name="database_sql_query_create_reminder_table"> CREATE TABLE reminder
+        (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            VISIT_ID INTEGER REFERENCES medicalVisits,
+            CALENDAR_ID REAL
+        )
+    </string>
+
     <string name="database_sql_query_drop_table"> DROP TABLE IF EXISTS </string>
 
     <string name="database_sql_query_select_where_id"> select * from
@@ -164,6 +173,15 @@
     <string name="database_sql_query_select_notes_where_diseases_id"> select * from
             tableName
              WHERE DISEASES_ID = ? ;
+    </string>
+
+    <string name="database_sql_query_select_reminders_where_visit_id"> select * from
+            tableName
+             WHERE VISIT_ID = ? ;
+    </string>
+
+    <string name="database_sql_query_select_reminders_table"> select * from
+            reminder
     </string>
 
 </resources>

@@ -2,7 +2,6 @@ package com.example.kamil.ebookyourchildshealth.fragment.childmainpanel;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,9 +28,11 @@ import android.widget.Toast;
 import com.example.kamil.ebookyourchildshealth.MyDebugger;
 import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
+import com.example.kamil.ebookyourchildshealth.model.Reminder;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -51,6 +52,8 @@ public class InfoMedicalVisitFragment extends Fragment {
     private int childIDFromIntent;
     private Visit visitObject;
     private Visit visitUpdatedObject;
+    private Reminder reminderObject;
+    private static ArrayList<Reminder> reminderRecyclerViewItemArrayList;
     private int day, month, year, hour, minute;
     private Calendar calendar;
     private static Context context;
@@ -124,6 +127,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         // a dopiero potem rekord z bazy danych z konkretnym imieniem dziecka
         getBundleFromIntent();
         getMedicalVisitDataFromDatabase();
+        getReminderDataFromDatabase();
         setTextOnLeftColumnTextView();
         setDataFromDBOnLeftColumnTextView();
         createListeners();
@@ -175,6 +179,23 @@ public class InfoMedicalVisitFragment extends Fragment {
 
             Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_object_info);
             toolbar.setTitle("Wizyta z dnia " + visitObject.getDate());
+        }
+    }
+
+    private void getReminderDataFromDatabase() {
+
+        reminderRecyclerViewItemArrayList= new ArrayList<>();
+        Reminder reminder;
+
+        Cursor cursor = myDatabaseHelper.readSingleVisitRemindersData(idMedicalVisit);
+
+        if(cursor.getCount() == 0) {
+            return;
+        }
+
+        while(cursor.moveToNext()) {
+            reminder = new Reminder(cursor.getInt(0), cursor.getInt(1), cursor.getLong(2));
+            reminderRecyclerViewItemArrayList.add(reminder);
         }
     }
 
@@ -372,18 +393,28 @@ public class InfoMedicalVisitFragment extends Fragment {
 
         Toast.makeText(getActivity(), "KASOWANIE WIZYTY", Toast.LENGTH_LONG).show();
 
-        int iNumRowsDeleted = 0;
-
-        Uri baseUri = Uri.parse("content://com.android.calendar/events");
-
         Uri deleteUri;
 
-        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, Long.parseLong(String.valueOf(eventID)));
+//        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, Long.parseLong(String.valueOf(eventID)));
+
+        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI,
+                Long.parseLong(String.valueOf(reminderRecyclerViewItemArrayList.get(0).getCalendarId())));
+
 
         int rows = getActivity().getContentResolver().delete(deleteUri, null, null);
 
         if (rows>0)
-            Toast.makeText(getActivity(), "WIZYTA SKASOWANA!", Toast.LENGTH_LONG).show();
+
+        deleteReminderFromDatabase();
+    }
+
+    private void deleteReminderFromDatabase() {
+        boolean ifDeleted = myDatabaseHelper.deleteReminderData(reminderRecyclerViewItemArrayList.get(0).getId());
+
+        if (ifDeleted)
+                Toast.makeText(getActivity(), "WIZYTA SKASOWANA!", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(getActivity(), "WIZYTA NIE ZOSTAŁA SKASOWANA! SPRÓBUJ PONOWNIE", Toast.LENGTH_LONG).show();
     }
 
 
@@ -430,7 +461,8 @@ public class InfoMedicalVisitFragment extends Fragment {
                 @Override
                 public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
                     setTimeOnVariables(selectedHour, selectedMinute);
-                    setReminder();
+                    setEventAndReminderOnSystemCalendar();
+                    saveReminderToDatabase();
                 }
             };
 
@@ -445,7 +477,7 @@ public class InfoMedicalVisitFragment extends Fragment {
         this.minute = selectedMinute;
     }
 
-    private void setReminder() {
+    private void setEventAndReminderOnSystemCalendar() {
         ContentValues values = new ContentValues();
 
         String dateString = String.valueOf(day) + "." + String.valueOf(month) + "."
@@ -503,4 +535,36 @@ public class InfoMedicalVisitFragment extends Fragment {
         toast.show();
     }
 
+    private void saveReminderToDatabase() {
+
+        reminderObject = new Reminder();
+        reminderObject.setVisitId(idMedicalVisit);
+        reminderObject.setCalendarId(eventID);
+
+        boolean isInserted = myDatabaseHelper.insertDataIntoReminderTable(reminderObject);
+
+//        if (isInserted == true)
+//            Toast.makeText(getActivity(), "Dane zapisane", Toast.LENGTH_LONG).show();
+//        else
+//            Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
