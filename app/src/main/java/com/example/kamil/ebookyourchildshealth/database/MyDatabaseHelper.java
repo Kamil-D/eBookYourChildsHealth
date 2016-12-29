@@ -70,6 +70,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String REMINDER_COL_1 = "ID";
     public static final String REMINDER_COL_2 = "VISIT_ID";
     public static final String REMINDER_COL_3 = "CALENDAR_ID";
+    public static final String REMINDER_COL_4 = "DATE";
+
 
     public static String DATABASE_SQL_QUERY_CREATE_CHILD_TABLE = "";
     public static String DATABASE_SQL_QUERY_CREATE_VISIT_TABLE = "";
@@ -317,6 +319,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(REMINDER_COL_2, reminder.getVisitId());
             contentValues.put(REMINDER_COL_3, reminder.getCalendarId());
+            contentValues.put(REMINDER_COL_4, reminder.getDate());
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
             result = database.insertOrThrow(REMINDER_TABLE_NAME, null, contentValues);

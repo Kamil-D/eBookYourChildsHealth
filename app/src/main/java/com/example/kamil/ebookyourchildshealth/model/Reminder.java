@@ -9,14 +9,16 @@ public class Reminder {
     private int id;
     private int visitId;
     private long calendarId;
+    private String date;
 
     public Reminder () {
     }
 
-    public Reminder (int id, int visitId, long calendarId) {
+    public Reminder (int id, int visitId, long calendarId, String date) {
         this.id = id;
         this.visitId = visitId;
         this.calendarId = calendarId;
+        this.date = date;
     }
 
     public long getCalendarId() {
@@ -41,5 +43,13 @@ public class Reminder {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

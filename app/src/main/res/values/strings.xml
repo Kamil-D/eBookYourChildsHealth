@@ -150,7 +150,8 @@
         (
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
             VISIT_ID INTEGER REFERENCES medicalVisits,
-            CALENDAR_ID REAL
+            CALENDAR_ID REAL,
+            DATE TEXT
         )
     </string>
 
