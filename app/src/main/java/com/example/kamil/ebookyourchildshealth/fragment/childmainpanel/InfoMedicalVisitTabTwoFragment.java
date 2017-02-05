@@ -32,6 +32,8 @@ import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Reminder;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -58,6 +60,7 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
     private String dateString;
     private int idReminderToDelete;
     private int positionReminderToDelete;
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private static Context context;
 
     @BindView(R.id.recycler_view_reminders)
@@ -266,6 +269,8 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
         long endTime;
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hour, minute);
+        dateString = dateFormat.format(calendar.getTime());
+
         startTime = calendar.getTimeInMillis();
         endTime = startTime;
 
