@@ -88,11 +88,11 @@ public class InfoMedicalVisitFragment extends Fragment {
         toast.show();
     }
 
-//    public void deleteReminder(Intent intent) {
-//        int index = 1;
-//
-//        ((InfoDiseaseTabTwoFragment) mAdapterViewPager.getFragment(index)).deleteNote(intent);
-//    }
+    public void deleteReminder(Intent intent) {
+        int index = 1;
+
+        ((InfoMedicalVisitTabTwoFragment) mAdapterViewPager.getFragment(index)).deleteReminder(intent);
+    }
 
     public static class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
 

@@ -6,21 +6,22 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -30,13 +31,11 @@ import com.example.kamil.ebookyourchildshealth.R;
 import com.example.kamil.ebookyourchildshealth.database.MyDatabaseHelper;
 import com.example.kamil.ebookyourchildshealth.model.Reminder;
 import com.example.kamil.ebookyourchildshealth.model.Visit;
-import com.example.kamil.ebookyourchildshealth.util.UtilCode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,7 +46,7 @@ import butterknife.OnClick;
 
 public class InfoMedicalVisitTabTwoFragment extends Fragment {
 
-    MyDebugger myDebugger;
+    static MyDebugger myDebugger;
     private long eventID;
     private MyDatabaseHelper myDatabaseHelper;
     private int idMedicalVisit;
@@ -57,7 +56,11 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
     private int day, month, year, hour, minute;
     private Calendar calendar;
     private String dateString;
+    private int idReminder;
     private static Context context;
+
+    @BindView(R.id.recycler_view_reminders)
+    RecyclerView recyclerView;
 
 
     @Override
@@ -75,6 +78,7 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
         getBundleFromIntent();
         getMedicalVisitDataFromDatabase();
         getReminderDataFromDatabase();
+        createAndSetContentAdapter();
 
         return view;
     }
@@ -87,9 +91,18 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
         }
     }
 
+    public static Context getAppContext(){
+        return context;
+    }
+
     private void getBundleFromIntent() {
         Bundle bundle = getActivity().getIntent().getBundleExtra("bundle");
         idMedicalVisit = bundle.getInt("idObjectToShow");
+    }
+
+    private void customRefreshRecyclerView() {
+        getReminderDataFromDatabase();
+        createAndSetContentAdapter();
     }
 
     public void getMedicalVisitDataFromDatabase() {
@@ -128,13 +141,18 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.buttonDeleteVisitReminder)
-    public void deleteReminder(View v) {
+//    @OnClick(R.id.buttonDeleteVisitReminder)
+    public void deleteReminderFromSystemCalendar(int id) {
 //        ContentResolver cr = getActivity().getContentResolver();
 //        ContentValues values = new ContentValues();
 //        Uri deleteUri = null;
 //        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
 //        int rows = getActivity().getContentResolver().delete(deleteUri, null, null);
+
+        int arrayListId = id - 1;
+
+        long calendarEventId = Long.parseLong
+                (String.valueOf(reminderRecyclerViewItemArrayList.get(arrayListId).getCalendarId()));
 
         Toast.makeText(getActivity(), "KASOWANIE WIZYTY", Toast.LENGTH_LONG).show();
 
@@ -142,14 +160,12 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
 
 //        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, Long.parseLong(String.valueOf(eventID)));
 
-        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI,
-                Long.parseLong(String.valueOf(reminderRecyclerViewItemArrayList.get(0).getCalendarId())));
+        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, calendarEventId);
 
 
         int rows = getActivity().getContentResolver().delete(deleteUri, null, null);
 
         if (rows>0)
-
             deleteReminderFromDatabase();
     }
 
@@ -208,6 +224,7 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
                     setTimeOnVariables(selectedHour, selectedMinute);
                     setEventAndReminderOnSystemCalendar();
                     saveReminderToDatabase();
+                    customRefreshRecyclerView();
                 }
             };
 
@@ -240,7 +257,7 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
     private void setEventAndReminderOnSystemCalendar() {
         ContentValues values = new ContentValues();
 
-        dateString = String.valueOf(day) + "." + String.valueOf(month) + "."
+        dateString = String.valueOf(day) + "." + String.valueOf(month+1) + "."
                 + String.valueOf(year) + " " + String.valueOf(hour) + ":" + String.valueOf(minute);
 
         long startTime;
@@ -309,6 +326,94 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
 //        else
 //            Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
 
+    }
+
+    public void deleteReminder(Intent intent) {
+        Bundle bundle = intent.getBundleExtra("bundle");
+        idReminder = bundle.getInt("idObjectToDelete");
+        showDialogToConfirmDeleteOperation();
+    }
+
+    public void showDialogToConfirmDeleteOperation() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getAppContext());
+        builder.setTitle("Czy chcesz usunąć przypomnienie?");
+        View myView = LayoutInflater.from(getAppContext()).inflate(R.layout.dialog_delete_view, null);
+        builder.setView(myView);
+        builder.setNegativeButton("NIE",null);
+        builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                myDatabaseHelper.deleteReminderData(idReminder);
+                deleteReminderFromSystemCalendar(idReminder);
+                // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
+                customRefreshRecyclerView();
+            }
+        });
+        builder.show();
+    }
+
+    private void createAndSetContentAdapter() {
+        ContentAdapter adapter = new ContentAdapter(recyclerView.getContext());
+        recyclerView.setPadding(0, 0, 0, (int) getActivity().getResources().getDimension(R.dimen.md_keylines));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    public static class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHolder> {
+
+        // Set numbers of List in RecyclerView.
+        private int LENGTH = 0;
+        private ArrayList<Reminder> reminderCardViewItemArrayList = new ArrayList<>();
+
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+
+            public Button button;
+            public ImageButton deleteButton;
+
+            public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
+
+                super(inflater.inflate(R.layout.list_records_fragment_card_item, parent, false));
+                button = (Button) itemView.findViewById(R.id.buttonRecordOnList);
+                deleteButton = (ImageButton) itemView.findViewById(R.id.buttonDeleteRecord);
+
+            }
+        }
+
+        public ContentAdapter(Context context) {
+
+            reminderCardViewItemArrayList = reminderRecyclerViewItemArrayList;
+
+            this.LENGTH = reminderCardViewItemArrayList.size();
+        }
+
+        @Override
+        public ContentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ContentAdapter.ViewHolder(LayoutInflater.from(parent.getContext()), parent);
+        }
+
+
+        /**
+         * Specify the contents of each item of the RecyclerView.
+         */
+        @Override
+        public void onBindViewHolder(ContentAdapter.ViewHolder holder, int position) {
+            String tempString = "";
+
+            tempString += reminderCardViewItemArrayList.get(position % reminderCardViewItemArrayList.size()).getDate();
+            holder.button.setText(tempString);
+
+            // nadawane jest takie samo ID dla przycisku wyboru jak i usuwania wizyty
+            int id = reminderCardViewItemArrayList.get(position % reminderCardViewItemArrayList.size()).getId();
+
+            holder.button.setTag(id);
+            holder.deleteButton.setTag(id);
+        }
+
+        @Override
+        public int getItemCount() {
+            return LENGTH;
+        }
     }
 
 }

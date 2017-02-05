@@ -114,6 +114,19 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
         infoDiseaseFragment.deleteNote(intent);
     }
 
+    public void deleteRecordFromDB(View view) {
+        int idObjectToDelete = getImageButtonDeleteTag(view);
+        InfoMedicalVisitFragment infoMedicalVisitFragment;
+
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putInt("idObjectToDelete", idObjectToDelete);
+        intent.putExtra("bundle", bundle);
+
+        infoMedicalVisitFragment = (InfoMedicalVisitFragment) getSupportFragmentManager().findFragmentByTag(fragmentDecisionVisit);
+        infoMedicalVisitFragment.deleteReminder(intent);
+    }
+
     private int getImageButtonDeleteTag(View v) {
         ImageButton button = (ImageButton) v;
         int buttonTag = Integer.parseInt(button.getTag().toString());

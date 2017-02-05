@@ -181,13 +181,17 @@ public class InfoDiseaseTabTwoFragment extends Fragment {
             else
                 Toast.makeText(getActivity(), "Dane nie zostały zapisane", Toast.LENGTH_LONG).show();
 
-            getDiseaseNoteDataFromDatabase();
-            createAndSetContentAdapter();
+            customRefreshRecyclerView();
             editTextNoteMessage.setText("");
 //            getActivity().setResult(UtilCode.RESULT_CODE, null);
 //            getActivity().finish();
         } else
-            Toast.makeText(getActivity(), "UZUPEŁNIJ WSZYSTKIE POLA!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "UZUPEŁNIJ POLE!", Toast.LENGTH_LONG).show();
+    }
+
+    private void customRefreshRecyclerView() {
+        getDiseaseNoteDataFromDatabase();
+        createAndSetContentAdapter();
     }
 
     public void deleteNote(Intent intent) {
