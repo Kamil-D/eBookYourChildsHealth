@@ -56,7 +56,8 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
     private int day, month, year, hour, minute;
     private Calendar calendar;
     private String dateString;
-    private int idReminder;
+    private int idReminderToDelete;
+    private int positionReminderToDelete;
     private static Context context;
 
     @BindView(R.id.recycler_view_reminders)
@@ -126,7 +127,7 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
 
     private void getReminderDataFromDatabase() {
 
-        reminderRecyclerViewItemArrayList= new ArrayList<>();
+        reminderRecyclerViewItemArrayList = new ArrayList<>();
         Reminder reminder;
 
         Cursor cursor = myDatabaseHelper.readSingleVisitRemindersData(idMedicalVisit);
@@ -152,7 +153,8 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
         int arrayListId = id - 1;
 
         long calendarEventId = Long.parseLong
-                (String.valueOf(reminderRecyclerViewItemArrayList.get(arrayListId).getCalendarId()));
+                (String.valueOf(reminderRecyclerViewItemArrayList.get(positionReminderToDelete).getCalendarId()));
+//        long calendarEventId = reminderRecyclerViewItemArrayList.get(arrayListId).getCalendarId();
 
         Toast.makeText(getActivity(), "KASOWANIE WIZYTY", Toast.LENGTH_LONG).show();
 
@@ -170,7 +172,7 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
     }
 
     private void deleteReminderFromDatabase() {
-        boolean ifDeleted = myDatabaseHelper.deleteReminderData(reminderRecyclerViewItemArrayList.get(0).getId());
+        boolean ifDeleted = myDatabaseHelper.deleteReminderData(idReminderToDelete);
 
         if (ifDeleted)
             Toast.makeText(getActivity(), "WIZYTA SKASOWANA!", Toast.LENGTH_LONG).show();
@@ -330,7 +332,8 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
 
     public void deleteReminder(Intent intent) {
         Bundle bundle = intent.getBundleExtra("bundle");
-        idReminder = bundle.getInt("idObjectToDelete");
+        idReminderToDelete = bundle.getInt("idObjectToDelete");
+        positionReminderToDelete = bundle.getInt("objectPosition");
         showDialogToConfirmDeleteOperation();
     }
 
@@ -343,8 +346,8 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
         builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                myDatabaseHelper.deleteReminderData(idReminder);
-                deleteReminderFromSystemCalendar(idReminder);
+                //myDatabaseHelper.deleteReminderData(idReminderToDelete);
+                deleteReminderFromSystemCalendar(idReminderToDelete);
                 // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
                 customRefreshRecyclerView();
             }
@@ -364,6 +367,7 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
 
         // Set numbers of List in RecyclerView.
         private int LENGTH = 0;
+        private int counter = 0;
         private ArrayList<Reminder> reminderCardViewItemArrayList = new ArrayList<>();
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -407,7 +411,16 @@ public class InfoMedicalVisitTabTwoFragment extends Fragment {
             int id = reminderCardViewItemArrayList.get(position % reminderCardViewItemArrayList.size()).getId();
 
             holder.button.setTag(id);
-            holder.deleteButton.setTag(id);
+            holder.deleteButton.setTag(R.integer.tagImageButtonOne, id);
+            holder.deleteButton.setTag(R.integer.tagImageButtonTwo, counter);
+
+//            holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    getLa
+//                }
+//            });
+            counter++;
         }
 
         @Override

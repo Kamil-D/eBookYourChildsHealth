@@ -110,17 +110,17 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
         intent.putExtra("bundle", bundle);
 
         infoDiseaseFragment = (InfoDiseaseFragment) getSupportFragmentManager().findFragmentByTag(fragmentDecisionDisease);
-        myDebugger.someMethod("InfoObjectActivity = " + infoDiseaseFragment);
         infoDiseaseFragment.deleteNote(intent);
     }
 
     public void deleteRecordFromDB(View view) {
-        int idObjectToDelete = getImageButtonDeleteTag(view);
+        int [] tags = getImageButtonDeleteTag1and2(view);
         InfoMedicalVisitFragment infoMedicalVisitFragment;
 
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putInt("idObjectToDelete", idObjectToDelete);
+        bundle.putInt("idObjectToDelete", tags[0]);
+        bundle.putInt("objectPosition", tags[1]);
         intent.putExtra("bundle", bundle);
 
         infoMedicalVisitFragment = (InfoMedicalVisitFragment) getSupportFragmentManager().findFragmentByTag(fragmentDecisionVisit);
@@ -131,5 +131,13 @@ public class InfoObjectActivity extends MyActivityOnlyMenuImplemented {
         ImageButton button = (ImageButton) v;
         int buttonTag = Integer.parseInt(button.getTag().toString());
         return buttonTag;
+    }
+
+    private int[] getImageButtonDeleteTag1and2(View v) {
+        ImageButton button = (ImageButton) v;
+        int [] tags = new int[2];
+        tags[0] = Integer.parseInt(button.getTag(R.integer.tagImageButtonOne).toString());
+        tags[1] = Integer.parseInt(button.getTag(R.integer.tagImageButtonTwo).toString());
+        return tags;
     }
 }

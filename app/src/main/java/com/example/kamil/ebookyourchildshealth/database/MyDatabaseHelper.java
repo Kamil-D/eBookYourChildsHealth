@@ -580,4 +580,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
+    public boolean deleteAllVisitReminderData(int visitId) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        String selection = REMINDER_COL_2 + "= ?";
+        String[] selectionArgs = new String[] { String.valueOf(visitId) };
+
+        int numberOfRowsAffected = database.delete(REMINDER_TABLE_NAME, selection, selectionArgs);
+
+        if (numberOfRowsAffected==1)
+            return true;
+        else
+            return false;
+    }
+
 }

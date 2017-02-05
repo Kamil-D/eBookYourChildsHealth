@@ -110,6 +110,7 @@ public class MedicalVisitsFragment extends Fragment {
         builder.setPositiveButton("TAK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                myDatabaseHelper.deleteAllVisitReminderData(visitID);
                 myDatabaseHelper.deleteMedicalVisitData(visitID);
                 // wywołanie dwóch poniższych metod spowoduje odświeżenie widoku
                 getVisitDataFromDatabase();

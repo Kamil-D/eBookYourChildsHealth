@@ -197,7 +197,6 @@ public class InfoDiseaseTabTwoFragment extends Fragment {
     public void deleteNote(Intent intent) {
         Bundle bundle = intent.getBundleExtra("bundle");
         idNote = bundle.getInt("idObjectToDelete");
-        myDebugger.someMethod("Fragment deleteNote " + idNote);
         showDialogToConfirmDeleteOperation();
     }
 
